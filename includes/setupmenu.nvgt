@@ -1,0 +1,34 @@
+void setupmenu()
+{
+m.reset(false);
+m.add_music("menumus"+random(1,3)+".ogg");
+m.enable_up_and_down=false;
+m.enable_left_and_right=true;
+m.enable_home_and_end=true;
+m.enable_first_letter_navigation=true;
+m.enable_numbers=true;
+m.enable_side_scrolling=true;
+m.speak_position_information=false;
+m.wrap=true;
+m.click_sound="menuclick.ogg";
+m.enter_sound="menuenter.ogg";
+m.open_sound="menuopen.ogg";
+m.wrap_sound="menuwrap.ogg";
+}
+void setupmenu2()
+{
+m.reset(false);
+m.add_music("");
+m.enable_up_and_down=true;
+m.enable_left_and_right=false;
+m.enable_home_and_end=true;
+m.enable_first_letter_navigation=true;
+m.enable_numbers=true;
+m.enable_side_scrolling=false;
+m.speak_position_information=false;
+m.wrap=true;
+m.click_sound="menuclick.ogg";
+m.enter_sound="menuenter.ogg";
+m.open_sound="menuopen.ogg";
+m.wrap_sound="menuwrap.ogg";
+}

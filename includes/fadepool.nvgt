@@ -1,0 +1,41 @@
+void fade_volume_pool(sound_pool@ handle,double time=0.25,double minvol=-50)
+{
+for(double current=0; current>minvol; current-=time)
+{
+for(uint x=0; x<handle.items.length(); x++)
+{
+if(@handle.items[x].handle==null)
+continue;
+if(handle.items[x].handle.playing==false)
+continue;
+handle.items[x].handle.volume=handle.items[x].handle.volume-time;
+wait(5);
+}
+}
+handle.destroy_all();
+}
+void fade_pitch_pool(sound_pool@ handle,double time=20,double minpitch=20,double amount=2)
+{
+if(handle.items.length()==0) return;
+double default_pitch=100;
+for(uint i=0; i<handle.items.length(); i++)
+{
+if(@handle.items[i].handle!=null)
+{
+default_pitch=handle.items[i].handle.pitch;
+break;
+}
+}
+double pitch=default_pitch;
+while(pitch>minpitch)
+{
+pitch-=amount;
+for(uint i=0; i<handle.items.length(); i++)
+{
+if(@handle.items[i].handle!=null)
+handle.items[i].handle.pitch=pitch;
+}
+wait(time);
+}
+handle.destroy_all();
+}

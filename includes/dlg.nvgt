@@ -1,0 +1,25 @@
+void dlg(string message, int timeout=-1)
+{
+timer timeouter;
+speak(message);
+while(true)
+{
+if (timeout>-1 and timeouter.elapsed>=timeout)
+return;
+if (key_pressed(KEY_C))
+{
+pool.play_stationary("copy.ogg",false);
+speak("Copied");
+clipboard_copy_text(message);
+}
+if (key_pressed(KEY_LEFT) or key_pressed(KEY_RIGHT) or key_pressed(KEY_UP) or key_pressed(KEY_DOWN))
+{
+speak(message);
+}
+if (key_pressed(KEY_RETURN))
+{
+break;
+}
+wait(5);
+}
+}

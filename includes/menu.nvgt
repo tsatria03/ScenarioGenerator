@@ -1,0 +1,476 @@
+void mainmenu()
+{
+setupmenu();
+m.add_item_tts("generate scenario", "gen");
+m.add_item_tts("scenario editor", "edit");
+m.add_item_tts("statistics", "stats");
+m.add_item_tts("exit", "ex");
+int mres=m.run("Main menu. Please choose an option with your arrow keys, then press enter to activate one.",true);
+string main=m.get_item_name(mres);
+if(mres==0)
+{
+speak("exiting");
+m.fade_music(20);
+exit();
+}
+if(main=="gen")
+{
+m.fade_music(20);
+health=10000;
+maxhealth=10000;
+genscen();
+}
+if(main=="edit")
+{
+scencredmenu();
+}
+if(main=="stats")
+{
+statsmenu();
+}
+if(main=="ex")
+{
+speak("exiting");
+m.fade_music(20);
+exit();
+}
+}
+void scencredmenu()
+{
+setupmenu();
+m.add_item_tts("add scenarios", "ascen");
+m.add_item_tts("remove scenarios", "rscen");
+m.add_item_tts("view scenarios", "vscen");
+m.add_item_tts("back", "back");
+int mres=m.run("Scenario edotor menu",true);
+string scm=m.get_item_name(mres);
+if(mres==0)
+{
+mainmenu();
+}
+if(scm=="ascen")
+{
+adscenmenu();
+}
+if(scm=="rscen")
+{
+remscenmenu();
+}
+if(scm=="vscen")
+{
+vewscenmenu();
+}
+if(scm=="back")
+{
+mainmenu();
+}
+}
+void adscenmenu()
+{
+setupmenu();
+m.add_item_tts("add an action", "act");
+m.add_item_tts("add an attack", "ak");
+m.add_item_tts("add a body part", "bpart");
+m.add_item_tts("add a character name", "cname");
+m.add_item_tts("add a character type", "ctype");
+m.add_item_tts("add a death message", "dmessage");
+m.add_item_tts("add a mood", "mod");
+m.add_item_tts("add a reason", "res");
+m.add_item_tts("back", "back");
+int mres=m.run("Add scenarios menu",true);
+string ascm=m.get_item_name(mres);
+if(mres==0)
+{
+scencredmenu();
+}
+if(ascm=="act")
+{
+m.fade_music(20);
+actions.open("data/actions.list", "a");
+string newact=input.input("Enter the action you'd like to add.");
+actions.write("\r\n"+newact);
+actions.close();
+dlg("Success! Your action has been added to the list.");
+adscenmenu();
+}
+if(ascm=="ak")
+{
+m.fade_music(20);
+attacks.open("data/attacks.list", "a");
+string newak=input.input("Enter the attack you'd like to add.");
+attacks.write("\r\n"+newak);
+attacks.close();
+dlg("Success! Your attack has been added to the list.");
+adscenmenu();
+}
+if(ascm=="bpart")
+{
+m.fade_music(20);
+bodyparts.open("data/bodyparts.list", "a");
+string newbpart=input.input("Enter the body part you'd like to add.");
+bodyparts.write("\r\n"+newbpart);
+bodyparts.close();
+dlg("Success! Your body part has been added to the list.");
+adscenmenu();
+}
+if(ascm=="cname")
+{
+m.fade_music(20);
+charnames.open("data/charnames.list", "a");
+string newcname=input.input("Enter the character name you'd like to add.");
+charnames.write("\r\n"+newcname);
+charnames.close();
+dlg("Success! Your character name has been added to the list.");
+adscenmenu();
+}
+if(ascm=="ctype")
+{
+m.fade_music(20);
+chartypes.open("data/chartypes.list", "a");
+string newctype=input.input("Enter the character type you'd like to add.");
+chartypes.write("\r\n"+newctype);
+chartypes.close();
+dlg("Success! Your character type has been added to the list.");
+adscenmenu();
+}
+if(ascm=="dmessage")
+{
+m.fade_music(20);
+deaths.open("data/deaths.list", "a");
+string newdmessage=input.input("Enter the death message you'd like to add.");
+deaths.write("\r\n"+newdmessage);
+deaths.close();
+dlg("Success! Your death message has been added to the list.");
+adscenmenu();
+}
+if(ascm=="mod")
+{
+m.fade_music(20);
+moods.open("data/moods.list", "a");
+string newmod=input.input("Enter the mood you'd like to add.");
+moods.write("\r\n"+newmod);
+moods.close();
+dlg("Success! Your mood has been added to the list.");
+adscenmenu();
+}
+if(ascm=="res")
+{
+m.fade_music(20);
+reasons.open("data/reasons.list", "a");
+string newres=input.input("Enter the reason you'd like to add.");
+reasons.write("\r\n"+newres);
+reasons.close();
+dlg("Success! Your reason has been added to the list.");
+adscenmenu();
+}
+if(ascm=="back")
+{
+scencredmenu();
+}
+}
+void remscenmenu()
+{
+setupmenu();
+m.add_item_tts("remove an action", "act2");
+m.add_item_tts("remove an attack", "ak2");
+m.add_item_tts("remove a body part", "bpart2");
+m.add_item_tts("remove a character name", "cname2");
+m.add_item_tts("remove a character type", "ctype2");
+m.add_item_tts("remove a death message", "dmessage2");
+m.add_item_tts("remove a mood", "mod2");
+m.add_item_tts("remove a reason", "res2");
+m.add_item_tts("back", "back");
+int mres=m.run("Remove scenarios menu",true);
+string rscm=m.get_item_name(mres);
+if(mres==0)
+{
+scencredmenu();
+}
+if(rscm=="act2")
+{
+actions.open("data/actions.list", "r");
+actionsplit=actions.read();
+string[] action=string_split(actionsplit,"\r\n",true);
+setupmenu();
+for (uint i=0; i<action.length(); i++)
+{
+m.add_item_tts(action[i],action[i],"",true);
+}
+int mres=m.run("Select an action to remove", true);
+if(mres==0)
+{
+remscenmenu();
+}
+if(mres>0 and mres<=action.length())
+{
+string act=action[mres-1];
+int finder=action.find(act);
+if(finder>-1)
+{
+action.remove_at(finder);
+string final;
+for (uint i=0; i<action.length(); i++)
+{
+final+=action[i]+"\r\n";
+actions.open("data/actions.list", "w");
+actionsplit=actions.read();
+actions.write(final);
+actions.close();
+dlg("Success! Your action has been removed.");
+remscenmenu();
+}
+}
+}
+}
+if(rscm=="back")
+{
+scencredmenu();
+}
+}
+void vewscenmenu()
+{
+setupmenu();
+m.add_item_tts("view actions", "act3");
+m.add_item_tts("view attacks", "ak3");
+m.add_item_tts("view body parts", "bpart3");
+m.add_item_tts("view character names", "cname3");
+m.add_item_tts("view character types", "ctype3");
+m.add_item_tts("view death messages", "dmessage3");
+m.add_item_tts("view moods", "mod3");
+m.add_item_tts("view reasons", "res3");
+m.add_item_tts("back", "back");
+int mres=m.run("View scenarios menu",true);
+string vscm=m.get_item_name(mres);
+if(mres==0)
+{
+scencredmenu();
+}
+if(vscm=="act3")
+{
+m.fade_music(20);
+actions.open("data/actions.list","r");
+actionsplit=actions.read();
+action=string_split(actionsplit,"\r\n",true);
+setupmenu2();
+for(uint i=0; i<action.length(); i++)
+{
+m.add_item_tts(action[i],"","",false);
+}
+int mres=m.run("Actions viewer", true);
+if(mres==0)
+{
+vewscenmenu();
+}
+if (mres==0 and mres>=action.length())
+{
+return;
+}
+if (mres>0 and mres<=action.length())
+{
+return;
+}
+}
+if(vscm=="ak3")
+{
+m.fade_music(20);
+attacks.open("data/attacks.list","r");
+attacksplit=attacks.read();
+attack=string_split(attacksplit,"\r\n",true);
+setupmenu2();
+for(uint i=0; i<attack.length(); i++)
+{
+m.add_item_tts(attack[i],"","",false);
+}
+int mres=m.run("Attacks viewer", true);
+if(mres==0)
+{
+vewscenmenu();
+}
+if (mres==0 and mres>=attack.length())
+{
+return;
+}
+if (mres>0 and mres<=attack.length())
+{
+return;
+}
+}
+if(vscm=="bpart3")
+{
+m.fade_music(20);
+bodyparts.open("data/bodyparts.list","r");
+bodypartsplit=bodyparts.read();
+bodypart=string_split(bodypartsplit,"\r\n",true);
+setupmenu2();
+for(uint i=0; i<bodypart.length(); i++)
+{
+m.add_item_tts(bodypart[i],"","",false);
+}
+int mres=m.run("Body parts viewer", true);
+if(mres==0)
+{
+vewscenmenu();
+}
+if (mres==0 and mres>=bodypart.length())
+{
+return;
+}
+if (mres>0 and mres<=bodypart.length())
+{
+return;
+}
+}
+if(vscm=="cname3")
+{
+m.fade_music(20);
+charnames.open("data/charnames.list","r");
+charnamesplit=charnames.read();
+charname=string_split(charnamesplit,"\r\n",true);
+setupmenu2();
+for(uint i=0; i<charname.length(); i++)
+{
+m.add_item_tts(charname[i],"","",false);
+}
+int mres=m.run("Character names viewer", true);
+if(mres==0)
+{
+vewscenmenu();
+}
+if (mres==0 and mres>=charname.length())
+{
+return;
+}
+if (mres>0 and mres<=charname.length())
+{
+return;
+}
+}
+if(vscm=="ctype3")
+{
+m.fade_music(20);
+chartypes.open("data/chartypes.list","r");
+chartypesplit=chartypes.read();
+chartype=string_split(chartypesplit,"\r\n",true);
+setupmenu2();
+for(uint i=0; i<chartype.length(); i++)
+{
+m.add_item_tts(chartype[i],"","",false);
+}
+int mres=m.run("Character types viewer", true);
+if(mres==0)
+{
+vewscenmenu();
+}
+if (mres==0 and mres>=chartype.length())
+{
+return;
+}
+if (mres>0 and mres<=chartype.length())
+{
+return;
+}
+}
+if(vscm=="dmessage3")
+{
+m.fade_music(20);
+deaths.open("data/deaths.list","r");
+deathsplit=deaths.read();
+death=string_split(deathsplit,"\r\n",true);
+setupmenu2();
+for(uint i=0; i<death.length(); i++)
+{
+m.add_item_tts(death[i],"","",false);
+}
+int mres=m.run("Death messages viewer", true);
+if(mres==0)
+{
+vewscenmenu();
+}
+if (mres==0 and mres>=death.length())
+{
+return;
+}
+if (mres>0 and mres<=death.length())
+{
+return;
+}
+}
+if(vscm=="mod3")
+{
+m.fade_music(20);
+moods.open("data/moods.list","r");
+moodsplit=moods.read();
+mood=string_split(moodsplit,"\r\n",true);
+setupmenu2();
+for(uint i=0; i<mood.length(); i++)
+{
+m.add_item_tts(mood[i],"","",false);
+}
+int mres=m.run("Moods viewer", true);
+if(mres==0)
+{
+vewscenmenu();
+}
+if (mres==0 and mres>=mood.length())
+{
+return;
+}
+if (mres>0 and mres<=mood.length())
+{
+return;
+}
+}
+if(vscm=="res3")
+{
+m.fade_music(20);
+reasons.open("data/reasons.list","r");
+reasonsplit=reasons.read();
+reason=string_split(reasonsplit,"\r\n",true);
+setupmenu2();
+for(uint i=0; i<reason.length(); i++)
+{
+m.add_item_tts(reason[i],"","",false);
+}
+int mres=m.run("Reasons viewer", true);
+if(mres==0)
+{
+vewscenmenu();
+}
+if (mres==0 and mres>=reason.length())
+{
+return;
+}
+if (mres>0 and mres<=reason.length())
+{
+return;
+}
+}
+if(vscm=="back")
+{
+scencredmenu();
+}
+}
+void statsmenu()
+{
+getscen();
+setupmenu();
+m.add_item_tts("There are "+action.length()+"entries in the actions file.");
+m.add_item_tts("There are "+attack.length()+"entries in the attacks file.");
+m.add_item_tts("There are "+bodypart.length()+"entries in the body parts file.");
+m.add_item_tts("There are "+charname.length()+"entries in the character names file.");
+m.add_item_tts("There are "+chartype.length()+"entries in the character types file.");
+m.add_item_tts("There are "+death.length()+"entries in the death messages file.");
+m.add_item_tts("There are "+mood.length()+"entries in the moods file.");
+m.add_item_tts("There are "+reason.length()+"entries in the reasons file.");
+m.add_item_tts("back", "back");
+int mres=m.run("statistics menu",true);
+string stm=m.get_item_name(mres);
+if(mres==0 or mres>=m.get_item_name(mres))
+{
+mainmenu();
+}
+if(stm=="back")
+{
+mainmenu();
+}
+}

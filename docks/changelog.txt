@@ -1,0 +1,61 @@
+new in 1.9
+Added back the remove senarios menu. It actually works this time.
+new in 1.8
+Fixed sounds not fading correctly upon pressing escape to go back to the main menu.
+The sounds will now be compiled with the game's executable. Therefore, it will no longer be needed in the main game directory.
+Wiped out the remove scenarios menu.
+new in 1.7
+The scenarios viewer will now tell you how many entries their are when viewing any of the file lists upon focusing on an entry.
+Ambience and music volumes can now be spoken as they are being adjusted.
+Ambience and music volumes can now be adjusted by increments of 5 instead of 1.
+Sounds will now fade out when pressing escape to go back to the main menu.
+You can now adjust ambience and music volume while they are playing. To adjust the music volume, press page up or down. To adjust the ambience volume, press home or end.
+new in 1.6
+You can now view all of the scenario entries in the view scenarios menu.
+Made it so if you were in a menu within a menu, you can easyly go back to the previous menu, rather than it taking you back to the main menu when you press the back option.
+Seperated the scenario edotor menu into 2 different sections to better organize the entry lists.
+Added the scenario editor menu to add and remove entries found in the various files discussed in the statistics menu.
+You can now view how many entries their are in the attacks file. I forgot to add that to begin with.
+new in 1.5
+Added music to the scenario generator.
+Made it so if you're focused on any of the statistics, you can easyly go back to the main menu by pressing enter. You can also press escape or the back option in the statistics menu as another alternitive to going back to the previous menu.
+Added the statistics menu to keep track of how many entries you've put in the various files to generate random scenarios. You can view the statistics for actions, body parts, character names, character types, death messages, moods, and reasons.
+new in 1.4
+Implemented side scrolling in menus.
+Removed up and down navigation in menus.
+new in 1.3
+Fixed sounds not destroying themselves propperly upon entering the main menu after death.
+Fixed an issue that caused deaths to repeatedly occur every time the user pressed the generate scenario option in the main menu.
+Finally implemented a basic menu to control the app. You can use your arrow keys to navigate between the different options, and press enter to activate it. As of right now, you can only generate scenarios and exit the app, right from within the menu itself.
+new in 1.2
+Added ambience to the scenario generator.
+Fixed dlgs. You can no longer press and hold the letter A to bypass them.
+Cleaned up some unneeded lines givvin in some of the file lists, particularly the ones given in attacks.list, actions.list, and moods.list.
+Changed the way health is spoken when you press the letter H. It now reports the health in percentages like normal, but also tells you the actual value versus the maximum health you started with.
+new in 1.1
+Turned down some sounds to ease up people's ears a bit lol.
+The ow ow ow text is back!
+new in 1.0
+Added a realistic bell sound that plays after death.
+Replaced the ow ow ow text with an actual sound upon pressing enter.
+new in 0.9
+Added moods.list, and reasons.list. These files will be discussed more in depth in the readme.
+new in 0.8
+Updated readme with file lists and their descriptions.
+Added more character types to play with.
+new in 0.7
+Added new files called chartypes.list, and deaths.list. Find out what they are!
+Added fall sounds for when you get killed.
+new in 0.6
+Added the H key to check your overall health. This is spoken in percentages.
+You can now die from actual health loss, not just random damage values.
+new in 0.5
+You can finally add your own sinarios with separate files! These are in the form of lists. Supported files include, actions.list, bodyparts.list, attacks.list, and charnames.list. Happy braking!
+new in 0.4
+Added more actions, body parts, attacks, and character names in the code for more fun.
+new in 0.3
+Added a death message if your random damage count reaches a sertain value. A death sound also Accompanies this change as well.
+new in 0.2
+Added bone brake sound effects to the alert messages that are reseaved from the string aray.
+new in 0.1
+Made it possible to randomize character names givven by the strings provided in the app. Your character name is no longer Brad.

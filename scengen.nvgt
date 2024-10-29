@@ -1,0 +1,129 @@
+#pragma embed"sounds.dat"
+#include"bgt_compat.nvgt"
+#include"sound_pool.nvgt"
+#include"includes/dlg.nvgt"
+#include"includes/fadepool.nvgt"
+#include"includes/form.nvgt"
+#include"includes/key_hold.nvgt";
+#include"includes/m_pro.nvgt"
+#include"includes/menu.nvgt"
+#include"includes/setupmenu.nvgt"
+#include"includes/speech.nvgt"
+#include"includes/text_input.nvgt"
+double ambvolume=0, ambmaxvolume=120, ambpan=0, ambmaxpan=100, ambpitch=100, ambmaxpitch=200;
+double musicvolume=0, musicmaxvolume=120, musicpan=0, musicmaxpan=100, musicpitch=100, musicmaxpitch=200;
+double health=10000, maxhealth=10000;
+int ambslot, musicslot;
+int dmg=0;
+string[] action, attack, bodypart, charname, chartype, death, mood, reason;
+string actionsplit, attacksplit, bodypartsplit, charnamesplit, chartypesplit, deathsplit, moodsplit, reasonsplit;
+string randomaction, randomattack, randombodypart, randomcharname, randomchartype, randomdeath, randommood, randomreason;
+string version="1.8";
+dynamic_menu_pro m;
+file actions, bodyparts, attacks, deaths, charnames, chartypes, moods, reasons;
+sound_pool pool, spool;
+text_input input;
+void main()
+{
+set_sound_storage("*");
+set_sound_decryption_key("JL9leE*,rL8&S*U07u&_o10c<Y/ab~3oyu?FQ/c!6vIyUYQk(,g~iw",true);
+show_game_window("Scenario generator, "+"version "+version);
+mainmenu();
+}
+void getscen()
+{
+actions.open("data/actions.list", "r");
+actionsplit=actions.read();
+action=string_split(actionsplit, "\r\n", true);
+randomaction=action[random(0, action.length()-1)];
+attacks.open("data/attacks.list", "r");
+attacksplit=attacks.read();
+attack=string_split(attacksplit, "\r\n", true);
+randomattack=attack[random(0, attack.length()-1)];
+bodyparts.open("data/bodyparts.list", "r");
+bodypartsplit=bodyparts.read();
+bodypart=string_split(bodypartsplit, "\r\n", true);
+randombodypart=bodypart[random(0, bodypart.length()-1)];
+deaths.open("data/deaths.list", "r");
+deathsplit=deaths.read();
+death=string_split(deathsplit, "\r\n", true);
+randomdeath=death[random(0, death.length()-1)];
+charnames.open("data/charnames.list", "r");
+charnamesplit=charnames.read();
+charname=string_split(charnamesplit, "\r\n", true);
+randomcharname=charname[random(0, charname.length()-1)];
+chartypes.open("data/chartypes.list", "r");
+chartypesplit=chartypes.read();
+chartype=string_split(chartypesplit, "\r\n", true);
+randomchartype=chartype[random(0, chartype.length()-1)];
+moods.open("data/moods.list", "r");
+moodsplit=moods.read();
+mood=string_split(moodsplit, "\r\n", true);
+randommood=mood[random(0, mood.length()-1)];
+reasons.open("data/reasons.list", "r");
+reasonsplit=reasons.read();
+reason=string_split(reasonsplit, "\r\n", true);
+randomreason=reason[random(0, reason.length()-1)];
+}
+void genscen()
+{
+ambslot=pool.play_stationary_extended("amb.ogg",true,0,ambpan,ambvolume,ambpitch,false);
+musicslot=pool.play_stationary_extended("music"+random(1,2)+".ogg",true,0,musicpan,musicvolume,musicpitch,false);
+while(true)
+{
+wait(5);
+if(key_pressed(KEY_PRIOR) and musicvolume!=0)
+{
+musicvolume+=5;
+pool.update_sound_start_values(musicslot,musicpan,musicvolume,musicpitch);
+speak("music volume, "+musicvolume);
+}
+if(key_pressed(KEY_NEXT) and musicvolume!=-50)
+{
+musicvolume-=5;
+pool.update_sound_start_values(musicslot,musicpan,musicvolume,musicpitch);
+speak("music volume, "+musicvolume);
+}
+if(key_pressed(KEY_HOME) and ambvolume!=0)
+{
+ambvolume+=5;
+pool.update_sound_start_values(ambslot,ambpan,ambvolume,ambpitch);
+speak("ambience volume, "+ambvolume);
+}
+if(key_pressed(KEY_END) and ambvolume!=-50)
+{
+ambvolume-=5;
+pool.update_sound_start_values(ambslot,ambpan,ambvolume,ambpitch);
+speak("ambience volume, "+ambvolume);
+}
+if(key_pressed(KEY_RETURN))
+{
+dmg=random(200,2000);
+health-=dmg;
+getscen();
+pool.play_stationary_extended("scream"+random(1,2)+".wav",false,0,0,-10,100,false);
+pool.play_stationary_extended("pain"+random(1,4)+".ogg",false,0,0,-10,100,false);
+dlg("Ow ow ow ow ow ow! Your "+randomchartype+", "+randomcharname+", "+randomaction+" your "+randombodypart+" with there "+randomattack+" because they were "+randommood+" that you "+randomreason+" , causing"+dmg+"dammage!");
+}
+if(key_pressed(KEY_H))
+{
+speak(round(health/maxhealth*100,2)+" percent, "+health+"of "+maxhealth);
+}
+if(health<=0)
+{
+pool.destroy_all();
+pool.play_stationary_extended("bell.wav",false,0,0,-10,100,false);
+pool.play_stationary_extended("fall"+random(1,7)+".wav",false,0,0,-10,100,false);
+pool.play_stationary_extended("death"+random(1,3)+".ogg",false,0,0,-10,100,false);
+dlg(randomdeath);
+mainmenu();
+}
+if(key_pressed(KEY_ESCAPE))
+{
+fade_volume_pool(pool);
+health=10000;
+maxhealth=10000;
+mainmenu();
+}
+}
+}
