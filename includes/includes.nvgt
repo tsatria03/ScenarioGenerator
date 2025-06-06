@@ -10,5 +10,5 @@
 #include"includes/m_pro.nvgt"
 #include"includes/menu.nvgt"
 #include"includes/setupmenu.nvgt"
-#include"includes/text_input.nvgt"
+#include"includes/virtual_dialogs.nvgt"
 typedef uint8 usmall; typedef int8 small;

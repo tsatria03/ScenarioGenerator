@@ -6,12 +6,14 @@ int dmg=0;
 string[] action, attack, bodypart, charname, chartype, death, mood, reason;
 string actionsplit, attacksplit, bodypartsplit, charnamesplit, chartypesplit, deathsplit, moodsplit, reasonsplit;
 string randomaction, randomattack, randombodypart, randomcharname, randomchartype, randomdeath, randommood, randomreason;
+string disachars="@#$%^&*()[]{};:'\"\\|<>/+-=`~";
+string disadesc="This character is not allowed.";
 string sengender="male";
 string version="1.3";
 dynamic_menu_pro m;
 file actions, bodyparts, attacks, deaths, charnames, chartypes, moods, reasons;
 sound_pool pool, spool;
-text_input input;
+virtual_dialogs vd;
 void main()
 {
 set_sound_storage("*");

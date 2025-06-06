@@ -4,11 +4,12 @@ timer timeouter;
 speak(message);
 while(true)
 {
+wait(5);
 if (timeout>-1 and timeouter.elapsed>=timeout)
 return;
 if (key_pressed(KEY_C))
 {
-pool.play_stationary("copy.ogg",false);
+pool.play_stationary("clipcopy.ogg",false);
 speak("Copied");
 clipboard_copy_text(message);
 }
@@ -16,10 +17,9 @@ if (key_pressed(KEY_LEFT) or key_pressed(KEY_RIGHT) or key_pressed(KEY_UP) or ke
 {
 speak(message);
 }
-if (key_pressed(KEY_RETURN))
+if (key_pressed(KEY_RETURN) or key_pressed(KEY_SPACE))
 {
 break;
 }
-wait(5);
 }
 }
