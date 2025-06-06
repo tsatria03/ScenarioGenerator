@@ -289,38 +289,298 @@ scencredmenu();
 }
 if(rscm=="act2")
 {
-actions.open("data/saves/actions.list", "r");
-actionsplit=actions.read();
-string[] action=string_split(actionsplit,"\r\n",true);
-setupmenu();
-for (uint i=0; i<action.length(); i++)
-{
-m.add_item_tts(action[i],action[i],"",true);
+m.fade_music();
+    actions.open("data/saves/actions.list", "r");
+    actionsplit = actions.read();
+    string[] action = string_split(actionsplit, "\r\n", true);
+    actions.close();
+    setupmenu(false);
+    for (uint i = 0; i < action.length(); i++)
+    {
+        m.add_item_tts(action[i], action[i], "", true);
+    }
+    int mres = m.run("Select an action to remove", true);
+    if (mres == 0)
+    {
+        remscenmenu();
+    }
+    if (mres > 0 and mres <= action.length())
+    {
+        string act = action[mres - 1];
+        int finder = action.find(act);
+        if (finder > -1)
+        {
+            action.remove_at(finder);
+            string final = "";
+            for (uint i = 0; i < action.length(); i++)
+            {
+                final += action[i] + "\r\n";
+            }
+            actions.open("data/saves/actions.list", "w");
+            actions.write(final);
+            actions.close();
+            dlg("Success! Your action has been removed.");
+            remscenmenu();
+        }
+    }
 }
-int mres=m.run("Select an action to remove", true);
-if(mres==0)
+if(rscm=="ak2")
 {
-remscenmenu();
+m.fade_music();
+attacks.open("data/saves/attacks.list", "r");
+attacksplit = attacks.read();
+string[] attack = string_split(attacksplit, "\r\n", true);
+attacks.close();
+setupmenu(false);
+for (uint i = 0; i < attack.length(); i++)
+{
+    m.add_item_tts(attack[i], attack[i], "", true);
 }
-if(mres>0 and mres<=action.length())
+int mres = m.run("Select an attack to remove", true);
+if (mres == 0)
 {
-string act=action[mres-1];
-int finder=action.find(act);
-if(finder>-1)
+    remscenmenu();
+}
+if (mres > 0 and mres <= attack.length())
 {
-action.remove_at(finder);
-string final;
-for (uint i=0; i<action.length(); i++)
-{
-final+=action[i]+"\r\n";
-actions.open("data/saves/actions.list", "w");
-actionsplit=actions.read();
-actions.write(final);
-actions.close();
-dlg("Success! Your action has been removed.");
-remscenmenu();
+    string atk = attack[mres - 1];
+    int finder = attack.find(atk);
+    if (finder > -1)
+    {
+        attack.remove_at(finder);
+        string final = "";
+        for (uint i = 0; i < attack.length(); i++)
+        {
+            final += attack[i] + "\r\n";
+        }
+        attacks.open("data/saves/attacks.list", "w");
+        attacks.write(final);
+        attacks.close();
+        dlg("Success! Your attack has been removed.");
+        remscenmenu();
+    }
 }
 }
+if(rscm=="bpart2")
+{
+m.fade_music();
+bodyparts.open("data/saves/bodyparts.list", "r");
+bodypartsplit = bodyparts.read();
+string[] bodypart = string_split(bodypartsplit, "\r\n", true);
+bodyparts.close();
+setupmenu(false);
+for (uint i = 0; i < bodypart.length(); i++)
+{
+    m.add_item_tts(bodypart[i], bodypart[i], "", true);
+}
+int mres = m.run("Select a body part to remove", true);
+if (mres == 0)
+{
+    remscenmenu();
+}
+if (mres > 0 and mres <= bodypart.length())
+{
+    string bp = bodypart[mres - 1];
+    int finder = bodypart.find(bp);
+    if (finder > -1)
+    {
+        bodypart.remove_at(finder);
+        string final = "";
+        for (uint i = 0; i < bodypart.length(); i++)
+        {
+            final += bodypart[i] + "\r\n";
+        }
+        bodyparts.open("data/saves/bodyparts.list", "w");
+        bodyparts.write(final);
+        bodyparts.close();
+        dlg("Success! Your body part has been removed.");
+        remscenmenu();
+    }
+}
+}
+if(rscm=="cname2")
+{
+m.fade_music();
+charnames.open("data/saves/charnames.list", "r");
+charnamesplit = charnames.read();
+string[] charname = string_split(charnamesplit, "\r\n", true);
+charnames.close();
+setupmenu(false);
+for (uint i = 0; i < charname.length(); i++)
+{
+    m.add_item_tts(charname[i], charname[i], "", true);
+}
+int mres = m.run("Select a character name to remove", true);
+if (mres == 0)
+{
+    remscenmenu();
+}
+if (mres > 0 and mres <= charname.length())
+{
+    string cn = charname[mres - 1];
+    int finder = charname.find(cn);
+    if (finder > -1)
+    {
+        charname.remove_at(finder);
+        string final = "";
+        for (uint i = 0; i < charname.length(); i++)
+        {
+            final += charname[i] + "\r\n";
+        }
+        charnames.open("data/saves/charnames.list", "w");
+        charnames.write(final);
+        charnames.close();
+        dlg("Success! Your character name has been removed.");
+        remscenmenu();
+    }
+}
+}
+if(rscm=="ctype2")
+{
+m.fade_music();
+chartypes.open("data/saves/chartypes.list", "r");
+chartypesplit = chartypes.read();
+string[] chartype = string_split(chartypesplit, "\r\n", true);
+chartypes.close();
+setupmenu(false);
+for (uint i = 0; i < chartype.length(); i++)
+{
+    m.add_item_tts(chartype[i], chartype[i], "", true);
+}
+int mres = m.run("Select a character type to remove", true);
+if (mres == 0)
+{
+    remscenmenu();
+}
+if (mres > 0 and mres <= chartype.length())
+{
+    string ct = chartype[mres - 1];
+    int finder = chartype.find(ct);
+    if (finder > -1)
+    {
+        chartype.remove_at(finder);
+        string final = "";
+        for (uint i = 0; i < chartype.length(); i++)
+        {
+            final += chartype[i] + "\r\n";
+        }
+        chartypes.open("data/saves/chartypes.list", "w");
+        chartypes.write(final);
+        chartypes.close();
+        dlg("Success! Your character type has been removed.");
+        remscenmenu();
+    }
+}
+}
+if(rscm=="dmessage2")
+{
+m.fade_music();
+deaths.open("data/saves/deaths.list", "r");
+deathsplit = deaths.read();
+string[] death = string_split(deathsplit, "\r\n", true);
+deaths.close();
+setupmenu(false);
+for (uint i = 0; i < death.length(); i++)
+{
+    m.add_item_tts(death[i], death[i], "", true);
+}
+int mres = m.run("Select a death message to remove", true);
+if (mres == 0)
+{
+    remscenmenu();
+}
+if (mres > 0 and mres <= death.length())
+{
+    string dm = death[mres - 1];
+    int finder = death.find(dm);
+    if (finder > -1)
+    {
+        death.remove_at(finder);
+        string final = "";
+        for (uint i = 0; i < death.length(); i++)
+        {
+            final += death[i] + "\r\n";
+        }
+        deaths.open("data/saves/deaths.list", "w");
+        deaths.write(final);
+        deaths.close();
+        dlg("Success! Your death message has been removed.");
+        remscenmenu();
+    }
+}
+}
+if(rscm=="mod2")
+{
+m.fade_music();
+moods.open("data/saves/moods.list", "r");
+moodsplit = moods.read();
+string[] mood = string_split(moodsplit, "\r\n", true);
+moods.close();
+setupmenu(false);
+for (uint i = 0; i < mood.length(); i++)
+{
+    m.add_item_tts(mood[i], mood[i], "", true);
+}
+int mres = m.run("Select a mood to remove", true);
+if (mres == 0)
+{
+    remscenmenu();
+}
+if (mres > 0 and mres <= mood.length())
+{
+    string md = mood[mres - 1];
+    int finder = mood.find(md);
+    if (finder > -1)
+    {
+        mood.remove_at(finder);
+        string final = "";
+        for (uint i = 0; i < mood.length(); i++)
+        {
+            final += mood[i] + "\r\n";
+        }
+        moods.open("data/saves/moods.list", "w");
+        moods.write(final);
+        moods.close();
+        dlg("Success! Your mood has been removed.");
+        remscenmenu();
+    }
+}
+}
+if(rscm=="res2")
+{
+m.fade_music();
+reasons.open("data/saves/reasons.list", "r");
+reasonsplit = reasons.read();
+string[] reason = string_split(reasonsplit, "\r\n", true);
+reasons.close();
+setupmenu(false);
+for (uint i = 0; i < reason.length(); i++)
+{
+    m.add_item_tts(reason[i], reason[i], "", true);
+}
+int mres = m.run("Select a reason to remove", true);
+if (mres == 0)
+{
+    remscenmenu();
+}
+if (mres > 0 and mres <= reason.length())
+{
+    string rs = reason[mres - 1];
+    int finder = reason.find(rs);
+    if (finder > -1)
+    {
+        reason.remove_at(finder);
+        string final = "";
+        for (uint i = 0; i < reason.length(); i++)
+        {
+            final += reason[i] + "\r\n";
+        }
+        reasons.open("data/saves/reasons.list", "w");
+        reasons.write(final);
+        reasons.close();
+        dlg("Success! Your reason has been removed.");
+        remscenmenu();
+    }
 }
 }
 if(rscm=="back")
@@ -564,7 +824,7 @@ m.add_item_tts("There are "+death.length()+"entries in the death messages file."
 m.add_item_tts("There are "+mood.length()+"entries in the moods file.");
 m.add_item_tts("There are "+reason.length()+"entries in the reasons file.");
 m.add_item_tts("back", "back");
-int mres=m.run("statistics menu",true);
+int mres=m.run("scenario statistics menu",true);
 string stm=m.get_item_name(mres);
 if(mres==0 or mres>=m.get_item_name(mres))
 {
