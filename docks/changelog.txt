@@ -1,5 +1,6 @@
 new in 1.3
-Made it so health will now be spoken in percentages only, instead of it's actual value.
+Made it so damage stats will now only be spoken in percentages when pressing the enter key to generate scenarios, instead of it's actual value.
+Made it so health stats will now only be spoken in percentages when pressing the letter H, instead of it's actual value.
 Made it so adjusting the ambience and music volume is now les verbose in the generator section of the app.
 Added back the remove scenarios menu. It actually works this time.
 Fixed sounds not fading correctly upon pressing escape to go back to the main menu.

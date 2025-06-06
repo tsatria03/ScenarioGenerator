@@ -95,7 +95,7 @@ health-=dmg;
 getscen();
 pool.play_stationary_extended("scream"+random(1,2)+".wav",false,0,0,-10,100,false);
 pool.play_stationary_extended("pain"+random(1,4)+".ogg",false,0,0,-10,100,false);
-dlg("Ow ow ow ow ow ow! Your "+randomchartype+", "+randomcharname+", "+randomaction+" your "+randombodypart+" with there "+randomattack+" because they were "+randommood+" that you "+randomreason+" , causing"+dmg+"dammage!");
+dlg("Ow ow ow ow ow ow! Your "+randomchartype+", "+randomcharname+", "+randomaction+" your "+randombodypart+" with there "+randomattack+" because they were "+randommood+" that you "+randomreason+" , causing "+round(dmg/maxhealth*100,2)+" percent damage!");
 }
 if(key_pressed(KEY_ESCAPE))
 {
