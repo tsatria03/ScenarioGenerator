@@ -3,7 +3,7 @@ void mainmenu()
 setupmenu();
 m.add_item_tts("generate scenario", "gen");
 m.add_item_tts("scenario editor", "edit");
-m.add_item_tts("statistics", "stats");
+m.add_item_tts("scenario statistics", "stats");
 m.add_item_tts("exit", "ex");
 int mres=m.run("Main menu. Please choose an option with your arrow keys, then press enter to activate one.",true);
 string main=m.get_item_name(mres);
@@ -20,7 +20,7 @@ setupmenu(false);
 m.add_item_tts("male", "ml");
 m.add_item_tts("female", "fl");
 m.add_item_tts("back", "back");
-int mres=m.run("Choose the gender you'd like to use for this generator.",true);
+int mres=m.run("Choose the gender you'd like to use for this generation.",true);
 string gend=m.get_item_name(mres);
 if(mres==0)
 {
@@ -118,10 +118,18 @@ m.fade_music();
 actions.open("data/saves/actions.list", "a");
 vd.set_disallowed_chars(disachars, false, disadesc);
 string newact=vd.input_box("", "Enter the action you'd like to add.");
+if(newact.empty())
+{
+alert("Error", "You must enter a valid action.");
+adscenmenu();
+}
+else
+{
 actions.write("\r\n"+newact);
 actions.close();
 dlg("Success! Your action has been added to the list.");
 adscenmenu();
+}
 }
 if(ascm=="ak")
 {
@@ -129,10 +137,18 @@ m.fade_music();
 attacks.open("data/saves/attacks.list", "a");
 vd.set_disallowed_chars(disachars, false, disadesc);
 string newak=vd.input_box("", "Enter the attack you'd like to add.");
+if(newak.empty())
+{
+alert("Error", "You must enter a valid attack.");
+adscenmenu();
+}
+else
+{
 attacks.write("\r\n"+newak);
 attacks.close();
 dlg("Success! Your attack has been added to the list.");
 adscenmenu();
+}
 }
 if(ascm=="bpart")
 {
@@ -140,10 +156,18 @@ m.fade_music();
 bodyparts.open("data/saves/bodyparts.list", "a");
 vd.set_disallowed_chars(disachars, false, disadesc);
 string newbpart=vd.input_box("", "Enter the body part you'd like to add.");
+if(newbpart.empty())
+{
+alert("Error", "You must enter a valid body part.");
+adscenmenu();
+}
+else
+{
 bodyparts.write("\r\n"+newbpart);
 bodyparts.close();
 dlg("Success! Your body part has been added to the list.");
 adscenmenu();
+}
 }
 if(ascm=="cname")
 {
@@ -151,10 +175,18 @@ m.fade_music();
 charnames.open("data/saves/charnames.list", "a");
 vd.set_disallowed_chars(disachars, false, disadesc);
 string newcname=vd.input_box("", "Enter the character name you'd like to add.");
+if(newcname.empty())
+{
+alert("Error", "You must enter a valid character name.");
+adscenmenu();
+}
+else
+{
 charnames.write("\r\n"+newcname);
 charnames.close();
 dlg("Success! Your character name has been added to the list.");
 adscenmenu();
+}
 }
 if(ascm=="ctype")
 {
@@ -162,10 +194,18 @@ m.fade_music();
 chartypes.open("data/saves/chartypes.list", "a");
 vd.set_disallowed_chars(disachars, false, disadesc);
 string newctype=vd.input_box("", "Enter the character type you'd like to add.");
+if(newctype.empty())
+{
+alert("Error", "You must enter a valid character type.");
+adscenmenu();
+}
+else
+{
 chartypes.write("\r\n"+newctype);
 chartypes.close();
 dlg("Success! Your character type has been added to the list.");
 adscenmenu();
+}
 }
 if(ascm=="dmessage")
 {
@@ -173,10 +213,18 @@ m.fade_music();
 deaths.open("data/saves/deaths.list", "a");
 vd.set_disallowed_chars(disachars, false, disadesc);
 string newdmessage=vd.input_box("", "Enter the death message you'd like to add.");
+if(newdmessage.empty())
+{
+alert("Error", "You must enter a valid death message.");
+adscenmenu();
+}
+else
+{
 deaths.write("\r\n"+newdmessage);
 deaths.close();
 dlg("Success! Your death message has been added to the list.");
 adscenmenu();
+}
 }
 if(ascm=="mod")
 {
@@ -184,10 +232,18 @@ m.fade_music();
 moods.open("data/saves/moods.list", "a");
 vd.set_disallowed_chars(disachars, false, disadesc);
 string newmod=vd.input_box("", "Enter the mood you'd like to add.");
+if(newmod.empty())
+{
+alert("Error", "You must enter a valid mood.");
+adscenmenu();
+}
+else
+{
 moods.write("\r\n"+newmod);
 moods.close();
 dlg("Success! Your mood has been added to the list.");
 adscenmenu();
+}
 }
 if(ascm=="res")
 {
@@ -195,10 +251,18 @@ m.fade_music();
 reasons.open("data/saves/reasons.list", "a");
 vd.set_disallowed_chars(disachars, false, disadesc);
 string newres=vd.input_box("", "Enter the reason you'd like to add.");
+if(newres.empty())
+{
+alert("Error", "You must enter a valid reason.");
+adscenmenu();
+}
+else
+{
 reasons.write("\r\n"+newres);
 reasons.close();
 dlg("Success! Your reason has been added to the list.");
 adscenmenu();
+}
 }
 if(ascm=="back")
 {
