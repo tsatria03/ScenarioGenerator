@@ -1,7 +1,8 @@
-void setupmenu()
+void setupmenu(bool music_added=true)
 {
 m.reset(false);
-m.add_music("menumus"+random(1,3)+".ogg");
+if(music_added==true) m.add_music("menumus"+random(1,3)+".ogg");
+else if(music_added==false) m.add_music("");
 m.enable_up_and_down=false;
 m.enable_left_and_right=true;
 m.enable_home_and_end=true;

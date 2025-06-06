@@ -16,9 +16,36 @@ exit();
 if(main=="gen")
 {
 m.fade_music();
+setupmenu(false);
+m.add_item_tts("male", "ml");
+m.add_item_tts("female", "fl");
+m.add_item_tts("back", "back");
+int mres=m.run("Choose the gender you'd like to generate.",true);
+string gend=m.get_item_name(mres);
+if(mres==0)
+{
+mainmenu();
+}
+if(gend=="ml")
+{
+m.fade_music();
+sengender="male";
 health=10000;
 maxhealth=10000;
 genscen();
+}
+if(gend=="fl")
+{
+m.fade_music();
+sengender="female";
+health=10000;
+maxhealth=10000;
+genscen();
+}
+if(gend=="back")
+{
+mainmenu();
+}
 }
 if(main=="edit")
 {
