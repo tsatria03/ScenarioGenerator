@@ -86,16 +86,16 @@ speak("source "+ambvolume);
 }
 if(key_repeating(KEY_H))
 {
-speak(round(health/maxhealth*100,2)+" percent health remaining");
+speak(round(health/maxhealth*100,0)+" percent health remaining");
 }
 if(key_pressed(KEY_RETURN))
 {
-dmg=random(200,2000);
+dmg = round(random(2, 20) / 100.0 * maxhealth, 0);
 health-=dmg;
 getscen();
 pool.play_stationary_extended("scream"+random(1,2)+".wav",false,0,0,-10,100,false);
 pool.play_stationary_extended("pain"+random(1,4)+".ogg",false,0,0,-10,100,false);
-dlg("Ow ow ow ow ow ow! Your "+randomchartype+", "+randomcharname+", "+randomaction+" your "+randombodypart+" with there "+randomattack+" because they were "+randommood+" that you "+randomreason+" , causing "+round(dmg/maxhealth*100,2)+" percent damage!");
+dlg("Ow ow ow ow ow ow! Your "+randomchartype+", "+randomcharname+", "+randomaction+" your "+randombodypart+" with there "+randomattack+" because they were "+randommood+" that you "+randomreason+" , causing you to lose "+round(dmg/maxhealth*100,0)+" percent of your health!");
 }
 if(key_pressed(KEY_ESCAPE))
 {
