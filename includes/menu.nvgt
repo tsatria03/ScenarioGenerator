@@ -10,12 +10,12 @@ string main=m.get_item_name(mres);
 if(mres==0)
 {
 speak("exiting");
-m.fade_music(20);
+m.fade_music();
 exit();
 }
 if(main=="gen")
 {
-m.fade_music(20);
+m.fade_music();
 health=10000;
 maxhealth=10000;
 genscen();
@@ -31,7 +31,7 @@ statsmenu();
 if(main=="ex")
 {
 speak("exiting");
-m.fade_music(20);
+m.fade_music();
 exit();
 }
 }
@@ -85,8 +85,8 @@ scencredmenu();
 }
 if(ascm=="act")
 {
-m.fade_music(20);
-actions.open("data/actions.list", "a");
+m.fade_music();
+actions.open("data/saves/actions.list", "a");
 string newact=input.input("Enter the action you'd like to add.");
 actions.write("\r\n"+newact);
 actions.close();
@@ -95,8 +95,8 @@ adscenmenu();
 }
 if(ascm=="ak")
 {
-m.fade_music(20);
-attacks.open("data/attacks.list", "a");
+m.fade_music();
+attacks.open("data/saves/attacks.list", "a");
 string newak=input.input("Enter the attack you'd like to add.");
 attacks.write("\r\n"+newak);
 attacks.close();
@@ -105,8 +105,8 @@ adscenmenu();
 }
 if(ascm=="bpart")
 {
-m.fade_music(20);
-bodyparts.open("data/bodyparts.list", "a");
+m.fade_music();
+bodyparts.open("data/saves/bodyparts.list", "a");
 string newbpart=input.input("Enter the body part you'd like to add.");
 bodyparts.write("\r\n"+newbpart);
 bodyparts.close();
@@ -115,8 +115,8 @@ adscenmenu();
 }
 if(ascm=="cname")
 {
-m.fade_music(20);
-charnames.open("data/charnames.list", "a");
+m.fade_music();
+charnames.open("data/saves/charnames.list", "a");
 string newcname=input.input("Enter the character name you'd like to add.");
 charnames.write("\r\n"+newcname);
 charnames.close();
@@ -125,8 +125,8 @@ adscenmenu();
 }
 if(ascm=="ctype")
 {
-m.fade_music(20);
-chartypes.open("data/chartypes.list", "a");
+m.fade_music();
+chartypes.open("data/saves/chartypes.list", "a");
 string newctype=input.input("Enter the character type you'd like to add.");
 chartypes.write("\r\n"+newctype);
 chartypes.close();
@@ -135,8 +135,8 @@ adscenmenu();
 }
 if(ascm=="dmessage")
 {
-m.fade_music(20);
-deaths.open("data/deaths.list", "a");
+m.fade_music();
+deaths.open("data/saves/deaths.list", "a");
 string newdmessage=input.input("Enter the death message you'd like to add.");
 deaths.write("\r\n"+newdmessage);
 deaths.close();
@@ -145,8 +145,8 @@ adscenmenu();
 }
 if(ascm=="mod")
 {
-m.fade_music(20);
-moods.open("data/moods.list", "a");
+m.fade_music();
+moods.open("data/saves/moods.list", "a");
 string newmod=input.input("Enter the mood you'd like to add.");
 moods.write("\r\n"+newmod);
 moods.close();
@@ -155,8 +155,8 @@ adscenmenu();
 }
 if(ascm=="res")
 {
-m.fade_music(20);
-reasons.open("data/reasons.list", "a");
+m.fade_music();
+reasons.open("data/saves/reasons.list", "a");
 string newres=input.input("Enter the reason you'd like to add.");
 reasons.write("\r\n"+newres);
 reasons.close();
@@ -188,7 +188,7 @@ scencredmenu();
 }
 if(rscm=="act2")
 {
-actions.open("data/actions.list", "r");
+actions.open("data/saves/actions.list", "r");
 actionsplit=actions.read();
 string[] action=string_split(actionsplit,"\r\n",true);
 setupmenu();
@@ -212,7 +212,7 @@ string final;
 for (uint i=0; i<action.length(); i++)
 {
 final+=action[i]+"\r\n";
-actions.open("data/actions.list", "w");
+actions.open("data/saves/actions.list", "w");
 actionsplit=actions.read();
 actions.write(final);
 actions.close();
@@ -247,8 +247,8 @@ scencredmenu();
 }
 if(vscm=="act3")
 {
-m.fade_music(20);
-actions.open("data/actions.list","r");
+m.fade_music();
+actions.open("data/saves/actions.list","r");
 actionsplit=actions.read();
 action=string_split(actionsplit,"\r\n",true);
 setupmenu2();
@@ -272,8 +272,8 @@ return;
 }
 if(vscm=="ak3")
 {
-m.fade_music(20);
-attacks.open("data/attacks.list","r");
+m.fade_music();
+attacks.open("data/saves/attacks.list","r");
 attacksplit=attacks.read();
 attack=string_split(attacksplit,"\r\n",true);
 setupmenu2();
@@ -297,8 +297,8 @@ return;
 }
 if(vscm=="bpart3")
 {
-m.fade_music(20);
-bodyparts.open("data/bodyparts.list","r");
+m.fade_music();
+bodyparts.open("data/saves/bodyparts.list","r");
 bodypartsplit=bodyparts.read();
 bodypart=string_split(bodypartsplit,"\r\n",true);
 setupmenu2();
@@ -322,8 +322,8 @@ return;
 }
 if(vscm=="cname3")
 {
-m.fade_music(20);
-charnames.open("data/charnames.list","r");
+m.fade_music();
+charnames.open("data/saves/charnames.list","r");
 charnamesplit=charnames.read();
 charname=string_split(charnamesplit,"\r\n",true);
 setupmenu2();
@@ -347,8 +347,8 @@ return;
 }
 if(vscm=="ctype3")
 {
-m.fade_music(20);
-chartypes.open("data/chartypes.list","r");
+m.fade_music();
+chartypes.open("data/saves/chartypes.list","r");
 chartypesplit=chartypes.read();
 chartype=string_split(chartypesplit,"\r\n",true);
 setupmenu2();
@@ -372,8 +372,8 @@ return;
 }
 if(vscm=="dmessage3")
 {
-m.fade_music(20);
-deaths.open("data/deaths.list","r");
+m.fade_music();
+deaths.open("data/saves/deaths.list","r");
 deathsplit=deaths.read();
 death=string_split(deathsplit,"\r\n",true);
 setupmenu2();
@@ -397,8 +397,8 @@ return;
 }
 if(vscm=="mod3")
 {
-m.fade_music(20);
-moods.open("data/moods.list","r");
+m.fade_music();
+moods.open("data/saves/moods.list","r");
 moodsplit=moods.read();
 mood=string_split(moodsplit,"\r\n",true);
 setupmenu2();
@@ -422,8 +422,8 @@ return;
 }
 if(vscm=="res3")
 {
-m.fade_music(20);
-reasons.open("data/reasons.list","r");
+m.fade_music();
+reasons.open("data/saves/reasons.list","r");
 reasonsplit=reasons.read();
 reason=string_split(reasonsplit,"\r\n",true);
 setupmenu2();

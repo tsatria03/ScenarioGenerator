@@ -1,24 +1,12 @@
-#pragma embed"sounds.dat"
-#include"bgt_compat.nvgt"
-#include"sound_pool.nvgt"
-#include"includes/dlg.nvgt"
-#include"includes/fadepool.nvgt"
-#include"includes/form.nvgt"
-#include"includes/key_hold.nvgt";
-#include"includes/m_pro.nvgt"
-#include"includes/menu.nvgt"
-#include"includes/setupmenu.nvgt"
-#include"includes/speech.nvgt"
-#include"includes/text_input.nvgt"
-double ambvolume=0, ambmaxvolume=120, ambpan=0, ambmaxpan=100, ambpitch=100, ambmaxpitch=200;
-double musicvolume=0, musicmaxvolume=120, musicpan=0, musicmaxpan=100, musicpitch=100, musicmaxpitch=200;
+#include"includes/includes.nvgt"
+double ambvolume=0, ambpan=0, ambpitch=100, musicvolume=0, musicpan=0, musicpitch=100;
 double health=10000, maxhealth=10000;
 int ambslot, musicslot;
 int dmg=0;
 string[] action, attack, bodypart, charname, chartype, death, mood, reason;
 string actionsplit, attacksplit, bodypartsplit, charnamesplit, chartypesplit, deathsplit, moodsplit, reasonsplit;
 string randomaction, randomattack, randombodypart, randomcharname, randomchartype, randomdeath, randommood, randomreason;
-string version="1.8";
+string version="1.3";
 dynamic_menu_pro m;
 file actions, bodyparts, attacks, deaths, charnames, chartypes, moods, reasons;
 sound_pool pool, spool;
@@ -26,41 +14,41 @@ text_input input;
 void main()
 {
 set_sound_storage("*");
-set_sound_decryption_key("JL9leE*,rL8&S*U07u&_o10c<Y/ab~3oyu?FQ/c!6vIyUYQk(,g~iw",true);
-show_game_window("Scenario generator, "+"version "+version);
+set_sound_decryption_key("K71W8fVbUmfS4easd2OOlYannfQTMC9UFltsV7Ny1jDov0TJDE3NIC5aXD7U2SIiUaGnVciZD8WKWxMuA4OvrzFynqgfL2Yisq0hf1EOYwDCsPvajHtXE6IL1J0fcfkvwuTvrFcjsCQaCa3QhwZe1LC8duw8bST0CsNPzUP7w78zIfJicTBgKSmOi2F19aIo5czOKN3h7yTFXGuM7Q5lSM8JJYr7sSe2Em",true);
+show_window("Scenario generator, "+"version "+version);
 mainmenu();
 }
 void getscen()
 {
-actions.open("data/actions.list", "r");
+actions.open("data/saves/actions.list", "r");
 actionsplit=actions.read();
 action=string_split(actionsplit, "\r\n", true);
 randomaction=action[random(0, action.length()-1)];
-attacks.open("data/attacks.list", "r");
+attacks.open("data/saves/attacks.list", "r");
 attacksplit=attacks.read();
 attack=string_split(attacksplit, "\r\n", true);
 randomattack=attack[random(0, attack.length()-1)];
-bodyparts.open("data/bodyparts.list", "r");
+bodyparts.open("data/saves/bodyparts.list", "r");
 bodypartsplit=bodyparts.read();
 bodypart=string_split(bodypartsplit, "\r\n", true);
 randombodypart=bodypart[random(0, bodypart.length()-1)];
-deaths.open("data/deaths.list", "r");
+deaths.open("data/saves/deaths.list", "r");
 deathsplit=deaths.read();
 death=string_split(deathsplit, "\r\n", true);
 randomdeath=death[random(0, death.length()-1)];
-charnames.open("data/charnames.list", "r");
+charnames.open("data/saves/charnames.list", "r");
 charnamesplit=charnames.read();
 charname=string_split(charnamesplit, "\r\n", true);
 randomcharname=charname[random(0, charname.length()-1)];
-chartypes.open("data/chartypes.list", "r");
+chartypes.open("data/saves/chartypes.list", "r");
 chartypesplit=chartypes.read();
 chartype=string_split(chartypesplit, "\r\n", true);
 randomchartype=chartype[random(0, chartype.length()-1)];
-moods.open("data/moods.list", "r");
+moods.open("data/saves/moods.list", "r");
 moodsplit=moods.read();
 mood=string_split(moodsplit, "\r\n", true);
 randommood=mood[random(0, mood.length()-1)];
-reasons.open("data/reasons.list", "r");
+reasons.open("data/saves/reasons.list", "r");
 reasonsplit=reasons.read();
 reason=string_split(reasonsplit, "\r\n", true);
 randomreason=reason[random(0, reason.length()-1)];
@@ -76,25 +64,25 @@ if(key_pressed(KEY_PRIOR) and musicvolume!=0)
 {
 musicvolume+=5;
 pool.update_sound_start_values(musicslot,musicpan,musicvolume,musicpitch);
-speak("music volume, "+musicvolume);
+speak("track "+musicvolume);
 }
 if(key_pressed(KEY_NEXT) and musicvolume!=-50)
 {
 musicvolume-=5;
 pool.update_sound_start_values(musicslot,musicpan,musicvolume,musicpitch);
-speak("music volume, "+musicvolume);
+speak("track "+musicvolume);
 }
 if(key_pressed(KEY_HOME) and ambvolume!=0)
 {
 ambvolume+=5;
 pool.update_sound_start_values(ambslot,ambpan,ambvolume,ambpitch);
-speak("ambience volume, "+ambvolume);
+speak("source "+ambvolume);
 }
 if(key_pressed(KEY_END) and ambvolume!=-50)
 {
 ambvolume-=5;
 pool.update_sound_start_values(ambslot,ambpan,ambvolume,ambpitch);
-speak("ambience volume, "+ambvolume);
+speak("source "+ambvolume);
 }
 if(key_pressed(KEY_RETURN))
 {
