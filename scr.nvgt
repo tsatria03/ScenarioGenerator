@@ -60,6 +60,7 @@ void genscen()
 {
 ambslot=pool.play_stationary_extended("amb.ogg",true,0,ambpan,ambvolume,ambpitch,false);
 musicslot=pool.play_stationary_extended("music"+random(1,2)+".ogg",true,0,musicpan,musicvolume,musicpitch,false);
+speak("Press enter to generate a random scenario.");
 while(true)
 {
 wait(5);
@@ -114,7 +115,7 @@ pool.destroy_all();
 pool.play_stationary_extended("bell.wav",false,0,0,-10,100,false);
 pool.play_stationary_extended("fall"+random(1,7)+".wav",false,0,0,-10,100,false);
 pool.play_stationary_extended("death"+random(1,3)+".ogg",false,0,0,-10,100,false);
-dlg(randomdeath);
+dlg(randomdeath+" Press enter to continue.");
 mainmenu();
 }
 }
