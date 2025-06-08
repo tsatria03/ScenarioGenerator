@@ -111,6 +111,7 @@ if(key_pressed(KEY_ESCAPE))
 {
 fade_volume_pool(pool);
 sengender="none";
+senpack="none";
 health=10000;
 maxhealth=10000;
 mainmenu();
@@ -122,6 +123,10 @@ pool.play_stationary_extended("bell.wav",false,0,0,-10,100,false);
 pool.play_stationary_extended("fall"+random(1,7)+".wav",false,0,0,-10,100,false);
 pool.play_stationary_extended("death"+random(1,3)+".ogg",false,0,0,-10,100,false);
 dlg(randomdeath+" Press enter to continue.");
+sengender="none";
+senpack="none";
+health=10000;
+maxhealth=10000;
 mainmenu();
 }
 }

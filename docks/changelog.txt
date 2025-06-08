@@ -1,4 +1,5 @@
 new in 1.5
+Made it so the add, edit, remove, and view scenario menus no longer ask the user to choose a scenario pack that they'd like to use. From now on, the promp will only show up in the scenario manager and statistic menus.
 Made it so if there's only one scenario pack found in the data/scenarios directory, the app will now auto select that pack for use, instead of bringing up the menu to choose it every time.
 Added error checking to each list file found in the edit scenarios menu.
 new in 1.4.

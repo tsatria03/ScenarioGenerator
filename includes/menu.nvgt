@@ -38,6 +38,7 @@ mainmenu();
 }
 else if(senarpacks.length()==1)
 {
+sengender="male";
 senpack = senarpacks[0];
 speak("loading");
 wait(500);
@@ -84,6 +85,7 @@ mainmenu();
 }
 else if(senarpacks.length()==1)
 {
+sengender="female";
 senpack = senarpacks[0];
 speak("loading");
 wait(500);
@@ -125,7 +127,40 @@ mainmenu();
 }
 if(main=="manage")
 {
+string[] senarpacks=find_directories("data/scenarios/*");
+if(senarpacks.length()==0)
+{
+alert("Error", "There are no scenario packs available to view.");
+wait(500);
+mainmenu();
+}
+else if(senarpacks.length()==1)
+{
+senpack = senarpacks[0];
 scencredmenu();
+}
+else
+{
+setupmenu();
+for(uint i=0; i<senarpacks.length(); i++)
+{
+m.add_item_tts(senarpacks[i], senarpacks[i]);
+}
+int mres=m.run("Choose the scenario pack you'd like to use in this menu.", true);
+if(mres==0)
+{
+mainmenu();
+}
+if (mres==0 and mres>=senarpacks.length())
+{
+senpack=senarpacks[mres-1];
+}
+if (mres>0 and mres<=senarpacks.length())
+{
+senpack=senarpacks[mres-1];
+scencredmenu();
+}
+}
 }
 if(main=="stats")
 {
@@ -179,7 +214,10 @@ m.add_item_tts("edit scenarios", "escen");
 m.add_item_tts("remove scenarios", "rscen");
 m.add_item_tts("view scenarios", "vscen");
 m.add_item_tts("back", "back");
-int mres=m.run("Scenario manager menu",true);
+string[] senarpacks=find_directories("data/scenarios/*");
+int mres;
+if(senarpacks.length()==1) mres=m.run("Scenario manager menu.",true);
+else if(senarpacks.length()>=2) mres=m.run(senpack+" loaded: Scenario manager menu.",true);
 string scm=m.get_item_name(mres);
 if(mres==0)
 {
@@ -187,151 +225,19 @@ mainmenu();
 }
 if(scm=="ascen")
 {
-string[] senarpacks=find_directories("data/scenarios/*");
-if(senarpacks.length()==0)
-{
-alert("Error", "There are no scenario packs available to view.");
-wait(500);
-mainmenu();
-}
-else if(senarpacks.length()==1)
-{
-senpack = senarpacks[0];
 adscenmenu();
-}
-else
-{
-setupmenu();
-for(uint i=0; i<senarpacks.length(); i++)
-{
-m.add_item_tts(senarpacks[i], senarpacks[i]);
-}
-int mres=m.run("Choose the scenario pack you'd like to use in this menu.", true);
-if(mres==0)
-{
-scencredmenu();
-}
-if (mres==0 and mres>=senarpacks.length())
-{
-senpack=senarpacks[mres-1];
-}
-if (mres>0 and mres<=senarpacks.length())
-{
-senpack=senarpacks[mres-1];
-adscenmenu();
-}
-}
 }
 if(scm=="escen")
 {
-string[] senarpacks=find_directories("data/scenarios/*");
-if(senarpacks.length()==0)
-{
-alert("Error", "There are no scenario packs available to view.");
-wait(500);
-mainmenu();
-}
-else if(senarpacks.length()==1)
-{
-senpack = senarpacks[0];
 edscenmenu();
-}
-else
-{
-setupmenu();
-for(uint i=0; i<senarpacks.length(); i++)
-{
-m.add_item_tts(senarpacks[i], senarpacks[i]);
-}
-int mres=m.run("Choose the scenario pack you'd like to use in this menu.", true);
-if(mres==0)
-{
-scencredmenu();
-}
-if (mres==0 and mres>=senarpacks.length())
-{
-senpack=senarpacks[mres-1];
-}
-if (mres>0 and mres<=senarpacks.length())
-{
-senpack=senarpacks[mres-1];
-edscenmenu();
-}
-}
 }
 if(scm=="rscen")
 {
-string[] senarpacks=find_directories("data/scenarios/*");
-if(senarpacks.length()==0)
-{
-alert("Error", "There are no scenario packs available to view.");
-wait(500);
-mainmenu();
-}
-else if(senarpacks.length()==1)
-{
-senpack = senarpacks[0];
 remscenmenu();
-}
-else
-{
-setupmenu();
-for(uint i=0; i<senarpacks.length(); i++)
-{
-m.add_item_tts(senarpacks[i], senarpacks[i]);
-}
-int mres=m.run("Choose the scenario pack you'd like to use in this menu.", true);
-if(mres==0)
-{
-scencredmenu();
-}
-if (mres==0 and mres>=senarpacks.length())
-{
-senpack=senarpacks[mres-1];
-}
-if (mres>0 and mres<=senarpacks.length())
-{
-senpack=senarpacks[mres-1];
-remscenmenu();
-}
-}
 }
 if(scm=="vscen")
 {
-string[] senarpacks=find_directories("data/scenarios/*");
-if(senarpacks.length()==0)
-{
-alert("Error", "There are no scenario packs available to view.");
-wait(500);
-mainmenu();
-}
-else if(senarpacks.length()==1)
-{
-senpack = senarpacks[0];
 vewscenmenu();
-}
-else
-{
-setupmenu();
-for(uint i=0; i<senarpacks.length(); i++)
-{
-m.add_item_tts(senarpacks[i], senarpacks[i]);
-}
-int mres=m.run("Choose the scenario pack you'd like to use in this menu.", true);
-if(mres==0)
-{
-scencredmenu();
-}
-if (mres==0 and mres>=senarpacks.length())
-{
-senpack=senarpacks[mres-1];
-}
-if (mres>0 and mres<=senarpacks.length())
-{
-senpack=senarpacks[mres-1];
-vewscenmenu();
-}
-}
 }
 if(scm=="back")
 {
@@ -351,7 +257,7 @@ m.add_item_tts("moods", "mod");
 m.add_item_tts("pain messages", "pmessage");
 m.add_item_tts("reasons", "res");
 m.add_item_tts("back", "back");
-int mres=m.run(senpack+" loaded: Add scenarios menu. What would you like to add?",true);
+int mres=m.run("Add scenarios menu. What would you like to add?",true);
 string ascm=m.get_item_name(mres);
 if(mres==0)
 {
@@ -555,7 +461,7 @@ m.add_item_tts("moods", "mod2");
 m.add_item_tts("pain messages", "pmessage2");
 m.add_item_tts("reasons", "res2");
 m.add_item_tts("back", "back");
-int mres=m.run(senpack+" loaded: Edit scenarios menu. What would you like to edit?",true);
+int mres=m.run("Edit scenarios menu. What would you like to edit?",true);
 string escm=m.get_item_name(mres);
 if(mres==0)
 {
@@ -1065,7 +971,7 @@ m.add_item_tts("moods", "mod3");
 m.add_item_tts("pain messages", "pmessage3");
 m.add_item_tts("reasons", "res3");
 m.add_item_tts("back", "back");
-int mres=m.run(senpack+" loaded: Remove scenarios menu. What would you like to remove?",true);
+int mres=m.run("Remove scenarios menu. What would you like to remove?",true);
 string rscm=m.get_item_name(mres);
 if(mres==0)
 {
@@ -1494,7 +1400,7 @@ m.add_item_tts("moods", "mod4");
 m.add_item_tts("pain messages", "pmessage4");
 m.add_item_tts("reasons", "res4");
 m.add_item_tts("back", "back");
-int mres=m.run(senpack+" loaded: View scenarios menu. What would you like to view?",true);
+int mres=m.run("View scenarios menu. What would you like to view?",true);
 string vscm=m.get_item_name(mres);
 if(mres==0)
 {
@@ -1798,7 +1704,10 @@ m.add_item_tts("There are "+(mood.length()-1)+"entries in the moods file.");
 m.add_item_tts("There are "+(pain.length()-1)+"entries in the pain messages file.");
 m.add_item_tts("There are "+(reason.length()-1)+"entries in the reasons file.");
 m.add_item_tts("back", "back");
-int mres=m.run(senpack+" loaded: Scenario statistics menu",true);
+string[] senarpacks=find_directories("data/scenarios/*");
+int mres;
+if(senarpacks.length()==1) mres=m.run("Scenario statistics menu. What would you like to view?",true);
+else if(senarpacks.length()>=2) mres=m.run(senpack+" loaded: Scenario statistics menu. What would you like to view?",true);
 string stm=m.get_item_name(mres);
 if(mres==0 or mres>=m.get_item_name(mres))
 {
