@@ -4,11 +4,12 @@
 #include"form.nvgt"
 #include"sound_pool.nvgt"
 #include"speech.nvgt"
-#include"includes/dlg.nvgt"
-#include"includes/fadepool.nvgt"
-#include"includes/key_hold.nvgt";
-#include"includes/m_pro.nvgt"
-#include"includes/menu.nvgt"
-#include"includes/setupmenu.nvgt"
-#include"includes/virtual_dialogs.nvgt"
+#include"dlg.nvgt"
+#include"extrafuncts.nvgt"
+#include"fadepool.nvgt"
+#include"key_hold.nvgt";
+#include"m_pro.nvgt"
+#include"menu.nvgt"
+#include"setupmenu.nvgt"
+#include"virtual_dialogs.nvgt"
 typedef uint8 usmall; typedef int8 small;

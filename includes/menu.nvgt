@@ -2,7 +2,7 @@ void mainmenu()
 {
 setupmenu();
 m.add_item_tts("generate scenario", "gen");
-m.add_item_tts("scenario editor", "edit");
+m.add_item_tts("scenario manager", "manage");
 m.add_item_tts("scenario statistics", "stats");
 m.add_item_tts("exit", "ex");
 int mres=m.run("Main menu. Please choose an option with your arrow keys, then press enter to activate one.",true);
@@ -107,7 +107,7 @@ if(gend=="back")
 mainmenu();
 }
 }
-if(main=="edit")
+if(main=="manage")
 {
 scencredmenu();
 }
@@ -155,10 +155,11 @@ void scencredmenu()
 {
 setupmenu();
 m.add_item_tts("add scenarios", "ascen");
+m.add_item_tts("edit scenarios", "escen");
 m.add_item_tts("remove scenarios", "rscen");
 m.add_item_tts("view scenarios", "vscen");
 m.add_item_tts("back", "back");
-int mres=m.run("Scenario edotor menu",true);
+int mres=m.run("Scenario manager menu",true);
 string scm=m.get_item_name(mres);
 if(mres==0)
 {
@@ -194,6 +195,39 @@ if (mres>0 and mres<=senarpacks.length())
 {
 senpack=senarpacks[mres-1];
 adscenmenu();
+}
+}
+}
+if(scm=="escen")
+{
+string[] senpacktyp=find_directories("data/scenarios/*");
+if(senpacktyp.length()==0)
+{
+alert("Error", "There are no scenario packs available to view.");
+wait(500);
+mainmenu();
+}
+else
+{
+string[] senarpacks=find_directories("data/scenarios/*");
+setupmenu();
+for(uint i=0; i<senarpacks.length(); i++)
+{
+m.add_item_tts(senarpacks[i], senarpacks[i]);
+}
+int mres=m.run("Choose the scenario pack you'd like to use in this menu.", true);
+if(mres==0)
+{
+scencredmenu();
+}
+if (mres==0 and mres>=senarpacks.length())
+{
+senpack=senarpacks[mres-1];
+}
+if (mres>0 and mres<=senarpacks.length())
+{
+senpack=senarpacks[mres-1];
+edscenmenu();
 }
 }
 }
@@ -271,17 +305,17 @@ mainmenu();
 void adscenmenu()
 {
 setupmenu();
-m.add_item_tts("add an action", "act");
-m.add_item_tts("add an attack", "ak");
-m.add_item_tts("add a body part", "bpart");
-m.add_item_tts("add a character name", "cname");
-m.add_item_tts("add a character type", "ctype");
-m.add_item_tts("add a death message", "dmessage");
-m.add_item_tts("add a mood", "mod");
-m.add_item_tts("add a pain message", "pmessage");
-m.add_item_tts("add a reason", "res");
+m.add_item_tts("actions", "act");
+m.add_item_tts("attacks", "ak");
+m.add_item_tts("body parts", "bpart");
+m.add_item_tts("character names", "cname");
+m.add_item_tts("character types", "ctype");
+m.add_item_tts("death messages", "dmessage");
+m.add_item_tts("moods", "mod");
+m.add_item_tts("pain messages", "pmessage");
+m.add_item_tts("reasons", "res");
 m.add_item_tts("back", "back");
-int mres=m.run(senpack+": Add scenarios menu",true);
+int mres=m.run(senpack+" loaded: Add scenarios menu. What would you like to add?",true);
 string ascm=m.get_item_name(mres);
 if(mres==0)
 {
@@ -472,55 +506,573 @@ if(ascm=="back")
 scencredmenu();
 }
 }
+void edscenmenu()
+{
+setupmenu();
+m.add_item_tts("actions", "act2");
+m.add_item_tts("attacks", "ak2");
+m.add_item_tts("body parts", "bpart2");
+m.add_item_tts("character names", "cname2");
+m.add_item_tts("character types", "ctype2");
+m.add_item_tts("death messages", "dmessage2");
+m.add_item_tts("moods", "mod2");
+m.add_item_tts("pain messages", "pmessage2");
+m.add_item_tts("reasons", "res2");
+m.add_item_tts("back", "back");
+int mres=m.run(senpack+" loaded: Edit scenarios menu. What would you like to edit?",true);
+string escm=m.get_item_name(mres);
+if(mres==0)
+{
+scencredmenu();
+}
+if (escm == "act2")
+{
+    m.fade_music();
+    actions.open("data/scenarios/" + senpack + "/actions.list", "r");
+    actionsplit = actions.read();
+    actions.close();
+    string[] rawActions = string_split(actionsplit, "\r\n", true);
+    string[] filteredActions;
+    uint[] originalIndexes;
+    filter_empty_lines(rawActions, filteredActions, originalIndexes);
+    if (filteredActions.length() == 0)
+    {
+        alert("Error", "There are no actions available to edit.");
+        wait(500);
+        edscenmenu();
+    }
+    setupmenu(false);
+    for (uint i = 0; i < filteredActions.length(); i++)
+    {
+        m.add_item_tts(filteredActions[i], filteredActions[i], "", true);
+    }
+    int mres = m.run("Select an action to edit", true);
+    if (mres == 0)
+    {
+        edscenmenu();
+    }
+    if (mres > 0 and mres <= filteredActions.length())
+    {
+        int realIndex = originalIndexes[mres - 1];
+        vd.set_disallowed_chars(disachars, false, disadesc);
+        string editedAction = vd.input_box("", "Enter the new name for this action.", rawActions[realIndex]);
+if(editedAction.empty())
+{
+alert("Error", "You must enter a valid action.");
+wait(500);
+edscenmenu();
+}
+else
+{
+        rawActions[realIndex] = editedAction;
+        string final = "";
+        for (uint i = 0; i < rawActions.length(); i++)
+        {
+            if (i > 0) final += "\r\n";
+            final += rawActions[i];
+        }
+        actions.open("data/scenarios/" + senpack + "/actions.list", "w");
+        actions.write(final);
+        actions.close();
+dlg("Success! Your action has been edited from the actions list.");
+        edscenmenu();
+    }
+}
+}
+if (escm == "ak2")
+{
+    m.fade_music();
+    attacks.open("data/scenarios/" + senpack + "/attacks.list", "r");
+    attacksplit = attacks.read();
+    attacks.close();
+    string[] rawAttacks = string_split(attacksplit, "\r\n", true);
+    string[] filteredAttacks;
+    uint[] originalIndexes;
+    filter_empty_lines(rawAttacks, filteredAttacks, originalIndexes);
+    if (filteredAttacks.length() == 0)
+    {
+        alert("Error", "There are no attacks available to edit.");
+        wait(500);
+        edscenmenu();
+    }
+    setupmenu(false);
+    for (uint i = 0; i < filteredAttacks.length(); i++)
+    {
+        m.add_item_tts(filteredAttacks[i], filteredAttacks[i], "", true);
+    }
+    int mres = m.run("Select an attack to edit", true);
+    if (mres == 0)
+    {
+        edscenmenu();
+    }
+    if (mres > 0 and mres <= filteredAttacks.length())
+    {
+        int realIndex = originalIndexes[mres - 1];
+        vd.set_disallowed_chars(disachars, false, disadesc);
+        string editedAttack = vd.input_box("", "Enter the new name for this attack.", rawAttacks[realIndex]);
+if(editedAttack.empty())
+{
+alert("Error", "You must enter a valid attack.");
+wait(500);
+edscenmenu();
+}
+else
+{
+        rawAttacks[realIndex] = editedAttack;
+        string final = "";
+        for (uint i = 0; i < rawAttacks.length(); i++)
+        {
+            if (i > 0) final += "\r\n";
+            final += rawAttacks[i];
+        }
+        attacks.open("data/scenarios/" + senpack + "/attacks.list", "w");
+        attacks.write(final);
+        attacks.close();
+dlg("Success! Your attack has been edited from the attacks list.");
+        edscenmenu();
+    }
+}
+}
+if (escm == "bpart2")
+{
+    m.fade_music();
+    bodyparts.open("data/scenarios/" + senpack + "/bodyparts.list", "r");
+    bodypartsplit = bodyparts.read();
+    bodyparts.close();
+    string[] rawBodyparts = string_split(bodypartsplit, "\r\n", true);
+    string[] filteredBodyparts;
+    uint[] originalIndexes;
+    filter_empty_lines(rawBodyparts, filteredBodyparts, originalIndexes);
+    if (filteredBodyparts.length() == 0)
+    {
+        alert("Error", "There are no body parts available to edit.");
+        wait(500);
+        edscenmenu();
+    }
+    setupmenu(false);
+    for (uint i = 0; i < filteredBodyparts.length(); i++)
+    {
+        m.add_item_tts(filteredBodyparts[i], filteredBodyparts[i], "", true);
+    }
+    int mres = m.run("Select a body part to edit", true);
+    if (mres == 0)
+    {
+        edscenmenu();
+    }
+    if (mres > 0 and mres <= filteredBodyparts.length())
+    {
+        int realIndex = originalIndexes[mres - 1];
+        vd.set_disallowed_chars(disachars, false, disadesc);
+        string editedBodypart = vd.input_box("", "Enter the new name for this body part.", rawBodyparts[realIndex]);
+if(editedBodypart.empty())
+{
+alert("Error", "You must enter a valid body part.");
+wait(500);
+edscenmenu();
+}
+else
+{
+        rawBodyparts[realIndex] = editedBodypart;
+        string final = "";
+        for (uint i = 0; i < rawBodyparts.length(); i++)
+        {
+            if (i > 0) final += "\r\n";
+            final += rawBodyparts[i];
+        }
+        bodyparts.open("data/scenarios/" + senpack + "/bodyparts.list", "w");
+        bodyparts.write(final);
+        bodyparts.close();
+dlg("Success! Your body part has been edited from the bodyparts list.");
+        edscenmenu();
+    }
+}
+}
+if (escm == "cname2")
+{
+    m.fade_music();
+    charnames.open("data/scenarios/" + senpack + "/charnames.list", "r");
+    charnamesplit = charnames.read();
+    charnames.close();
+    string[] rawCharnames = string_split(charnamesplit, "\r\n", true);
+    string[] filteredCharnames;
+    uint[] originalIndexes;
+    filter_empty_lines(rawCharnames, filteredCharnames, originalIndexes);
+    if (filteredCharnames.length() == 0)
+    {
+        alert("Error", "There are no character names available to edit.");
+        wait(500);
+        edscenmenu();
+    }
+    setupmenu(false);
+    for (uint i = 0; i < filteredCharnames.length(); i++)
+    {
+        m.add_item_tts(filteredCharnames[i], filteredCharnames[i], "", true);
+    }
+    int mres = m.run("Select a character name to edit", true);
+    if (mres == 0)
+    {
+        edscenmenu();
+    }
+    if (mres > 0 and mres <= filteredCharnames.length())
+    {
+        int realIndex = originalIndexes[mres - 1];
+        vd.set_disallowed_chars(disachars, false, disadesc);
+        string editedCharname = vd.input_box("", "Enter the new name for this character name.", rawCharnames[realIndex]);
+if(editedCharname.empty())
+{
+alert("Error", "You must enter a valid character name.");
+wait(500);
+edscenmenu();
+}
+else
+{
+        rawCharnames[realIndex] = editedCharname;
+        string final = "";
+        for (uint i = 0; i < rawCharnames.length(); i++)
+        {
+            if (i > 0) final += "\r\n";
+            final += rawCharnames[i];
+        }
+        charnames.open("data/scenarios/" + senpack + "/charnames.list", "w");
+        charnames.write(final);
+        charnames.close();
+dlg("Success! Your character name has been edited from the character names list.");
+        edscenmenu();
+    }
+}
+}
+if (escm == "ctype2")
+{
+    m.fade_music();
+    chartypes.open("data/scenarios/" + senpack + "/chartypes.list", "r");
+    chartypesplit = chartypes.read();
+    chartypes.close();
+    string[] rawChartypes = string_split(chartypesplit, "\r\n", true);
+    string[] filteredChartypes;
+    uint[] originalIndexes;
+    filter_empty_lines(rawChartypes, filteredChartypes, originalIndexes);
+    if (filteredChartypes.length() == 0)
+    {
+        alert("Error", "There are no character types available to edit.");
+        wait(500);
+        edscenmenu();
+    }
+    setupmenu(false);
+    for (uint i = 0; i < filteredChartypes.length(); i++)
+    {
+        m.add_item_tts(filteredChartypes[i], filteredChartypes[i], "", true);
+    }
+    int mres = m.run("Select a character type to edit", true);
+    if (mres == 0)
+    {
+        edscenmenu();
+    }
+    if (mres > 0 and mres <= filteredChartypes.length())
+    {
+        int realIndex = originalIndexes[mres - 1];
+        vd.set_disallowed_chars(disachars, false, disadesc);
+        string editedChartype = vd.input_box("", "Enter the new name for this character type.", rawChartypes[realIndex]);
+if(editedChartype.empty())
+{
+alert("Error", "You must enter a valid character type.");
+wait(500);
+edscenmenu();
+}
+else
+{
+        rawChartypes[realIndex] = editedChartype;
+        string final = "";
+        for (uint i = 0; i < rawChartypes.length(); i++)
+        {
+            if (i > 0) final += "\r\n";
+            final += rawChartypes[i];
+        }
+        chartypes.open("data/scenarios/" + senpack + "/chartypes.list", "w");
+        chartypes.write(final);
+        chartypes.close();
+dlg("Success! Your character type has been edited from the character types list.");
+        edscenmenu();
+    }
+}
+}
+if (escm == "dmessage2")
+{
+    m.fade_music();
+    deaths.open("data/scenarios/" + senpack + "/deaths.list", "r");
+    deathsplit = deaths.read();
+    deaths.close();
+    string[] rawDeaths = string_split(deathsplit, "\r\n", true);
+    string[] filteredDeaths;
+    uint[] originalIndexes;
+    filter_empty_lines(rawDeaths, filteredDeaths, originalIndexes);
+    if (filteredDeaths.length() == 0)
+    {
+        alert("Error", "There are no death messages available to edit.");
+        wait(500);
+        edscenmenu();
+    }
+    setupmenu(false);
+    for (uint i = 0; i < filteredDeaths.length(); i++)
+    {
+        m.add_item_tts(filteredDeaths[i], filteredDeaths[i], "", true);
+    }
+    int mres = m.run("Select a death message to edit", true);
+    if (mres == 0)
+    {
+        edscenmenu();
+    }
+    if (mres > 0 and mres <= filteredDeaths.length())
+    {
+        int realIndex = originalIndexes[mres - 1];
+        vd.set_disallowed_chars(disachars, false, disadesc);
+        string editedDeath = vd.input_box("", "Enter the new name for this death message.", rawDeaths[realIndex]);
+if(editedDeath.empty())
+{
+alert("Error", "You must enter a valid death message.");
+wait(500);
+edscenmenu();
+}
+else
+{
+        rawDeaths[realIndex] = editedDeath;
+        string final = "";
+        for (uint i = 0; i < rawDeaths.length(); i++)
+        {
+            if (i > 0) final += "\r\n";
+            final += rawDeaths[i];
+        }
+        deaths.open("data/scenarios/" + senpack + "/deaths.list", "w");
+        deaths.write(final);
+        deaths.close();
+dlg("Success! Your death message has been edited from the death messages list.");
+        edscenmenu();
+    }
+}
+}
+if (escm == "mod2")
+{
+    m.fade_music();
+    moods.open("data/scenarios/" + senpack + "/moods.list", "r");
+    moodsplit = moods.read();
+    moods.close();
+    string[] rawMoods = string_split(moodsplit, "\r\n", true);
+    string[] filteredMoods;
+    uint[] originalIndexes;
+    filter_empty_lines(rawMoods, filteredMoods, originalIndexes);
+    if (filteredMoods.length() == 0)
+    {
+        alert("Error", "There are no moods available to edit.");
+        wait(500);
+        edscenmenu();
+    }
+    setupmenu(false);
+    for (uint i = 0; i < filteredMoods.length(); i++)
+    {
+        m.add_item_tts(filteredMoods[i], filteredMoods[i], "", true);
+    }
+    int mres = m.run("Select a mood to edit", true);
+    if (mres == 0)
+    {
+        edscenmenu();
+    }
+    if (mres > 0 and mres <= filteredMoods.length())
+    {
+        int realIndex = originalIndexes[mres - 1];
+        vd.set_disallowed_chars(disachars, false, disadesc);
+        string editedMood = vd.input_box("", "Enter the new name for this mood.", rawMoods[realIndex]);
+if(editedMood.empty())
+{
+alert("Error", "You must enter a valid mood.");
+wait(500);
+edscenmenu();
+}
+else
+{
+        rawMoods[realIndex] = editedMood;
+        string final = "";
+        for (uint i = 0; i < rawMoods.length(); i++)
+        {
+            if (i > 0) final += "\r\n";
+            final += rawMoods[i];
+        }
+        moods.open("data/scenarios/" + senpack + "/moods.list", "w");
+        moods.write(final);
+        moods.close();
+dlg("Success! Your mood has been edited from the moods list.");
+        edscenmenu();
+    }
+}
+}
+if (escm == "pmessage2")
+{
+    m.fade_music();
+    pains.open("data/scenarios/" + senpack + "/pains.list", "r");
+    painsplit = pains.read();
+    pains.close();
+    string[] rawPains = string_split(painsplit, "\r\n", true);
+    string[] filteredPains;
+    uint[] originalIndexes;
+    filter_empty_lines(rawPains, filteredPains, originalIndexes);
+    if (filteredPains.length() == 0)
+    {
+        alert("Error", "There are no pain messages available to edit.");
+        wait(500);
+        edscenmenu();
+    }
+    setupmenu(false);
+    for (uint i = 0; i < filteredPains.length(); i++)
+    {
+        m.add_item_tts(filteredPains[i], filteredPains[i], "", true);
+    }
+    int mres = m.run("Select a pain message to edit", true);
+    if (mres == 0)
+    {
+        edscenmenu();
+    }
+    if (mres > 0 and mres <= filteredPains.length())
+    {
+        int realIndex = originalIndexes[mres - 1];
+        vd.set_disallowed_chars(disachars, false, disadesc);
+        string editedPain = vd.input_box("", "Enter the new name for this pain message.", rawPains[realIndex]);
+if(editedPain.empty())
+{
+alert("Error", "You must enter a valid pain message.");
+wait(500);
+edscenmenu();
+}
+else
+{
+        rawPains[realIndex] = editedPain;
+        string final = "";
+        for (uint i = 0; i < rawPains.length(); i++)
+        {
+            if (i > 0) final += "\r\n";
+            final += rawPains[i];
+        }
+        pains.open("data/scenarios/" + senpack + "/pains.list", "w");
+        pains.write(final);
+        pains.close();
+dlg("Success! Your pain message has been edited from the pain messages list.");
+        edscenmenu();
+    }
+}
+}
+if (escm == "res2")
+{
+    m.fade_music();
+    reasons.open("data/scenarios/" + senpack + "/reasons.list", "r");
+    reasonsplit = reasons.read();
+    reasons.close();
+    string[] rawReasons = string_split(reasonsplit, "\r\n", true);
+    string[] filteredReasons;
+    uint[] originalIndexes;
+    filter_empty_lines(rawReasons, filteredReasons, originalIndexes);
+    if (filteredReasons.length() == 0)
+    {
+        alert("Error", "There are no reasons available to edit.");
+        wait(500);
+        edscenmenu();
+    }
+    setupmenu(false);
+    for (uint i = 0; i < filteredReasons.length(); i++)
+    {
+        m.add_item_tts(filteredReasons[i], filteredReasons[i], "", true);
+    }
+    int mres = m.run("Select a reason to edit", true);
+    if (mres == 0)
+    {
+        edscenmenu();
+    }
+    if (mres > 0 and mres <= filteredReasons.length())
+    {
+        int realIndex = originalIndexes[mres - 1];
+        vd.set_disallowed_chars(disachars, false, disadesc);
+        string editedReason = vd.input_box("", "Enter the new name for this reason.", rawReasons[realIndex]);
+if(editedReason.empty())
+{
+alert("Error", "You must enter a valid reason.");
+wait(500);
+edscenmenu();
+}
+else
+{
+        rawReasons[realIndex] = editedReason;
+        string final = "";
+        for (uint i = 0; i < rawReasons.length(); i++)
+        {
+            if (i > 0) final += "\r\n";
+            final += rawReasons[i];
+        }
+        reasons.open("data/scenarios/" + senpack + "/reasons.list", "w");
+        reasons.write(final);
+        reasons.close();
+dlg("Success! Your reason has been edited from the reasons list.");
+        edscenmenu();
+    }
+}
+}
+if(escm=="back")
+{
+scencredmenu();
+}
+}
 void remscenmenu()
 {
 setupmenu();
-m.add_item_tts("remove an action", "act2");
-m.add_item_tts("remove an attack", "ak2");
-m.add_item_tts("remove a body part", "bpart2");
-m.add_item_tts("remove a character name", "cname2");
-m.add_item_tts("remove a character type", "ctype2");
-m.add_item_tts("remove a death message", "dmessage2");
-m.add_item_tts("remove a mood", "mod2");
-m.add_item_tts("remove a pain message", "pmessage2");
-m.add_item_tts("remove a reason", "res2");
+m.add_item_tts("actions", "act3");
+m.add_item_tts("attacks", "ak3");
+m.add_item_tts("body parts", "bpart3");
+m.add_item_tts("character names", "cname3");
+m.add_item_tts("character types", "ctype3");
+m.add_item_tts("death messages", "dmessage3");
+m.add_item_tts("moods", "mod3");
+m.add_item_tts("pain messages", "pmessage3");
+m.add_item_tts("reasons", "res3");
 m.add_item_tts("back", "back");
-int mres=m.run(senpack+": Remove scenarios menu",true);
+int mres=m.run(senpack+" loaded: Remove scenarios menu. What would you like to remove?",true);
 string rscm=m.get_item_name(mres);
 if(mres==0)
 {
 scencredmenu();
 }
-if(rscm=="act2")
+if (rscm == "act3")
 {
-m.fade_music();
-    actions.open("data/scenarios/"+senpack+"/actions.list", "r");
+    m.fade_music();
+    actions.open("data/scenarios/" + senpack + "/actions.list", "r");
     actionsplit = actions.read();
-    string[] action = string_split(actionsplit, "\r\n", true);
     actions.close();
-    setupmenu(false);
-    for (uint i = 0; i < action.length(); i++)
+    string[] rawActions = string_split(actionsplit, "\r\n", true);
+    string[] filteredActions;
+    uint[] originalIndexes;
+    filter_empty_lines(rawActions, filteredActions, originalIndexes);
+    if (filteredActions.length() == 0)
     {
-        m.add_item_tts(action[i], action[i], "", true);
+        alert("Error", "There are no actions available to remove.");
+        wait(500);
+        remscenmenu();
+    }
+    setupmenu(false);
+    for (uint i = 0; i < filteredActions.length(); i++)
+    {
+        m.add_item_tts(filteredActions[i], filteredActions[i], "", true);
     }
     int mres = m.run("Select an action to remove", true);
     if (mres == 0)
     {
         remscenmenu();
     }
-    if (mres > 0 and mres <= action.length())
+    if (mres > 0 and mres <= filteredActions.length())
     {
-        string act = action[mres - 1];
-        int finder = action.find(act);
-        if (finder > -1)
+        int realIndex = originalIndexes[mres - 1];
+        if (realIndex >= 0 and realIndex < rawActions.length())
         {
-            action.remove_at(finder);
+            rawActions.remove_at(realIndex);
             string final = "";
-            for (uint i = 0; i < action.length(); i++)
+            for (uint i = 0; i < rawActions.length(); i++)
             {
-                final += action[i] + "\r\n";
+                final += rawActions[i] + "\r\n";
             }
-            actions.open("data/scenarios/"+senpack+"/actions.list", "w");
+            actions.open("data/scenarios/" + senpack + "/actions.list", "w");
             actions.write(final);
             actions.close();
             dlg("Success! Your action has been removed from the actions list.");
@@ -528,301 +1080,365 @@ m.fade_music();
         }
     }
 }
-if(rscm=="ak2")
+if (rscm == "ak3")
 {
-m.fade_music();
-attacks.open("data/scenarios/"+senpack+"/attacks.list", "r");
-attacksplit = attacks.read();
-string[] attack = string_split(attacksplit, "\r\n", true);
-attacks.close();
-setupmenu(false);
-for (uint i = 0; i < attack.length(); i++)
-{
-    m.add_item_tts(attack[i], attack[i], "", true);
-}
-int mres = m.run("Select an attack to remove", true);
-if (mres == 0)
-{
-    remscenmenu();
-}
-if (mres > 0 and mres <= attack.length())
-{
-    string atk = attack[mres - 1];
-    int finder = attack.find(atk);
-    if (finder > -1)
+    m.fade_music();
+    attacks.open("data/scenarios/" + senpack + "/attacks.list", "r");
+    attacksplit = attacks.read();
+    attacks.close();
+    string[] rawAttacks = string_split(attacksplit, "\r\n", true);
+    string[] filteredAttacks;
+    uint[] originalIndexes;
+    filter_empty_lines(rawAttacks, filteredAttacks, originalIndexes);
+    if (filteredAttacks.length() == 0)
     {
-        attack.remove_at(finder);
-        string final = "";
-        for (uint i = 0; i < attack.length(); i++)
-        {
-            final += attack[i] + "\r\n";
-        }
-        attacks.open("data/scenarios/"+senpack+"/attacks.list", "w");
-        attacks.write(final);
-        attacks.close();
-        dlg("Success! Your attack has been removed from the attacks list.");
+        alert("Error", "There are no attacks available to remove.");
+        wait(500);
         remscenmenu();
     }
-}
-}
-if(rscm=="bpart2")
-{
-m.fade_music();
-bodyparts.open("data/scenarios/"+senpack+"/bodyparts.list", "r");
-bodypartsplit = bodyparts.read();
-string[] bodypart = string_split(bodypartsplit, "\r\n", true);
-bodyparts.close();
-setupmenu(false);
-for (uint i = 0; i < bodypart.length(); i++)
-{
-    m.add_item_tts(bodypart[i], bodypart[i], "", true);
-}
-int mres = m.run("Select a body part to remove", true);
-if (mres == 0)
-{
-    remscenmenu();
-}
-if (mres > 0 and mres <= bodypart.length())
-{
-    string bp = bodypart[mres - 1];
-    int finder = bodypart.find(bp);
-    if (finder > -1)
+    setupmenu(false);
+    for (uint i = 0; i < filteredAttacks.length(); i++)
     {
-        bodypart.remove_at(finder);
-        string final = "";
-        for (uint i = 0; i < bodypart.length(); i++)
-        {
-            final += bodypart[i] + "\r\n";
-        }
-        bodyparts.open("data/scenarios/"+senpack+"/bodyparts.list", "w");
-        bodyparts.write(final);
-        bodyparts.close();
-        dlg("Success! Your body part has been removed from the body parts list.");
+        m.add_item_tts(filteredAttacks[i], filteredAttacks[i], "", true);
+    }
+    int mres = m.run("Select an attack to remove", true);
+    if (mres == 0)
+    {
         remscenmenu();
     }
-}
-}
-if(rscm=="cname2")
-{
-m.fade_music();
-charnames.open("data/scenarios/"+senpack+"/charnames.list", "r");
-charnamesplit = charnames.read();
-string[] charname = string_split(charnamesplit, "\r\n", true);
-charnames.close();
-setupmenu(false);
-for (uint i = 0; i < charname.length(); i++)
-{
-    m.add_item_tts(charname[i], charname[i], "", true);
-}
-int mres = m.run("Select a character name to remove", true);
-if (mres == 0)
-{
-    remscenmenu();
-}
-if (mres > 0 and mres <= charname.length())
-{
-    string cn = charname[mres - 1];
-    int finder = charname.find(cn);
-    if (finder > -1)
+    if (mres > 0 and mres <= filteredAttacks.length())
     {
-        charname.remove_at(finder);
-        string final = "";
-        for (uint i = 0; i < charname.length(); i++)
+        int realIndex = originalIndexes[mres - 1];
+        if (realIndex >= 0 and realIndex < rawAttacks.length())
         {
-            final += charname[i] + "\r\n";
+            rawAttacks.remove_at(realIndex);
+            string final = "";
+            for (uint i = 0; i < rawAttacks.length(); i++)
+            {
+                final += rawAttacks[i] + "\r\n";
+            }
+            attacks.open("data/scenarios/" + senpack + "/attacks.list", "w");
+            attacks.write(final);
+            attacks.close();
+            dlg("Success! Your attack has been removed from the attacks list.");
+            remscenmenu();
         }
-        charnames.open("data/scenarios/"+senpack+"/charnames.list", "w");
-        charnames.write(final);
-        charnames.close();
-        dlg("Success! Your character name has been removed from the character names list.");
-        remscenmenu();
     }
 }
-}
-if(rscm=="ctype2")
+if (rscm == "bpart3")
 {
-m.fade_music();
-chartypes.open("data/scenarios/"+senpack+"/chartypes.list", "r");
-chartypesplit = chartypes.read();
-string[] chartype = string_split(chartypesplit, "\r\n", true);
-chartypes.close();
-setupmenu(false);
-for (uint i = 0; i < chartype.length(); i++)
-{
-    m.add_item_tts(chartype[i], chartype[i], "", true);
-}
-int mres = m.run("Select a character type to remove", true);
-if (mres == 0)
-{
-    remscenmenu();
-}
-if (mres > 0 and mres <= chartype.length())
-{
-    string ct = chartype[mres - 1];
-    int finder = chartype.find(ct);
-    if (finder > -1)
+    m.fade_music();
+    bodyparts.open("data/scenarios/" + senpack + "/bodyparts.list", "r");
+    bodypartsplit = bodyparts.read();
+    bodyparts.close();
+    string[] rawBodyparts = string_split(bodypartsplit, "\r\n", true);
+    string[] filteredBodyparts;
+    uint[] originalIndexes;
+    filter_empty_lines(rawBodyparts, filteredBodyparts, originalIndexes);
+    if (filteredBodyparts.length() == 0)
     {
-        chartype.remove_at(finder);
-        string final = "";
-        for (uint i = 0; i < chartype.length(); i++)
-        {
-            final += chartype[i] + "\r\n";
-        }
-        chartypes.open("data/scenarios/"+senpack+"/chartypes.list", "w");
-        chartypes.write(final);
-        chartypes.close();
-        dlg("Success! Your character type has been removed from the character types list.");
+        alert("Error", "There are no body parts available to remove.");
+        wait(500);
         remscenmenu();
     }
-}
-}
-if(rscm=="dmessage2")
-{
-m.fade_music();
-deaths.open("data/scenarios/"+senpack+"/deaths.list", "r");
-deathsplit = deaths.read();
-string[] death = string_split(deathsplit, "\r\n", true);
-deaths.close();
-setupmenu(false);
-for (uint i = 0; i < death.length(); i++)
-{
-    m.add_item_tts(death[i], death[i], "", true);
-}
-int mres = m.run("Select a death message to remove", true);
-if (mres == 0)
-{
-    remscenmenu();
-}
-if (mres > 0 and mres <= death.length())
-{
-    string dm = death[mres - 1];
-    int finder = death.find(dm);
-    if (finder > -1)
+    setupmenu(false);
+    for (uint i = 0; i < filteredBodyparts.length(); i++)
     {
-        death.remove_at(finder);
-        string final = "";
-        for (uint i = 0; i < death.length(); i++)
-        {
-            final += death[i] + "\r\n";
-        }
-        deaths.open("data/scenarios/"+senpack+"/deaths.list", "w");
-        deaths.write(final);
-        deaths.close();
-        dlg("Success! Your death message has been removed from the death messages list.");
+        m.add_item_tts(filteredBodyparts[i], filteredBodyparts[i], "", true);
+    }
+    int mres = m.run("Select a bodypart to remove", true);
+    if (mres == 0)
+    {
         remscenmenu();
     }
-}
-}
-if(rscm=="mod2")
-{
-m.fade_music();
-moods.open("data/scenarios/"+senpack+"/moods.list", "r");
-moodsplit = moods.read();
-string[] mood = string_split(moodsplit, "\r\n", true);
-moods.close();
-setupmenu(false);
-for (uint i = 0; i < mood.length(); i++)
-{
-    m.add_item_tts(mood[i], mood[i], "", true);
-}
-int mres = m.run("Select a mood to remove", true);
-if (mres == 0)
-{
-    remscenmenu();
-}
-if (mres > 0 and mres <= mood.length())
-{
-    string md = mood[mres - 1];
-    int finder = mood.find(md);
-    if (finder > -1)
+    if (mres > 0 and mres <= filteredBodyparts.length())
     {
-        mood.remove_at(finder);
-        string final = "";
-        for (uint i = 0; i < mood.length(); i++)
+        int realIndex = originalIndexes[mres - 1];
+        if (realIndex >= 0 and realIndex < rawBodyparts.length())
         {
-            final += mood[i] + "\r\n";
+            rawBodyparts.remove_at(realIndex);
+            string final = "";
+            for (uint i = 0; i < rawBodyparts.length(); i++)
+            {
+                final += rawBodyparts[i] + "\r\n";
+            }
+            bodyparts.open("data/scenarios/" + senpack + "/bodyparts.list", "w");
+            bodyparts.write(final);
+            bodyparts.close();
+            dlg("Success! Your body part has been removed from the bodyparts list.");
+            remscenmenu();
         }
-        moods.open("data/scenarios/"+senpack+"/moods.list", "w");
-        moods.write(final);
-        moods.close();
-        dlg("Success! Your mood has been removed from the moods list.");
-        remscenmenu();
     }
 }
-}
-if(rscm=="pmessage2")
+if (rscm == "cname3")
 {
-m.fade_music();
-pains.open("data/scenarios/"+senpack+"/pains.list", "r");
-painsplit = pains.read();
-string[] pain = string_split(painsplit, "\r\n", true);
-pains.close();
-setupmenu(false);
-for (uint i = 0; i < pain.length(); i++)
-{
-    m.add_item_tts(pain[i], pain[i], "", true);
-}
-int mres = m.run("Select a pain message to remove", true);
-if (mres == 0)
-{
-    remscenmenu();
-}
-if (mres > 0 and mres <= pain.length())
-{
-    string pm = pain[mres - 1];
-    int finder = pain.find(pm);
-    if (finder > -1)
+    m.fade_music();
+    charnames.open("data/scenarios/" + senpack + "/charnames.list", "r");
+    charnamesplit = charnames.read();
+    charnames.close();
+    string[] rawCharnames = string_split(charnamesplit, "\r\n", true);
+    string[] filteredCharnames;
+    uint[] originalIndexes;
+    filter_empty_lines(rawCharnames, filteredCharnames, originalIndexes);
+    if (filteredCharnames.length() == 0)
     {
-        pain.remove_at(finder);
-        string final = "";
-        for (uint i = 0; i < pain.length(); i++)
-        {
-            final += pain[i] + "\r\n";
-        }
-        pains.open("data/scenarios/"+senpack+"/pains.list", "w");
-        pains.write(final);
-        pains.close();
-        dlg("Success! Your pain message has been removed from the pain messages list.");
+        alert("Error", "There are no character names available to remove.");
+        wait(500);
         remscenmenu();
     }
-}
-}
-if(rscm=="res2")
-{
-m.fade_music();
-reasons.open("data/scenarios/"+senpack+"/reasons.list", "r");
-reasonsplit = reasons.read();
-string[] reason = string_split(reasonsplit, "\r\n", true);
-reasons.close();
-setupmenu(false);
-for (uint i = 0; i < reason.length(); i++)
-{
-    m.add_item_tts(reason[i], reason[i], "", true);
-}
-int mres = m.run("Select a reason to remove", true);
-if (mres == 0)
-{
-    remscenmenu();
-}
-if (mres > 0 and mres <= reason.length())
-{
-    string rs = reason[mres - 1];
-    int finder = reason.find(rs);
-    if (finder > -1)
+    setupmenu(false);
+    for (uint i = 0; i < filteredCharnames.length(); i++)
     {
-        reason.remove_at(finder);
-        string final = "";
-        for (uint i = 0; i < reason.length(); i++)
-        {
-            final += reason[i] + "\r\n";
-        }
-        reasons.open("data/scenarios/"+senpack+"/reasons.list", "w");
-        reasons.write(final);
-        reasons.close();
-        dlg("Success! Your reason has been removed from the reasons list.");
+        m.add_item_tts(filteredCharnames[i], filteredCharnames[i], "", true);
+    }
+    int mres = m.run("Select a character name to remove", true);
+    if (mres == 0)
+    {
         remscenmenu();
     }
+    if (mres > 0 and mres <= filteredCharnames.length())
+    {
+        int realIndex = originalIndexes[mres - 1];
+        if (realIndex >= 0 and realIndex < rawCharnames.length())
+        {
+            rawCharnames.remove_at(realIndex);
+            string final = "";
+            for (uint i = 0; i < rawCharnames.length(); i++)
+            {
+                final += rawCharnames[i] + "\r\n";
+            }
+            charnames.open("data/scenarios/" + senpack + "/charnames.list", "w");
+            charnames.write(final);
+            charnames.close();
+            dlg("Success! Your character name has been removed from the character names list.");
+            remscenmenu();
+        }
+    }
 }
+if (rscm == "ctype3")
+{
+    m.fade_music();
+    chartypes.open("data/scenarios/" + senpack + "/chartypes.list", "r");
+    chartypesplit = chartypes.read();
+    chartypes.close();
+    string[] rawChartypes = string_split(chartypesplit, "\r\n", true);
+    string[] filteredChartypes;
+    uint[] originalIndexes;
+    filter_empty_lines(rawChartypes, filteredChartypes, originalIndexes);
+    if (filteredChartypes.length() == 0)
+    {
+        alert("Error", "There are no character types available to remove.");
+        wait(500);
+        remscenmenu();
+    }
+    setupmenu(false);
+    for (uint i = 0; i < filteredChartypes.length(); i++)
+    {
+        m.add_item_tts(filteredChartypes[i], filteredChartypes[i], "", true);
+    }
+    int mres = m.run("Select a character type to remove", true);
+    if (mres == 0)
+    {
+        remscenmenu();
+    }
+    if (mres > 0 and mres <= filteredChartypes.length())
+    {
+        int realIndex = originalIndexes[mres - 1];
+        if (realIndex >= 0 and realIndex < rawChartypes.length())
+        {
+            rawChartypes.remove_at(realIndex);
+            string final = "";
+            for (uint i = 0; i < rawChartypes.length(); i++)
+            {
+                final += rawChartypes[i] + "\r\n";
+            }
+            chartypes.open("data/scenarios/" + senpack + "/chartypes.list", "w");
+            chartypes.write(final);
+            chartypes.close();
+            dlg("Success! Your character type has been removed from the character types list.");
+            remscenmenu();
+        }
+    }
+}
+if (rscm == "dmessage3")
+{
+    m.fade_music();
+    deaths.open("data/scenarios/" + senpack + "/deaths.list", "r");
+    deathsplit = deaths.read();
+    deaths.close();
+    string[] rawDeaths = string_split(deathsplit, "\r\n", true);
+    string[] filteredDeaths;
+    uint[] originalIndexes;
+    filter_empty_lines(rawDeaths, filteredDeaths, originalIndexes);
+    if (filteredDeaths.length() == 0)
+    {
+        alert("Error", "There are no death messages available to remove.");
+        wait(500);
+        remscenmenu();
+    }
+    setupmenu(false);
+    for (uint i = 0; i < filteredDeaths.length(); i++)
+    {
+        m.add_item_tts(filteredDeaths[i], filteredDeaths[i], "", true);
+    }
+    int mres = m.run("Select a death message to remove", true);
+    if (mres == 0)
+    {
+        remscenmenu();
+    }
+    if (mres > 0 and mres <= filteredDeaths.length())
+    {
+        int realIndex = originalIndexes[mres - 1];
+        if (realIndex >= 0 and realIndex < rawDeaths.length())
+        {
+            rawDeaths.remove_at(realIndex);
+            string final = "";
+            for (uint i = 0; i < rawDeaths.length(); i++)
+            {
+                final += rawDeaths[i] + "\r\n";
+            }
+            deaths.open("data/scenarios/" + senpack + "/deaths.list", "w");
+            deaths.write(final);
+            deaths.close();
+            dlg("Success! Your death message has been removed from the death messages list.");
+            remscenmenu();
+        }
+    }
+}
+if (rscm == "mod3")
+{
+    m.fade_music();
+    moods.open("data/scenarios/" + senpack + "/moods.list", "r");
+    moodsplit = moods.read();
+    moods.close();
+    string[] rawMoods = string_split(moodsplit, "\r\n", true);
+    string[] filteredMoods;
+    uint[] originalIndexes;
+    filter_empty_lines(rawMoods, filteredMoods, originalIndexes);
+    if (filteredMoods.length() == 0)
+    {
+        alert("Error", "There are no moods available to remove.");
+        wait(500);
+        remscenmenu();
+    }
+    setupmenu(false);
+    for (uint i = 0; i < filteredMoods.length(); i++)
+    {
+        m.add_item_tts(filteredMoods[i], filteredMoods[i], "", true);
+    }
+    int mres = m.run("Select a mood to remove", true);
+    if (mres == 0)
+    {
+        remscenmenu();
+    }
+    if (mres > 0 and mres <= filteredMoods.length())
+    {
+        int realIndex = originalIndexes[mres - 1];
+        if (realIndex >= 0 and realIndex < rawMoods.length())
+        {
+            rawMoods.remove_at(realIndex);
+            string final = "";
+            for (uint i = 0; i < rawMoods.length(); i++)
+            {
+                final += rawMoods[i] + "\r\n";
+            }
+            moods.open("data/scenarios/" + senpack + "/moods.list", "w");
+            moods.write(final);
+            moods.close();
+            dlg("Success! Your mood has been removed from the moods list.");
+            remscenmenu();
+        }
+    }
+}
+if (rscm == "pmessage3")
+{
+    m.fade_music();
+    pains.open("data/scenarios/" + senpack + "/pains.list", "r");
+    painsplit = pains.read();
+    pains.close();
+    string[] rawPains = string_split(painsplit, "\r\n", true);
+    string[] filteredPains;
+    uint[] originalIndexes;
+    filter_empty_lines(rawPains, filteredPains, originalIndexes);
+    if (filteredPains.length() == 0)
+    {
+        alert("Error", "There are no pain messages available to remove.");
+        wait(500);
+        remscenmenu();
+    }
+    setupmenu(false);
+    for (uint i = 0; i < filteredPains.length(); i++)
+    {
+        m.add_item_tts(filteredPains[i], filteredPains[i], "", true);
+    }
+    int mres = m.run("Select a pain message to remove", true);
+    if (mres == 0)
+    {
+        remscenmenu();
+    }
+    if (mres > 0 and mres <= filteredPains.length())
+    {
+        int realIndex = originalIndexes[mres - 1];
+        if (realIndex >= 0 and realIndex < rawPains.length())
+        {
+            rawPains.remove_at(realIndex);
+            string final = "";
+            for (uint i = 0; i < rawPains.length(); i++)
+            {
+                final += rawPains[i] + "\r\n";
+            }
+            pains.open("data/scenarios/" + senpack + "/pains.list", "w");
+            pains.write(final);
+            pains.close();
+            dlg("Success! Your pain message has been removed from the pain messages list.");
+            remscenmenu();
+        }
+    }
+}
+if (rscm == "res3")
+{
+    m.fade_music();
+    reasons.open("data/scenarios/" + senpack + "/reasons.list", "r");
+    reasonsplit = reasons.read();
+    reasons.close();
+    string[] rawReasons = string_split(reasonsplit, "\r\n", true);
+    string[] filteredReasons;
+    uint[] originalIndexes;
+    filter_empty_lines(rawReasons, filteredReasons, originalIndexes);
+    if (filteredReasons.length() == 0)
+    {
+        alert("Error", "There are no reasons available to remove.");
+        wait(500);
+        remscenmenu();
+    }
+    setupmenu(false);
+    for (uint i = 0; i < filteredReasons.length(); i++)
+    {
+        m.add_item_tts(filteredReasons[i], filteredReasons[i], "", true);
+    }
+    int mres = m.run("Select a reason to remove", true);
+    if (mres == 0)
+    {
+        remscenmenu();
+    }
+    if (mres > 0 and mres <= filteredReasons.length())
+    {
+        int realIndex = originalIndexes[mres - 1];
+        if (realIndex >= 0 and realIndex < rawReasons.length())
+        {
+            rawReasons.remove_at(realIndex);
+            string final = "";
+            for (uint i = 0; i < rawReasons.length(); i++)
+            {
+                final += rawReasons[i] + "\r\n";
+            }
+            reasons.open("data/scenarios/" + senpack + "/reasons.list", "w");
+            reasons.write(final);
+            reasons.close();
+            dlg("Success! Your reason has been removed from the reasons list.");
+            remscenmenu();
+        }
+    }
 }
 if(rscm=="back")
 {
@@ -832,327 +1448,300 @@ scencredmenu();
 void vewscenmenu()
 {
 setupmenu();
-m.add_item_tts("view actions", "act3");
-m.add_item_tts("view attacks", "ak3");
-m.add_item_tts("view body parts", "bpart3");
-m.add_item_tts("view character names", "cname3");
-m.add_item_tts("view character types", "ctype3");
-m.add_item_tts("view death messages", "dmessage3");
-m.add_item_tts("view moods", "mod3");
-m.add_item_tts("view pain messages", "pmessage3");
-m.add_item_tts("view reasons", "res3");
+m.add_item_tts("actions", "act4");
+m.add_item_tts("attacks", "ak4");
+m.add_item_tts("body parts", "bpart4");
+m.add_item_tts("character names", "cname4");
+m.add_item_tts("character types", "ctype4");
+m.add_item_tts("death messages", "dmessage4");
+m.add_item_tts("moods", "mod4");
+m.add_item_tts("pain messages", "pmessage4");
+m.add_item_tts("reasons", "res4");
 m.add_item_tts("back", "back");
-int mres=m.run(senpack+": View scenarios menu",true);
+int mres=m.run(senpack+" loaded: View scenarios menu. What would you like to view?",true);
 string vscm=m.get_item_name(mres);
 if(mres==0)
 {
 scencredmenu();
 }
-if(vscm=="act3")
+if(vscm=="act4")
 {
-m.fade_music();
-if(action.length()==0)
-{
-alert("Error", "There are no actions available to view.");
-wait(500);
-vewscenmenu();
+    m.fade_music();
+    actions.open("data/scenarios/" + senpack + "/actions.list", "r");
+    actionsplit = actions.read();
+    actions.close();
+    action = string_split(actionsplit, "\r\n", true);
+    string[] filtered_actions;
+    uint[] original_indices;
+    filter_empty_lines(action, filtered_actions, original_indices);
+    if(filtered_actions.length() == 0)
+    {
+        alert("Error", "There are no actions available to view.");
+        wait(500);
+        vewscenmenu();
+    }
+    setupmenu(false);
+    for(uint i = 0; i < filtered_actions.length(); i++)
+    {
+        m.add_item_tts(filtered_actions[i], "", "", false);
+    }
+    int mres = m.run("Actions viewer", true);
+    if(mres == 0)
+    {
+        vewscenmenu();
+    }
+    if(mres > 0 && mres <= filtered_actions.length())
+    {
+        return;
+    }
 }
-else
+if(vscm=="ak4")
 {
-actions.open("data/scenarios/"+senpack+"/actions.list","r");
-actionsplit=actions.read();
-action=string_split(actionsplit,"\r\n",true);
-setupmenu2();
-for(uint i=0; i<action.length(); i++)
+    m.fade_music();
+    attacks.open("data/scenarios/" + senpack + "/attacks.list", "r");
+    attacksplit = attacks.read();
+    attacks.close();
+    attack = string_split(attacksplit, "\r\n", true);
+    string[] filtered_attacks;
+    uint[] original_indices;
+    filter_empty_lines(attack, filtered_attacks, original_indices);
+    if(filtered_attacks.length() == 0)
+    {
+        alert("Error", "There are no attacks available to view.");
+        wait(500);
+        vewscenmenu();
+    }
+setupmenu(false);
+    for(uint i = 0; i < filtered_attacks.length(); i++)
+    {
+        m.add_item_tts(filtered_attacks[i], "", "", false);
+    }
+    int mres = m.run("attacks viewer", true);
+    if(mres == 0)
+    {
+        vewscenmenu();
+    }
+    if(mres > 0 && mres <= filtered_attacks.length())
+    {
+        return;
+    }
+}
+if(vscm=="bpart4")
 {
-m.add_item_tts(action[i],"","",false);
+    m.fade_music();
+    bodyparts.open("data/scenarios/" + senpack + "/bodyparts.list", "r");
+    bodypartsplit = bodyparts.read();
+    bodyparts.close();
+    bodypart = string_split(bodypartsplit, "\r\n", true);
+    string[] filtered_bodyparts;
+    uint[] original_indices;
+    filter_empty_lines(bodypart, filtered_bodyparts, original_indices);
+    if(filtered_bodyparts.length() == 0)
+    {
+        alert("Error", "There are no body parts available to view.");
+        wait(500);
+        vewscenmenu();
+    }
+setupmenu(false);
+    for(uint i = 0; i < filtered_bodyparts.length(); i++)
+    {
+        m.add_item_tts(filtered_bodyparts[i], "", "", false);
+    }
+    int mres = m.run("body parts viewer", true);
+    if(mres == 0)
+    {
+        vewscenmenu();
+    }
+    if(mres > 0 && mres <= filtered_bodyparts.length())
+    {
+        return;
+    }
 }
-int mres=m.run("Actions viewer", true);
-if(mres==0)
+if(vscm=="cname4")
 {
-vewscenmenu();
+    m.fade_music();
+    charnames.open("data/scenarios/" + senpack + "/charnames.list", "r");
+    charnamesplit = charnames.read();
+    charnames.close();
+    charname = string_split(charnamesplit, "\r\n", true);
+    string[] filtered_charnames;
+    uint[] original_indices;
+    filter_empty_lines(charname, filtered_charnames, original_indices);
+    if(filtered_charnames.length() == 0)
+    {
+        alert("Error", "There are no character names available to view.");
+        wait(500);
+        vewscenmenu();
+    }
+    setupmenu(false);
+    for(uint i = 0; i < filtered_charnames.length(); i++)
+    {
+        m.add_item_tts(filtered_charnames[i], "", "", false);
+    }
+    int mres = m.run("character names viewer", true);
+    if(mres == 0)
+    {
+        vewscenmenu();
+    }
+    if(mres > 0 && mres <= filtered_charnames.length())
+    {
+        return;
+    }
 }
-if (mres==0 and mres>=action.length())
+if(vscm=="ctype4")
 {
-return;
+    m.fade_music();
+    chartypes.open("data/scenarios/" + senpack + "/chartypes.list", "r");
+    chartypesplit = chartypes.read();
+    chartypes.close();
+    chartype = string_split(chartypesplit, "\r\n", true);
+    string[] filtered_chartypes;
+    uint[] original_indices;
+    filter_empty_lines(chartype, filtered_chartypes, original_indices);
+    if(filtered_chartypes.length() == 0)
+    {
+        alert("Error", "There are no character types available to view.");
+        wait(500);
+        vewscenmenu();
+    }
+    setupmenu(false);
+    for(uint i = 0; i < filtered_chartypes.length(); i++)
+    {
+        m.add_item_tts(filtered_chartypes[i], "", "", false);
+    }
+    int mres = m.run("character types viewer", true);
+    if(mres == 0)
+    {
+        vewscenmenu();
+    }
+    if(mres > 0 && mres <= filtered_chartypes.length())
+    {
+        return;
+    }
 }
-if (mres>0 and mres<=action.length())
+if(vscm=="dmessage4")
 {
-return;
+    m.fade_music();
+    deaths.open("data/scenarios/" + senpack + "/deaths.list", "r");
+    deathsplit = deaths.read();
+    deaths.close();
+    death = string_split(deathsplit, "\r\n", true);
+    string[] filtered_deaths;
+    uint[] original_indices;
+    filter_empty_lines(death, filtered_deaths, original_indices);
+    if(filtered_deaths.length() == 0)
+    {
+        alert("Error", "There are no death messages available to view.");
+        wait(500);
+        vewscenmenu();
+    }
+    setupmenu(false);
+    for(uint i = 0; i < filtered_deaths.length(); i++)
+    {
+        m.add_item_tts(filtered_deaths[i], "", "", false);
+    }
+    int mres = m.run("death messages viewer", true);
+    if(mres == 0)
+    {
+        vewscenmenu();
+    }
+    if(mres > 0 && mres <= filtered_deaths.length())
+    {
+        return;
+    }
 }
-}
-}
-if(vscm=="ak3")
+if(vscm=="mod4")
 {
-m.fade_music();
-if(attack.length()==0)
-{
-alert("Error", "There are no attacks available to view.");
-wait(500);
-vewscenmenu();
+    m.fade_music();
+    moods.open("data/scenarios/" + senpack + "/moods.list", "r");
+    moodsplit = moods.read();
+    moods.close();
+    mood = string_split(moodsplit, "\r\n", true);
+    string[] filtered_moods;
+    uint[] original_indices;
+    filter_empty_lines(mood, filtered_moods, original_indices);
+    if(filtered_moods.length() == 0)
+    {
+        alert("Error", "There are no moods available to view.");
+        wait(500);
+        vewscenmenu();
+    }
+    setupmenu(false);
+    for(uint i = 0; i < filtered_moods.length(); i++)
+    {
+        m.add_item_tts(filtered_moods[i], "", "", false);
+    }
+    int mres = m.run("moods viewer", true);
+    if(mres == 0)
+    {
+        vewscenmenu();
+    }
+    if(mres > 0 && mres <= filtered_moods.length())
+    {
+        return;
+    }
 }
-else
+if(vscm=="pmessage4")
 {
-attacks.open("data/scenarios/"+senpack+"/attacks.list","r");
-attacksplit=attacks.read();
-attack=string_split(attacksplit,"\r\n",true);
-setupmenu2();
-for(uint i=0; i<attack.length(); i++)
+    m.fade_music();
+    pains.open("data/scenarios/" + senpack + "/pains.list", "r");
+    painsplit = pains.read();
+    pains.close();
+    pain = string_split(painsplit, "\r\n", true);
+    string[] filtered_pains;
+    uint[] original_indices;
+    filter_empty_lines(pain, filtered_pains, original_indices);
+    if(filtered_pains.length() == 0)
+    {
+        alert("Error", "There are no pain messages available to view.");
+        wait(500);
+        vewscenmenu();
+    }
+    setupmenu(false);
+    for(uint i = 0; i < filtered_pains.length(); i++)
+    {
+        m.add_item_tts(filtered_pains[i], "", "", false);
+    }
+    int mres = m.run("pain messages viewer", true);
+    if(mres == 0)
+    {
+        vewscenmenu();
+    }
+    if(mres > 0 && mres <= filtered_pains.length())
+    {
+        return;
+    }
+}
+if(vscm=="res4")
 {
-m.add_item_tts(attack[i],"","",false);
-}
-int mres=m.run("Attacks viewer", true);
-if(mres==0)
-{
-vewscenmenu();
-}
-if (mres==0 and mres>=attack.length())
-{
-return;
-}
-if (mres>0 and mres<=attack.length())
-{
-return;
-}
-}
-}
-if(vscm=="bpart3")
-{
-m.fade_music();
-if(bodypart.length()==0)
-{
-alert("Error", "There are no body parts available to view.");
-wait(500);
-vewscenmenu();
-}
-else
-{
-bodyparts.open("data/scenarios/"+senpack+"/bodyparts.list","r");
-bodypartsplit=bodyparts.read();
-bodypart=string_split(bodypartsplit,"\r\n",true);
-setupmenu2();
-for(uint i=0; i<bodypart.length(); i++)
-{
-m.add_item_tts(bodypart[i],"","",false);
-}
-int mres=m.run("Body parts viewer", true);
-if(mres==0)
-{
-vewscenmenu();
-}
-if (mres==0 and mres>=bodypart.length())
-{
-return;
-}
-if (mres>0 and mres<=bodypart.length())
-{
-return;
-}
-}
-}
-if(vscm=="cname3")
-{
-m.fade_music();
-if(charname.length()==0)
-{
-alert("Error", "There are no character names available to view.");
-wait(500);
-vewscenmenu();
-}
-else
-{
-charnames.open("data/scenarios/"+senpack+"/charnames.list","r");
-charnamesplit=charnames.read();
-charname=string_split(charnamesplit,"\r\n",true);
-setupmenu2();
-for(uint i=0; i<charname.length(); i++)
-{
-m.add_item_tts(charname[i],"","",false);
-}
-int mres=m.run("Character names viewer", true);
-if(mres==0)
-{
-vewscenmenu();
-}
-if (mres==0 and mres>=charname.length())
-{
-return;
-}
-if (mres>0 and mres<=charname.length())
-{
-return;
-}
-}
-}
-if(vscm=="ctype3")
-{
-m.fade_music();
-if(chartype.length()==0)
-{
-alert("Error", "There are no character types available to view.");
-wait(500);
-vewscenmenu();
-}
-else
-{
-chartypes.open("data/scenarios/"+senpack+"/chartypes.list","r");
-chartypesplit=chartypes.read();
-chartype=string_split(chartypesplit,"\r\n",true);
-setupmenu2();
-for(uint i=0; i<chartype.length(); i++)
-{
-m.add_item_tts(chartype[i],"","",false);
-}
-int mres=m.run("Character types viewer", true);
-if(mres==0)
-{
-vewscenmenu();
-}
-if (mres==0 and mres>=chartype.length())
-{
-return;
-}
-if (mres>0 and mres<=chartype.length())
-{
-return;
-}
-}
-}
-if(vscm=="dmessage3")
-{
-m.fade_music();
-if(death.length()==0)
-{
-alert("Error", "There are no death messages available to view.");
-wait(500);
-vewscenmenu();
-}
-else
-{
-deaths.open("data/scenarios/"+senpack+"/deaths.list","r");
-deathsplit=deaths.read();
-death=string_split(deathsplit,"\r\n",true);
-setupmenu2();
-for(uint i=0; i<death.length(); i++)
-{
-m.add_item_tts(death[i],"","",false);
-}
-int mres=m.run("Death messages viewer", true);
-if(mres==0)
-{
-vewscenmenu();
-}
-if (mres==0 and mres>=death.length())
-{
-return;
-}
-if (mres>0 and mres<=death.length())
-{
-return;
-}
-}
-}
-if(vscm=="mod3")
-{
-m.fade_music();
-if(mood.length()==0)
-{
-alert("Error", "There are no moods available to view.");
-wait(500);
-vewscenmenu();
-}
-else
-{
-moods.open("data/scenarios/"+senpack+"/moods.list","r");
-moodsplit=moods.read();
-mood=string_split(moodsplit,"\r\n",true);
-setupmenu2();
-for(uint i=0; i<mood.length(); i++)
-{
-m.add_item_tts(mood[i],"","",false);
-}
-int mres=m.run("Moods viewer", true);
-if(mres==0)
-{
-vewscenmenu();
-}
-if (mres==0 and mres>=mood.length())
-{
-return;
-}
-if (mres>0 and mres<=mood.length())
-{
-return;
-}
-}
-}
-if(vscm=="pmessage3")
-{
-m.fade_music();
-if(pain.length()==0)
-{
-alert("Error", "There are no pain messages available to view.");
-wait(500);
-vewscenmenu();
-}
-else
-{
-pains.open("data/scenarios/"+senpack+"/pains.list","r");
-painsplit=pains.read();
-pain=string_split(painsplit,"\r\n",true);
-setupmenu2();
-for(uint i=0; i<pain.length(); i++)
-{
-m.add_item_tts(pain[i],"","",false);
-}
-int mres=m.run("pain messages viewer", true);
-if(mres==0)
-{
-vewscenmenu();
-}
-if (mres==0 and mres>=pain.length())
-{
-return;
-}
-if (mres>0 and mres<=pain.length())
-{
-return;
-}
-}
-}
-if(vscm=="res3")
-{
-m.fade_music();
-if(reason.length()==0)
-{
-alert("Error", "There are no reasons available to view.");
-wait(500);
-vewscenmenu();
-}
-else
-{
-reasons.open("data/scenarios/"+senpack+"/reasons.list","r");
-reasonsplit=reasons.read();
-reason=string_split(reasonsplit,"\r\n",true);
-setupmenu2();
-for(uint i=0; i<reason.length(); i++)
-{
-m.add_item_tts(reason[i],"","",false);
-}
-int mres=m.run("Reasons viewer", true);
-if(mres==0)
-{
-vewscenmenu();
-}
-if (mres==0 and mres>=reason.length())
-{
-return;
-}
-if (mres>0 and mres<=reason.length())
-{
-return;
-}
-}
+    m.fade_music();
+    reasons.open("data/scenarios/" + senpack + "/reasons.list", "r");
+    reasonsplit = reasons.read();
+    reasons.close();
+    reason = string_split(reasonsplit, "\r\n", true);
+    string[] filtered_reasons;
+    uint[] original_indices;
+    filter_empty_lines(reason, filtered_reasons, original_indices);
+    if(filtered_reasons.length() == 0)
+    {
+        alert("Error", "There are no reasons available to view.");
+        wait(500);
+        vewscenmenu();
+    }
+    setupmenu(false);
+    for(uint i = 0; i < filtered_reasons.length(); i++)
+    {
+        m.add_item_tts(filtered_reasons[i], "", "", false);
+    }
+    int mres = m.run("reasons viewer", true);
+    if(mres == 0)
+    {
+        vewscenmenu();
+    }
+    if(mres > 0 && mres <= filtered_reasons.length())
+    {
+        return;
+    }
 }
 if(vscm=="back")
 {
@@ -1173,7 +1762,7 @@ m.add_item_tts("There are "+(mood.length()-1)+"entries in the moods file.");
 m.add_item_tts("There are "+(pain.length()-1)+"entries in the pain messages file.");
 m.add_item_tts("There are "+(reason.length()-1)+"entries in the reasons file.");
 m.add_item_tts("back", "back");
-int mres=m.run(senpack+": Scenario statistics menu",true);
+int mres=m.run(senpack+" loaded: Scenario statistics menu",true);
 string stm=m.get_item_name(mres);
 if(mres==0 or mres>=m.get_item_name(mres))
 {

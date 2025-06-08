@@ -10,7 +10,7 @@ string disachars="@#$%^&*()[]{};:'\"\\|<>/+-=`~";
 string disadesc="This character is not allowed.";
 string sengender="male";
 string senpack="default";
-string version="1.4";
+string version="1.5";
 dynamic_menu_pro m;
 file actions, bodyparts, attacks, deaths, charnames, chartypes, moods, pains, reasons;
 sound_pool pool, spool;
