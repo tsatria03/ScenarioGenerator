@@ -29,16 +29,24 @@ mainmenu();
 if(gend=="ml")
 {
 sengender="male";
-string[] senpacktyp=find_directories("data/scenarios/*");
-if(senpacktyp.length()==0)
+string[] senarpacks=find_directories("data/scenarios/*");
+if(senarpacks.length()==0)
 {
 alert("Error", "There are no scenario packs available to view.");
 wait(500);
 mainmenu();
 }
+else if(senarpacks.length()==1)
+{
+senpack = senarpacks[0];
+speak("loading");
+wait(500);
+health=10000;
+maxhealth=10000;
+genscen();
+}
 else
 {
-string[] senarpacks=find_directories("data/scenarios/*");
 setupmenu(false);
 for(uint i=0; i<senarpacks.length(); i++)
 {
@@ -67,16 +75,24 @@ genscen();
 if(gend=="fl")
 {
 sengender="female";
-string[] senpacktyp=find_directories("data/scenarios/*");
-if(senpacktyp.length()==0)
+string[] senarpacks=find_directories("data/scenarios/*");
+if(senarpacks.length()==0)
 {
 alert("Error", "There are no scenario packs available to view.");
 wait(500);
 mainmenu();
 }
+else if(senarpacks.length()==1)
+{
+senpack = senarpacks[0];
+speak("loading");
+wait(500);
+health=10000;
+maxhealth=10000;
+genscen();
+}
 else
 {
-string[] senarpacks=find_directories("data/scenarios/*");
 setupmenu(false);
 for(uint i=0; i<senarpacks.length(); i++)
 {
@@ -113,16 +129,20 @@ scencredmenu();
 }
 if(main=="stats")
 {
-string[] senpacktyp=find_directories("data/scenarios/*");
-if(senpacktyp.length()==0)
+string[] senarpacks=find_directories("data/scenarios/*");
+if(senarpacks.length()==0)
 {
 alert("Error", "There are no scenario packs available to view.");
 wait(500);
 mainmenu();
 }
+else if(senarpacks.length()==1)
+{
+senpack = senarpacks[0];
+statsmenu();
+}
 else
 {
-string[] senarpacks=find_directories("data/scenarios/*");
 setupmenu();
 for(uint i=0; i<senarpacks.length(); i++)
 {
@@ -167,16 +187,20 @@ mainmenu();
 }
 if(scm=="ascen")
 {
-string[] senpacktyp=find_directories("data/scenarios/*");
-if(senpacktyp.length()==0)
+string[] senarpacks=find_directories("data/scenarios/*");
+if(senarpacks.length()==0)
 {
 alert("Error", "There are no scenario packs available to view.");
 wait(500);
 mainmenu();
 }
+else if(senarpacks.length()==1)
+{
+senpack = senarpacks[0];
+adscenmenu();
+}
 else
 {
-string[] senarpacks=find_directories("data/scenarios/*");
 setupmenu();
 for(uint i=0; i<senarpacks.length(); i++)
 {
@@ -200,16 +224,20 @@ adscenmenu();
 }
 if(scm=="escen")
 {
-string[] senpacktyp=find_directories("data/scenarios/*");
-if(senpacktyp.length()==0)
+string[] senarpacks=find_directories("data/scenarios/*");
+if(senarpacks.length()==0)
 {
 alert("Error", "There are no scenario packs available to view.");
 wait(500);
 mainmenu();
 }
+else if(senarpacks.length()==1)
+{
+senpack = senarpacks[0];
+edscenmenu();
+}
 else
 {
-string[] senarpacks=find_directories("data/scenarios/*");
 setupmenu();
 for(uint i=0; i<senarpacks.length(); i++)
 {
@@ -233,16 +261,20 @@ edscenmenu();
 }
 if(scm=="rscen")
 {
-string[] senpacktyp=find_directories("data/scenarios/*");
-if(senpacktyp.length()==0)
+string[] senarpacks=find_directories("data/scenarios/*");
+if(senarpacks.length()==0)
 {
 alert("Error", "There are no scenario packs available to view.");
 wait(500);
 mainmenu();
 }
+else if(senarpacks.length()==1)
+{
+senpack = senarpacks[0];
+remscenmenu();
+}
 else
 {
-string[] senarpacks=find_directories("data/scenarios/*");
 setupmenu();
 for(uint i=0; i<senarpacks.length(); i++)
 {
@@ -266,16 +298,20 @@ remscenmenu();
 }
 if(scm=="vscen")
 {
-string[] senpacktyp=find_directories("data/scenarios/*");
-if(senpacktyp.length()==0)
+string[] senarpacks=find_directories("data/scenarios/*");
+if(senarpacks.length()==0)
 {
 alert("Error", "There are no scenario packs available to view.");
 wait(500);
 mainmenu();
 }
+else if(senarpacks.length()==1)
+{
+senpack = senarpacks[0];
+vewscenmenu();
+}
 else
 {
-string[] senarpacks=find_directories("data/scenarios/*");
 setupmenu();
 for(uint i=0; i<senarpacks.length(); i++)
 {
