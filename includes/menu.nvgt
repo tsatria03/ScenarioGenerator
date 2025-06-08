@@ -104,6 +104,7 @@ m.add_item_tts("add a character name", "cname");
 m.add_item_tts("add a character type", "ctype");
 m.add_item_tts("add a death message", "dmessage");
 m.add_item_tts("add a mood", "mod");
+m.add_item_tts("add a pain message", "pmessage");
 m.add_item_tts("add a reason", "res");
 m.add_item_tts("back", "back");
 int mres=m.run("Add scenarios menu",true);
@@ -127,7 +128,7 @@ else
 {
 actions.write("\r\n"+newact);
 actions.close();
-dlg("Success! Your action has been added to the list.");
+dlg("Success! Your action has been added to the actions list.");
 adscenmenu();
 }
 }
@@ -146,7 +147,7 @@ else
 {
 attacks.write("\r\n"+newak);
 attacks.close();
-dlg("Success! Your attack has been added to the list.");
+dlg("Success! Your attack has been added to the attacks list.");
 adscenmenu();
 }
 }
@@ -165,7 +166,7 @@ else
 {
 bodyparts.write("\r\n"+newbpart);
 bodyparts.close();
-dlg("Success! Your body part has been added to the list.");
+dlg("Success! Your body part has been added to the body parts list.");
 adscenmenu();
 }
 }
@@ -184,7 +185,7 @@ else
 {
 charnames.write("\r\n"+newcname);
 charnames.close();
-dlg("Success! Your character name has been added to the list.");
+dlg("Success! Your character name has been added to the character names list.");
 adscenmenu();
 }
 }
@@ -203,7 +204,7 @@ else
 {
 chartypes.write("\r\n"+newctype);
 chartypes.close();
-dlg("Success! Your character type has been added to the list.");
+dlg("Success! Your character type has been added to the character types list.");
 adscenmenu();
 }
 }
@@ -222,7 +223,7 @@ else
 {
 deaths.write("\r\n"+newdmessage);
 deaths.close();
-dlg("Success! Your death message has been added to the list.");
+dlg("Success! Your death message has been added to the death messages list.");
 adscenmenu();
 }
 }
@@ -241,7 +242,26 @@ else
 {
 moods.write("\r\n"+newmod);
 moods.close();
-dlg("Success! Your mood has been added to the list.");
+dlg("Success! Your mood has been added to the moods list.");
+adscenmenu();
+}
+}
+if(ascm=="pmessage")
+{
+m.fade_music();
+pains.open("data/saves/pains.list", "a");
+vd.set_disallowed_chars(disachars, false, disadesc);
+string newpmessage=vd.input_box("", "Enter the pain message you'd like to add.");
+if(newpmessage.empty())
+{
+alert("Error", "You must enter a valid pain message.");
+adscenmenu();
+}
+else
+{
+pains.write("\r\n"+newpmessage);
+pains.close();
+dlg("Success! Your pain message has been added to the pain messages list.");
 adscenmenu();
 }
 }
@@ -260,7 +280,7 @@ else
 {
 reasons.write("\r\n"+newres);
 reasons.close();
-dlg("Success! Your reason has been added to the list.");
+dlg("Success! Your reason has been added to the reasons list.");
 adscenmenu();
 }
 }
@@ -279,6 +299,7 @@ m.add_item_tts("remove a character name", "cname2");
 m.add_item_tts("remove a character type", "ctype2");
 m.add_item_tts("remove a death message", "dmessage2");
 m.add_item_tts("remove a mood", "mod2");
+m.add_item_tts("remove a pain message", "pmessage2");
 m.add_item_tts("remove a reason", "res2");
 m.add_item_tts("back", "back");
 int mres=m.run("Remove scenarios menu",true);
@@ -319,7 +340,7 @@ m.fade_music();
             actions.open("data/saves/actions.list", "w");
             actions.write(final);
             actions.close();
-            dlg("Success! Your action has been removed.");
+            dlg("Success! Your action has been removed from the actions list.");
             remscenmenu();
         }
     }
@@ -356,7 +377,7 @@ if (mres > 0 and mres <= attack.length())
         attacks.open("data/saves/attacks.list", "w");
         attacks.write(final);
         attacks.close();
-        dlg("Success! Your attack has been removed.");
+        dlg("Success! Your attack has been removed from the attacks list.");
         remscenmenu();
     }
 }
@@ -393,7 +414,7 @@ if (mres > 0 and mres <= bodypart.length())
         bodyparts.open("data/saves/bodyparts.list", "w");
         bodyparts.write(final);
         bodyparts.close();
-        dlg("Success! Your body part has been removed.");
+        dlg("Success! Your body part has been removed from the body parts list.");
         remscenmenu();
     }
 }
@@ -430,7 +451,7 @@ if (mres > 0 and mres <= charname.length())
         charnames.open("data/saves/charnames.list", "w");
         charnames.write(final);
         charnames.close();
-        dlg("Success! Your character name has been removed.");
+        dlg("Success! Your character name has been removed from the character names list.");
         remscenmenu();
     }
 }
@@ -467,7 +488,7 @@ if (mres > 0 and mres <= chartype.length())
         chartypes.open("data/saves/chartypes.list", "w");
         chartypes.write(final);
         chartypes.close();
-        dlg("Success! Your character type has been removed.");
+        dlg("Success! Your character type has been removed from the character types list.");
         remscenmenu();
     }
 }
@@ -504,7 +525,7 @@ if (mres > 0 and mres <= death.length())
         deaths.open("data/saves/deaths.list", "w");
         deaths.write(final);
         deaths.close();
-        dlg("Success! Your death message has been removed.");
+        dlg("Success! Your death message has been removed from the death messages list.");
         remscenmenu();
     }
 }
@@ -541,7 +562,44 @@ if (mres > 0 and mres <= mood.length())
         moods.open("data/saves/moods.list", "w");
         moods.write(final);
         moods.close();
-        dlg("Success! Your mood has been removed.");
+        dlg("Success! Your mood has been removed from the moods list.");
+        remscenmenu();
+    }
+}
+}
+if(rscm=="pmessage2")
+{
+m.fade_music();
+pains.open("data/saves/pains.list", "r");
+painsplit = pains.read();
+string[] pain = string_split(painsplit, "\r\n", true);
+pains.close();
+setupmenu(false);
+for (uint i = 0; i < pain.length(); i++)
+{
+    m.add_item_tts(pain[i], pain[i], "", true);
+}
+int mres = m.run("Select a pain message to remove", true);
+if (mres == 0)
+{
+    remscenmenu();
+}
+if (mres > 0 and mres <= pain.length())
+{
+    string pm = pain[mres - 1];
+    int finder = pain.find(pm);
+    if (finder > -1)
+    {
+        pain.remove_at(finder);
+        string final = "";
+        for (uint i = 0; i < pain.length(); i++)
+        {
+            final += pain[i] + "\r\n";
+        }
+        pains.open("data/saves/pains.list", "w");
+        pains.write(final);
+        pains.close();
+        dlg("Success! Your pain message has been removed from the pain messages list.");
         remscenmenu();
     }
 }
@@ -578,7 +636,7 @@ if (mres > 0 and mres <= reason.length())
         reasons.open("data/saves/reasons.list", "w");
         reasons.write(final);
         reasons.close();
-        dlg("Success! Your reason has been removed.");
+        dlg("Success! Your reason has been removed from the reasons list.");
         remscenmenu();
     }
 }
@@ -598,6 +656,7 @@ m.add_item_tts("view character names", "cname3");
 m.add_item_tts("view character types", "ctype3");
 m.add_item_tts("view death messages", "dmessage3");
 m.add_item_tts("view moods", "mod3");
+m.add_item_tts("view pain messages", "pmessage3");
 m.add_item_tts("view reasons", "res3");
 m.add_item_tts("back", "back");
 int mres=m.run("View scenarios menu",true);
@@ -781,6 +840,31 @@ if (mres>0 and mres<=mood.length())
 return;
 }
 }
+if(vscm=="pmessage3")
+{
+m.fade_music();
+pains.open("data/saves/pains.list","r");
+painsplit=pains.read();
+pain=string_split(painsplit,"\r\n",true);
+setupmenu2();
+for(uint i=0; i<pain.length(); i++)
+{
+m.add_item_tts(pain[i],"","",false);
+}
+int mres=m.run("pain messages viewer", true);
+if(mres==0)
+{
+vewscenmenu();
+}
+if (mres==0 and mres>=pain.length())
+{
+return;
+}
+if (mres>0 and mres<=pain.length())
+{
+return;
+}
+}
 if(vscm=="res3")
 {
 m.fade_music();
@@ -822,6 +906,7 @@ m.add_item_tts("There are "+charname.length()+"entries in the character names fi
 m.add_item_tts("There are "+chartype.length()+"entries in the character types file.");
 m.add_item_tts("There are "+death.length()+"entries in the death messages file.");
 m.add_item_tts("There are "+mood.length()+"entries in the moods file.");
+m.add_item_tts("There are "+pain.length()+"entries in the pain messages file.");
 m.add_item_tts("There are "+reason.length()+"entries in the reasons file.");
 m.add_item_tts("back", "back");
 int mres=m.run("scenario statistics menu",true);

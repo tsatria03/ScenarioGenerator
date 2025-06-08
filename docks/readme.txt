@@ -16,6 +16,7 @@ Charnames.list. This file holds everything related to who's performing the actio
 Chartypes.list. This file holds everything related to what type of character you're facing off against, such as your Friend Raven frying your face with a fireball, your Cuzzen Jenna poaking your eye with a pencel, or your bully Deric mutilating your hands with a swift army knife.
 Deaths.list. This file holds all of the messages givven to the player after there health reaches 0.
 Moods.list. This file holds everything related to how the character feels after what they did to you, such as your sibling Bob braking your leg with a chain_wip because they were angry, your parent Jaimy kicking your nea with a right kick because they were upset, or your prison gard Mark slashing your face with a dagger because they were furious.
+Pains.list. This file holds all of the messages givven to the player after they start to lose health.
 Reasons.list. This file holds everything related to the causes of why your character attacked you in the firstplace resulting in their overall mood, such as your teacher Peater hitting your face with a book because they were disappointed that you weren't paying atencion in class, or your friend Mia punching your arm with a left_hook because they were sad that you were talking crap about them behind their back, or your child Brandon destroying your window with a baseball_bat because they were jealous that you were going to mcdonald's without them.
 
 Enjoy, and happy generating!

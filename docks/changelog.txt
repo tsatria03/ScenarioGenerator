@@ -1,3 +1,8 @@
+new in 1.4.
+Updated all of the add and remove dialog messages to notify the user of the files that have something added or removed from it in the scenario editor menu.
+You can now view how many entries their are for the pains file in the statistics menu.
+Added the ability to add, remove, and view pain messages in the scenario editor menu.
+Added a new file called pains.list. This file will be discussed more in depth in the readme.
 new in 1.3
 Updated the readme file with added keyboard shortcuts.
 Fixed an issue where removing a scenario item such as action and attack would incorrectly rewrite the file with only a few entries left in the scenario editor menu.
@@ -37,7 +42,7 @@ Fixed dlgs. You can no longer press and hold the letter A to bypass them.
 Cleaned up some unneeded lines givvin in some of the file lists, particularly the ones given in attacks.list, actions.list, and moods.list.
 Changed the way health is spoken when you press the letter H. It now reports the health in percentages like normal, but also tells you the actual value versus the maximum health you started with.
 Turned down some sounds to ease up people's ears a bit.
-The pain text is back!
+Added back the pain text.
 Added a realistic bell sound that plays after death.
 Replaced the pain text with an actual sound upon pressing enter.
 Added moods.list and reasons.list. These files will be discussed more in depth in the readme.
