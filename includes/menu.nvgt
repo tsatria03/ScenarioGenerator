@@ -28,21 +28,79 @@ mainmenu();
 }
 if(gend=="ml")
 {
+sengender="male";
+string[] senpacktyp=find_directories("data/scenarios/*");
+if(senpacktyp.length()==0)
+{
+alert("Error", "There are no scenario packs available to view.");
+wait(500);
+mainmenu();
+}
+else
+{
+string[] senarpacks=find_directories("data/scenarios/*");
+setupmenu(false);
+for(uint i=0; i<senarpacks.length(); i++)
+{
+m.add_item_tts(senarpacks[i], senarpacks[i]);
+}
+int mres=m.run("Choose the scenario pack you'd like to use for this generation.", true);
+if(mres==0)
+{
+mainmenu();
+}
+if (mres==0 and mres>=senarpacks.length())
+{
+senpack=senarpacks[mres-1];
+}
+if (mres>0 and mres<=senarpacks.length())
+{
+senpack=senarpacks[mres-1];
 speak("loading");
 wait(500);
-sengender="male";
 health=10000;
 maxhealth=10000;
 genscen();
 }
+}
+}
 if(gend=="fl")
 {
+sengender="female";
+string[] senpacktyp=find_directories("data/scenarios/*");
+if(senpacktyp.length()==0)
+{
+alert("Error", "There are no scenario packs available to view.");
+wait(500);
+mainmenu();
+}
+else
+{
+string[] senarpacks=find_directories("data/scenarios/*");
+setupmenu(false);
+for(uint i=0; i<senarpacks.length(); i++)
+{
+m.add_item_tts(senarpacks[i], senarpacks[i]);
+}
+int mres=m.run("Choose the scenario pack you'd like to use for this generation.", true);
+if(mres==0)
+{
+mainmenu();
+}
+if (mres==0 and mres>=senarpacks.length())
+{
+senpack=senarpacks[mres-1];
+}
+if (mres>0 and mres<=senarpacks.length())
+{
+senpack=senarpacks[mres-1];
 speak("loading");
 wait(500);
-sengender="female";
 health=10000;
 maxhealth=10000;
 genscen();
+}
+}
 }
 if(gend=="back")
 {
@@ -55,7 +113,36 @@ scencredmenu();
 }
 if(main=="stats")
 {
+string[] senpacktyp=find_directories("data/scenarios/*");
+if(senpacktyp.length()==0)
+{
+alert("Error", "There are no scenario packs available to view.");
+wait(500);
+mainmenu();
+}
+else
+{
+string[] senarpacks=find_directories("data/scenarios/*");
+setupmenu();
+for(uint i=0; i<senarpacks.length(); i++)
+{
+m.add_item_tts(senarpacks[i], senarpacks[i]);
+}
+int mres=m.run("Choose the scenario pack you'd like to use in this menu.", true);
+if(mres==0)
+{
+scencredmenu();
+}
+if (mres==0 and mres>=senarpacks.length())
+{
+senpack=senarpacks[mres-1];
+}
+if (mres>0 and mres<=senarpacks.length())
+{
+senpack=senarpacks[mres-1];
 statsmenu();
+}
+}
 }
 if(main=="ex")
 {
@@ -79,15 +166,102 @@ mainmenu();
 }
 if(scm=="ascen")
 {
+string[] senpacktyp=find_directories("data/scenarios/*");
+if(senpacktyp.length()==0)
+{
+alert("Error", "There are no scenario packs available to view.");
+wait(500);
+mainmenu();
+}
+else
+{
+string[] senarpacks=find_directories("data/scenarios/*");
+setupmenu();
+for(uint i=0; i<senarpacks.length(); i++)
+{
+m.add_item_tts(senarpacks[i], senarpacks[i]);
+}
+int mres=m.run("Choose the scenario pack you'd like to use in this menu.", true);
+if(mres==0)
+{
+scencredmenu();
+}
+if (mres==0 and mres>=senarpacks.length())
+{
+senpack=senarpacks[mres-1];
+}
+if (mres>0 and mres<=senarpacks.length())
+{
+senpack=senarpacks[mres-1];
 adscenmenu();
+}
+}
 }
 if(scm=="rscen")
 {
+string[] senpacktyp=find_directories("data/scenarios/*");
+if(senpacktyp.length()==0)
+{
+alert("Error", "There are no scenario packs available to view.");
+wait(500);
+mainmenu();
+}
+else
+{
+string[] senarpacks=find_directories("data/scenarios/*");
+setupmenu();
+for(uint i=0; i<senarpacks.length(); i++)
+{
+m.add_item_tts(senarpacks[i], senarpacks[i]);
+}
+int mres=m.run("Choose the scenario pack you'd like to use in this menu.", true);
+if(mres==0)
+{
+scencredmenu();
+}
+if (mres==0 and mres>=senarpacks.length())
+{
+senpack=senarpacks[mres-1];
+}
+if (mres>0 and mres<=senarpacks.length())
+{
+senpack=senarpacks[mres-1];
 remscenmenu();
+}
+}
 }
 if(scm=="vscen")
 {
+string[] senpacktyp=find_directories("data/scenarios/*");
+if(senpacktyp.length()==0)
+{
+alert("Error", "There are no scenario packs available to view.");
+wait(500);
+mainmenu();
+}
+else
+{
+string[] senarpacks=find_directories("data/scenarios/*");
+setupmenu();
+for(uint i=0; i<senarpacks.length(); i++)
+{
+m.add_item_tts(senarpacks[i], senarpacks[i]);
+}
+int mres=m.run("Choose the scenario pack you'd like to use in this menu.", true);
+if(mres==0)
+{
+scencredmenu();
+}
+if (mres==0 and mres>=senarpacks.length())
+{
+senpack=senarpacks[mres-1];
+}
+if (mres>0 and mres<=senarpacks.length())
+{
+senpack=senarpacks[mres-1];
 vewscenmenu();
+}
+}
 }
 if(scm=="back")
 {
@@ -107,7 +281,7 @@ m.add_item_tts("add a mood", "mod");
 m.add_item_tts("add a pain message", "pmessage");
 m.add_item_tts("add a reason", "res");
 m.add_item_tts("back", "back");
-int mres=m.run("Add scenarios menu",true);
+int mres=m.run(senpack+": Add scenarios menu",true);
 string ascm=m.get_item_name(mres);
 if(mres==0)
 {
@@ -116,12 +290,13 @@ scencredmenu();
 if(ascm=="act")
 {
 m.fade_music();
-actions.open("data/saves/actions.list", "a");
+actions.open("data/scenarios/"+senpack+"/actions.list", "a");
 vd.set_disallowed_chars(disachars, false, disadesc);
 string newact=vd.input_box("", "Enter the action you'd like to add.");
 if(newact.empty())
 {
 alert("Error", "You must enter a valid action.");
+wait(500);
 adscenmenu();
 }
 else
@@ -135,12 +310,13 @@ adscenmenu();
 if(ascm=="ak")
 {
 m.fade_music();
-attacks.open("data/saves/attacks.list", "a");
+attacks.open("data/scenarios/"+senpack+"/attacks.list", "a");
 vd.set_disallowed_chars(disachars, false, disadesc);
 string newak=vd.input_box("", "Enter the attack you'd like to add.");
 if(newak.empty())
 {
 alert("Error", "You must enter a valid attack.");
+wait(500);
 adscenmenu();
 }
 else
@@ -154,12 +330,13 @@ adscenmenu();
 if(ascm=="bpart")
 {
 m.fade_music();
-bodyparts.open("data/saves/bodyparts.list", "a");
+bodyparts.open("data/scenarios/"+senpack+"/bodyparts.list", "a");
 vd.set_disallowed_chars(disachars, false, disadesc);
 string newbpart=vd.input_box("", "Enter the body part you'd like to add.");
 if(newbpart.empty())
 {
 alert("Error", "You must enter a valid body part.");
+wait(500);
 adscenmenu();
 }
 else
@@ -173,12 +350,13 @@ adscenmenu();
 if(ascm=="cname")
 {
 m.fade_music();
-charnames.open("data/saves/charnames.list", "a");
+charnames.open("data/scenarios/"+senpack+"/charnames.list", "a");
 vd.set_disallowed_chars(disachars, false, disadesc);
 string newcname=vd.input_box("", "Enter the character name you'd like to add.");
 if(newcname.empty())
 {
 alert("Error", "You must enter a valid character name.");
+wait(500);
 adscenmenu();
 }
 else
@@ -192,12 +370,13 @@ adscenmenu();
 if(ascm=="ctype")
 {
 m.fade_music();
-chartypes.open("data/saves/chartypes.list", "a");
+chartypes.open("data/scenarios/"+senpack+"/chartypes.list", "a");
 vd.set_disallowed_chars(disachars, false, disadesc);
 string newctype=vd.input_box("", "Enter the character type you'd like to add.");
 if(newctype.empty())
 {
 alert("Error", "You must enter a valid character type.");
+wait(500);
 adscenmenu();
 }
 else
@@ -211,12 +390,13 @@ adscenmenu();
 if(ascm=="dmessage")
 {
 m.fade_music();
-deaths.open("data/saves/deaths.list", "a");
+deaths.open("data/scenarios/"+senpack+"/deaths.list", "a");
 vd.set_disallowed_chars(disachars, false, disadesc);
 string newdmessage=vd.input_box("", "Enter the death message you'd like to add.");
 if(newdmessage.empty())
 {
 alert("Error", "You must enter a valid death message.");
+wait(500);
 adscenmenu();
 }
 else
@@ -230,12 +410,13 @@ adscenmenu();
 if(ascm=="mod")
 {
 m.fade_music();
-moods.open("data/saves/moods.list", "a");
+moods.open("data/scenarios/"+senpack+"/moods.list", "a");
 vd.set_disallowed_chars(disachars, false, disadesc);
 string newmod=vd.input_box("", "Enter the mood you'd like to add.");
 if(newmod.empty())
 {
 alert("Error", "You must enter a valid mood.");
+wait(500);
 adscenmenu();
 }
 else
@@ -249,12 +430,13 @@ adscenmenu();
 if(ascm=="pmessage")
 {
 m.fade_music();
-pains.open("data/saves/pains.list", "a");
+pains.open("data/scenarios/"+senpack+"/pains.list", "a");
 vd.set_disallowed_chars(disachars, false, disadesc);
 string newpmessage=vd.input_box("", "Enter the pain message you'd like to add.");
 if(newpmessage.empty())
 {
 alert("Error", "You must enter a valid pain message.");
+wait(500);
 adscenmenu();
 }
 else
@@ -268,12 +450,13 @@ adscenmenu();
 if(ascm=="res")
 {
 m.fade_music();
-reasons.open("data/saves/reasons.list", "a");
+reasons.open("data/scenarios/"+senpack+"/reasons.list", "a");
 vd.set_disallowed_chars(disachars, false, disadesc);
 string newres=vd.input_box("", "Enter the reason you'd like to add.");
 if(newres.empty())
 {
 alert("Error", "You must enter a valid reason.");
+wait(500);
 adscenmenu();
 }
 else
@@ -302,7 +485,7 @@ m.add_item_tts("remove a mood", "mod2");
 m.add_item_tts("remove a pain message", "pmessage2");
 m.add_item_tts("remove a reason", "res2");
 m.add_item_tts("back", "back");
-int mres=m.run("Remove scenarios menu",true);
+int mres=m.run(senpack+": Remove scenarios menu",true);
 string rscm=m.get_item_name(mres);
 if(mres==0)
 {
@@ -311,7 +494,7 @@ scencredmenu();
 if(rscm=="act2")
 {
 m.fade_music();
-    actions.open("data/saves/actions.list", "r");
+    actions.open("data/scenarios/"+senpack+"/actions.list", "r");
     actionsplit = actions.read();
     string[] action = string_split(actionsplit, "\r\n", true);
     actions.close();
@@ -337,7 +520,7 @@ m.fade_music();
             {
                 final += action[i] + "\r\n";
             }
-            actions.open("data/saves/actions.list", "w");
+            actions.open("data/scenarios/"+senpack+"/actions.list", "w");
             actions.write(final);
             actions.close();
             dlg("Success! Your action has been removed from the actions list.");
@@ -348,7 +531,7 @@ m.fade_music();
 if(rscm=="ak2")
 {
 m.fade_music();
-attacks.open("data/saves/attacks.list", "r");
+attacks.open("data/scenarios/"+senpack+"/attacks.list", "r");
 attacksplit = attacks.read();
 string[] attack = string_split(attacksplit, "\r\n", true);
 attacks.close();
@@ -374,7 +557,7 @@ if (mres > 0 and mres <= attack.length())
         {
             final += attack[i] + "\r\n";
         }
-        attacks.open("data/saves/attacks.list", "w");
+        attacks.open("data/scenarios/"+senpack+"/attacks.list", "w");
         attacks.write(final);
         attacks.close();
         dlg("Success! Your attack has been removed from the attacks list.");
@@ -385,7 +568,7 @@ if (mres > 0 and mres <= attack.length())
 if(rscm=="bpart2")
 {
 m.fade_music();
-bodyparts.open("data/saves/bodyparts.list", "r");
+bodyparts.open("data/scenarios/"+senpack+"/bodyparts.list", "r");
 bodypartsplit = bodyparts.read();
 string[] bodypart = string_split(bodypartsplit, "\r\n", true);
 bodyparts.close();
@@ -411,7 +594,7 @@ if (mres > 0 and mres <= bodypart.length())
         {
             final += bodypart[i] + "\r\n";
         }
-        bodyparts.open("data/saves/bodyparts.list", "w");
+        bodyparts.open("data/scenarios/"+senpack+"/bodyparts.list", "w");
         bodyparts.write(final);
         bodyparts.close();
         dlg("Success! Your body part has been removed from the body parts list.");
@@ -422,7 +605,7 @@ if (mres > 0 and mres <= bodypart.length())
 if(rscm=="cname2")
 {
 m.fade_music();
-charnames.open("data/saves/charnames.list", "r");
+charnames.open("data/scenarios/"+senpack+"/charnames.list", "r");
 charnamesplit = charnames.read();
 string[] charname = string_split(charnamesplit, "\r\n", true);
 charnames.close();
@@ -448,7 +631,7 @@ if (mres > 0 and mres <= charname.length())
         {
             final += charname[i] + "\r\n";
         }
-        charnames.open("data/saves/charnames.list", "w");
+        charnames.open("data/scenarios/"+senpack+"/charnames.list", "w");
         charnames.write(final);
         charnames.close();
         dlg("Success! Your character name has been removed from the character names list.");
@@ -459,7 +642,7 @@ if (mres > 0 and mres <= charname.length())
 if(rscm=="ctype2")
 {
 m.fade_music();
-chartypes.open("data/saves/chartypes.list", "r");
+chartypes.open("data/scenarios/"+senpack+"/chartypes.list", "r");
 chartypesplit = chartypes.read();
 string[] chartype = string_split(chartypesplit, "\r\n", true);
 chartypes.close();
@@ -485,7 +668,7 @@ if (mres > 0 and mres <= chartype.length())
         {
             final += chartype[i] + "\r\n";
         }
-        chartypes.open("data/saves/chartypes.list", "w");
+        chartypes.open("data/scenarios/"+senpack+"/chartypes.list", "w");
         chartypes.write(final);
         chartypes.close();
         dlg("Success! Your character type has been removed from the character types list.");
@@ -496,7 +679,7 @@ if (mres > 0 and mres <= chartype.length())
 if(rscm=="dmessage2")
 {
 m.fade_music();
-deaths.open("data/saves/deaths.list", "r");
+deaths.open("data/scenarios/"+senpack+"/deaths.list", "r");
 deathsplit = deaths.read();
 string[] death = string_split(deathsplit, "\r\n", true);
 deaths.close();
@@ -522,7 +705,7 @@ if (mres > 0 and mres <= death.length())
         {
             final += death[i] + "\r\n";
         }
-        deaths.open("data/saves/deaths.list", "w");
+        deaths.open("data/scenarios/"+senpack+"/deaths.list", "w");
         deaths.write(final);
         deaths.close();
         dlg("Success! Your death message has been removed from the death messages list.");
@@ -533,7 +716,7 @@ if (mres > 0 and mres <= death.length())
 if(rscm=="mod2")
 {
 m.fade_music();
-moods.open("data/saves/moods.list", "r");
+moods.open("data/scenarios/"+senpack+"/moods.list", "r");
 moodsplit = moods.read();
 string[] mood = string_split(moodsplit, "\r\n", true);
 moods.close();
@@ -559,7 +742,7 @@ if (mres > 0 and mres <= mood.length())
         {
             final += mood[i] + "\r\n";
         }
-        moods.open("data/saves/moods.list", "w");
+        moods.open("data/scenarios/"+senpack+"/moods.list", "w");
         moods.write(final);
         moods.close();
         dlg("Success! Your mood has been removed from the moods list.");
@@ -570,7 +753,7 @@ if (mres > 0 and mres <= mood.length())
 if(rscm=="pmessage2")
 {
 m.fade_music();
-pains.open("data/saves/pains.list", "r");
+pains.open("data/scenarios/"+senpack+"/pains.list", "r");
 painsplit = pains.read();
 string[] pain = string_split(painsplit, "\r\n", true);
 pains.close();
@@ -596,7 +779,7 @@ if (mres > 0 and mres <= pain.length())
         {
             final += pain[i] + "\r\n";
         }
-        pains.open("data/saves/pains.list", "w");
+        pains.open("data/scenarios/"+senpack+"/pains.list", "w");
         pains.write(final);
         pains.close();
         dlg("Success! Your pain message has been removed from the pain messages list.");
@@ -607,7 +790,7 @@ if (mres > 0 and mres <= pain.length())
 if(rscm=="res2")
 {
 m.fade_music();
-reasons.open("data/saves/reasons.list", "r");
+reasons.open("data/scenarios/"+senpack+"/reasons.list", "r");
 reasonsplit = reasons.read();
 string[] reason = string_split(reasonsplit, "\r\n", true);
 reasons.close();
@@ -633,7 +816,7 @@ if (mres > 0 and mres <= reason.length())
         {
             final += reason[i] + "\r\n";
         }
-        reasons.open("data/saves/reasons.list", "w");
+        reasons.open("data/scenarios/"+senpack+"/reasons.list", "w");
         reasons.write(final);
         reasons.close();
         dlg("Success! Your reason has been removed from the reasons list.");
@@ -659,7 +842,7 @@ m.add_item_tts("view moods", "mod3");
 m.add_item_tts("view pain messages", "pmessage3");
 m.add_item_tts("view reasons", "res3");
 m.add_item_tts("back", "back");
-int mres=m.run("View scenarios menu",true);
+int mres=m.run(senpack+": View scenarios menu",true);
 string vscm=m.get_item_name(mres);
 if(mres==0)
 {
@@ -668,7 +851,15 @@ scencredmenu();
 if(vscm=="act3")
 {
 m.fade_music();
-actions.open("data/saves/actions.list","r");
+if(action.length()==0)
+{
+alert("Error", "There are no actions available to view.");
+wait(500);
+vewscenmenu();
+}
+else
+{
+actions.open("data/scenarios/"+senpack+"/actions.list","r");
 actionsplit=actions.read();
 action=string_split(actionsplit,"\r\n",true);
 setupmenu2();
@@ -690,10 +881,19 @@ if (mres>0 and mres<=action.length())
 return;
 }
 }
+}
 if(vscm=="ak3")
 {
 m.fade_music();
-attacks.open("data/saves/attacks.list","r");
+if(attack.length()==0)
+{
+alert("Error", "There are no attacks available to view.");
+wait(500);
+vewscenmenu();
+}
+else
+{
+attacks.open("data/scenarios/"+senpack+"/attacks.list","r");
 attacksplit=attacks.read();
 attack=string_split(attacksplit,"\r\n",true);
 setupmenu2();
@@ -715,10 +915,19 @@ if (mres>0 and mres<=attack.length())
 return;
 }
 }
+}
 if(vscm=="bpart3")
 {
 m.fade_music();
-bodyparts.open("data/saves/bodyparts.list","r");
+if(bodypart.length()==0)
+{
+alert("Error", "There are no body parts available to view.");
+wait(500);
+vewscenmenu();
+}
+else
+{
+bodyparts.open("data/scenarios/"+senpack+"/bodyparts.list","r");
 bodypartsplit=bodyparts.read();
 bodypart=string_split(bodypartsplit,"\r\n",true);
 setupmenu2();
@@ -740,10 +949,19 @@ if (mres>0 and mres<=bodypart.length())
 return;
 }
 }
+}
 if(vscm=="cname3")
 {
 m.fade_music();
-charnames.open("data/saves/charnames.list","r");
+if(charname.length()==0)
+{
+alert("Error", "There are no character names available to view.");
+wait(500);
+vewscenmenu();
+}
+else
+{
+charnames.open("data/scenarios/"+senpack+"/charnames.list","r");
 charnamesplit=charnames.read();
 charname=string_split(charnamesplit,"\r\n",true);
 setupmenu2();
@@ -765,10 +983,19 @@ if (mres>0 and mres<=charname.length())
 return;
 }
 }
+}
 if(vscm=="ctype3")
 {
 m.fade_music();
-chartypes.open("data/saves/chartypes.list","r");
+if(chartype.length()==0)
+{
+alert("Error", "There are no character types available to view.");
+wait(500);
+vewscenmenu();
+}
+else
+{
+chartypes.open("data/scenarios/"+senpack+"/chartypes.list","r");
 chartypesplit=chartypes.read();
 chartype=string_split(chartypesplit,"\r\n",true);
 setupmenu2();
@@ -790,10 +1017,19 @@ if (mres>0 and mres<=chartype.length())
 return;
 }
 }
+}
 if(vscm=="dmessage3")
 {
 m.fade_music();
-deaths.open("data/saves/deaths.list","r");
+if(death.length()==0)
+{
+alert("Error", "There are no death messages available to view.");
+wait(500);
+vewscenmenu();
+}
+else
+{
+deaths.open("data/scenarios/"+senpack+"/deaths.list","r");
 deathsplit=deaths.read();
 death=string_split(deathsplit,"\r\n",true);
 setupmenu2();
@@ -815,10 +1051,19 @@ if (mres>0 and mres<=death.length())
 return;
 }
 }
+}
 if(vscm=="mod3")
 {
 m.fade_music();
-moods.open("data/saves/moods.list","r");
+if(mood.length()==0)
+{
+alert("Error", "There are no moods available to view.");
+wait(500);
+vewscenmenu();
+}
+else
+{
+moods.open("data/scenarios/"+senpack+"/moods.list","r");
 moodsplit=moods.read();
 mood=string_split(moodsplit,"\r\n",true);
 setupmenu2();
@@ -840,10 +1085,19 @@ if (mres>0 and mres<=mood.length())
 return;
 }
 }
+}
 if(vscm=="pmessage3")
 {
 m.fade_music();
-pains.open("data/saves/pains.list","r");
+if(pain.length()==0)
+{
+alert("Error", "There are no pain messages available to view.");
+wait(500);
+vewscenmenu();
+}
+else
+{
+pains.open("data/scenarios/"+senpack+"/pains.list","r");
 painsplit=pains.read();
 pain=string_split(painsplit,"\r\n",true);
 setupmenu2();
@@ -865,10 +1119,19 @@ if (mres>0 and mres<=pain.length())
 return;
 }
 }
+}
 if(vscm=="res3")
 {
 m.fade_music();
-reasons.open("data/saves/reasons.list","r");
+if(reason.length()==0)
+{
+alert("Error", "There are no reasons available to view.");
+wait(500);
+vewscenmenu();
+}
+else
+{
+reasons.open("data/scenarios/"+senpack+"/reasons.list","r");
 reasonsplit=reasons.read();
 reason=string_split(reasonsplit,"\r\n",true);
 setupmenu2();
@@ -890,6 +1153,7 @@ if (mres>0 and mres<=reason.length())
 return;
 }
 }
+}
 if(vscm=="back")
 {
 scencredmenu();
@@ -899,17 +1163,17 @@ void statsmenu()
 {
 getscen();
 setupmenu();
-m.add_item_tts("There are "+action.length()+"entries in the actions file.");
-m.add_item_tts("There are "+attack.length()+"entries in the attacks file.");
-m.add_item_tts("There are "+bodypart.length()+"entries in the body parts file.");
-m.add_item_tts("There are "+charname.length()+"entries in the character names file.");
-m.add_item_tts("There are "+chartype.length()+"entries in the character types file.");
-m.add_item_tts("There are "+death.length()+"entries in the death messages file.");
-m.add_item_tts("There are "+mood.length()+"entries in the moods file.");
-m.add_item_tts("There are "+pain.length()+"entries in the pain messages file.");
-m.add_item_tts("There are "+reason.length()+"entries in the reasons file.");
+m.add_item_tts("There are "+(action.length()-1)+"entries in the actions file.");
+m.add_item_tts("There are "+(attack.length()-1)+"entries in the attacks file.");
+m.add_item_tts("There are "+(bodypart.length()-1)+"entries in the body parts file.");
+m.add_item_tts("There are "+(charname.length()-1)+"entries in the character names file.");
+m.add_item_tts("There are "+(chartype.length()-1)+"entries in the character types file.");
+m.add_item_tts("There are "+(death.length()-1)+"entries in the death messages file.");
+m.add_item_tts("There are "+(mood.length()-1)+"entries in the moods file.");
+m.add_item_tts("There are "+(pain.length()-1)+"entries in the pain messages file.");
+m.add_item_tts("There are "+(reason.length()-1)+"entries in the reasons file.");
 m.add_item_tts("back", "back");
-int mres=m.run("scenario statistics menu",true);
+int mres=m.run(senpack+": Scenario statistics menu",true);
 string stm=m.get_item_name(mres);
 if(mres==0 or mres>=m.get_item_name(mres))
 {

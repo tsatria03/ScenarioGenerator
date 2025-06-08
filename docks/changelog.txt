@@ -1,4 +1,8 @@
 new in 1.4.
+Fixed an issue where the scenario statistics menu would incorrectly provide information for files that didn't contain any written data.
+Added error checking to each list file found in the view scenarios menu.
+Added the ability to choose a scenario pack to use to add, generate, remove, and view scenario data for all menus that involve using them.
+Added the ability to create your own scenario packs in the data/scenarios directory.
 Updated all of the add and remove dialog messages to notify the user of the files that have something added or removed from it in the scenario editor menu.
 You can now view how many entries their are for the pains file in the statistics menu.
 Added the ability to add, remove, and view pain messages in the scenario editor menu.
