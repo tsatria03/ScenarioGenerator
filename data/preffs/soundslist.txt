@@ -1,0 +1,34 @@
+amb.ogg
+bell.wav
+bloody hit.wav
+bloody hit2.wav
+clipcopy.ogg
+death1.ogg
+death2.ogg
+death3.ogg
+fall1.wav
+fall2.wav
+fall3.wav
+fall4.wav
+fall5.wav
+fall6.wav
+fall7.wav
+female_scream.wav
+heal1.ogg
+heal2.ogg
+heal3.ogg
+male_scream.wav
+menuclick.ogg
+menuenter.ogg
+menufail.ogg
+menumus1.ogg
+menumus2.ogg
+menumus3.ogg
+menuopen.ogg
+music1.ogg
+music2.ogg
+pain1.ogg
+pain2.ogg
+pain3.ogg
+pain4.ogg
+total files: 33
