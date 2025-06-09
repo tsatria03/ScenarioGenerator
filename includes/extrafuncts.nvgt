@@ -98,4 +98,5 @@ void notimsg(string title, string text, bool can_cancel = false, uint flags = 0)
 temp.play_stationary("error.ogg", false);
 alert(title, text, false, 0);
 temp.destroy_all();
+wait(500);
 }

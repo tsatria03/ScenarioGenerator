@@ -1,21 +1,21 @@
-void dlg(string message, int timeout=-1)
+void dlg(string message, int timeout=-1, bool dlgsound=true)
 {
 timer timeouter;
-temp.play_stationary("dialog.ogg",false);
+if(dlgsound==true) temp.play_stationary("dialog.ogg",false);
 speak(message);
 while(true)
 {
 wait(5);
 if (timeout>-1 and timeouter.elapsed>=timeout)
 return;
-if (key_pressed(KEY_C))
+if (key_repeating(KEY_C))
 {
 temp.destroy_all();
 temp.play_stationary("copy.ogg",false);
 speak("Copied");
 clipboard_copy_text(message);
 }
-if (key_pressed(KEY_LEFT) or key_pressed(KEY_RIGHT) or key_pressed(KEY_UP) or key_pressed(KEY_DOWN))
+if (key_repeating(KEY_LEFT) or key_repeating(KEY_RIGHT) or key_repeating(KEY_UP) or key_repeating(KEY_DOWN))
 {
 speak(message);
 }
@@ -26,7 +26,7 @@ break;
 }
 }
 }
-void dlg_return(string msg)
+void dlg_return(string msg, int timeout=-1, bool dlgsound=true)
 {
-    dlg(msg + " Press enter to continue.");
+    dlg(msg + " Press enter to continue.", timeout, dlgsound);
 }

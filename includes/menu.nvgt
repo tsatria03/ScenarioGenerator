@@ -33,7 +33,6 @@ string[] senarpacks=find_directories("data/scenarios/*");
 if(senarpacks.length()==0)
 {
 notimsg("Error", "There are no scenario packs available to view.");
-wait(500);
 mainmenu();
 }
 else if(senarpacks.length()==1)
@@ -80,7 +79,6 @@ string[] senarpacks=find_directories("data/scenarios/*");
 if(senarpacks.length()==0)
 {
 notimsg("Error", "There are no scenario packs available to view.");
-wait(500);
 mainmenu();
 }
 else if(senarpacks.length()==1)
@@ -131,7 +129,6 @@ string[] senarpacks=find_directories("data/scenarios/*");
 if(senarpacks.length()==0)
 {
 notimsg("Error", "There are no scenario packs available to view.");
-wait(500);
 mainmenu();
 }
 else if(senarpacks.length()==1)
@@ -168,7 +165,6 @@ string[] senarpacks=find_directories("data/scenarios/*");
 if(senarpacks.length()==0)
 {
 notimsg("Error", "There are no scenario packs available to view.");
-wait(500);
 mainmenu();
 }
 else if(senarpacks.length()==1)
@@ -273,7 +269,6 @@ string newact=vd.input_box("", "Enter the action you'd like to add.");
 if(newact.empty())
 {
 notimsg("Error", "You must enter a valid action.");
-wait(500);
 adscenmenu();
 }
 else
@@ -293,7 +288,6 @@ string newak=vd.input_box("", "Enter the attack you'd like to add.");
 if(newak.empty())
 {
 notimsg("Error", "You must enter a valid attack.");
-wait(500);
 adscenmenu();
 }
 else
@@ -313,7 +307,6 @@ string newbpart=vd.input_box("", "Enter the body part you'd like to add.");
 if(newbpart.empty())
 {
 notimsg("Error", "You must enter a valid body part.");
-wait(500);
 adscenmenu();
 }
 else
@@ -333,7 +326,6 @@ string newcname=vd.input_box("", "Enter the character name you'd like to add.");
 if(newcname.empty())
 {
 notimsg("Error", "You must enter a valid character name.");
-wait(500);
 adscenmenu();
 }
 else
@@ -353,7 +345,6 @@ string newctype=vd.input_box("", "Enter the character type you'd like to add.");
 if(newctype.empty())
 {
 notimsg("Error", "You must enter a valid character type.");
-wait(500);
 adscenmenu();
 }
 else
@@ -373,7 +364,6 @@ string newdmessage=vd.input_box("", "Enter the death message you'd like to add."
 if(newdmessage.empty())
 {
 notimsg("Error", "You must enter a valid death message.");
-wait(500);
 adscenmenu();
 }
 else
@@ -393,7 +383,6 @@ string newmod=vd.input_box("", "Enter the mood you'd like to add.");
 if(newmod.empty())
 {
 notimsg("Error", "You must enter a valid mood.");
-wait(500);
 adscenmenu();
 }
 else
@@ -413,7 +402,6 @@ string newpmessage=vd.input_box("", "Enter the pain message you'd like to add.")
 if(newpmessage.empty())
 {
 notimsg("Error", "You must enter a valid pain message.");
-wait(500);
 adscenmenu();
 }
 else
@@ -433,7 +421,6 @@ string newres=vd.input_box("", "Enter the reason you'd like to add.");
 if(newres.empty())
 {
 notimsg("Error", "You must enter a valid reason.");
-wait(500);
 adscenmenu();
 }
 else
@@ -452,7 +439,6 @@ if(ascm == "temps")
     if (newCat.empty())
     {
         notimsg("Error", "You must enter a valid template category.");
-        wait(500);
         adscenmenu();
     }
     string[] tokens;
@@ -461,97 +447,81 @@ if(ascm == "temps")
     tokens.insert_last(vd.input_box("", "Enter the first token of this template category. Example, {pain}."));
     if (tokens[0].empty()) {
         notimsg("Error", "Token 1 is empty. Please enter a valid token for this template category.");
-        wait(500);
         adscenmenu();
     }
     texts.insert_last(vd.input_box("", "Enter the first text of this template category. Example, Your."));
     if (texts[0].empty()) {
         notimsg("Error", "Text 1 is empty. Please enter a valid text segment for this template category.");
-        wait(500);
         adscenmenu();
     }
     tokens.insert_last(vd.input_box("", "Enter the second token of this template category. Example, {chartype}."));
     if (tokens[1].empty()) {
         notimsg("Error", "Token 2 is empty. Please enter a valid token for this template category.");
-        wait(500);
         adscenmenu();
     }
     tokens.insert_last(vd.input_box("", "Enter the third token of this template category. Example, {charname}."));
     if (tokens[2].empty()) {
         notimsg("Error", "Token 3 is empty. Please enter a valid token for this template category.");
-        wait(500);
         adscenmenu();
     }
     tokens.insert_last(vd.input_box("", "Enter the fourth token of this template category. Example, {action}."));
     if (tokens[3].empty()) {
         notimsg("Error", "Token 4 is empty. Please enter a valid token for this template category.");
-        wait(500);
         adscenmenu();
     }
     texts.insert_last(vd.input_box("", "Enter the second text of this template category. Example, your."));
     if (texts[1].empty()) {
         notimsg("Error", "Text 2 is empty. Please enter a valid text segment for this template category.");
-        wait(500);
         adscenmenu();
     }
     tokens.insert_last(vd.input_box("", "Enter the fifth token of this template category. Example, {bodypart}."));
     if (tokens[4].empty()) {
         notimsg("Error", "Token 5 is empty. Please enter a valid token for this template category.");
-        wait(500);
         adscenmenu();
     }
     texts.insert_last(vd.input_box("", "Enter the third text of this template category. Example, with their."));
     if (texts[2].empty()) {
         notimsg("Error", "Text 3 is empty. Please enter a valid text segment for this template category.");
-        wait(500);
         adscenmenu();
     }
     tokens.insert_last(vd.input_box("", "Enter the sixth token of this template category. Example, {attack}."));
     if (tokens[5].empty()) {
         notimsg("Error", "Token 6 is empty. Please enter a valid token for this template category.");
-        wait(500);
         adscenmenu();
     }
     texts.insert_last(vd.input_box("", "Enter the fourth text of this template category. Example, because they were."));
     if (texts[3].empty()) {
         notimsg("Error", "Text 4 is empty. Please enter a valid text segment for this template category.");
-        wait(500);
         adscenmenu();
     }
     tokens.insert_last(vd.input_box("", "Enter the seventh token of this template category. Example, {mood}."));
     if (tokens[6].empty()) {
         notimsg("Error", "Token 7 is empty. Please enter a valid token for this template category.");
-        wait(500);
         adscenmenu();
     }
     texts.insert_last(vd.input_box("", "Enter the fifth text of this template category. Example, that you."));
     if (texts[4].empty()) {
         notimsg("Error", "Text 5 is empty. Please enter a valid text segment for this template category.");
-        wait(500);
         adscenmenu();
     }
     tokens.insert_last(vd.input_box("", "Enter the eighth token of this template category. Example, {reason}."));
     if (tokens[7].empty()) {
         notimsg("Error", "Token 8 is empty. Please enter a valid token for this template category.");
-        wait(500);
         adscenmenu();
     }
     texts.insert_last(vd.input_box("", "Enter the sixth text of this template category. Example, causing you to lose."));
     if (texts[5].empty()) {
         notimsg("Error", "Text 6 is empty. Please enter a valid text segment for this template category.");
-        wait(500);
         adscenmenu();
     }
     tokens.insert_last(vd.input_box("", "Enter the ninth token of this template category. Example, {dmg}."));
     if (tokens[8].empty()) {
         notimsg("Error", "Token 9 is empty. Please enter a valid token for this template category.");
-        wait(500);
         adscenmenu();
     }
     texts.insert_last(vd.input_box("", "Enter the seventh text of this template category. Example, % of your health!"));
     if (texts[6].empty()) {
         notimsg("Error", "Text 7 is empty. Please enter a valid text segment for this template category.");
-        wait(500);
         adscenmenu();
     }
 string newTemplate = "";
@@ -576,7 +546,6 @@ int mres = m.run("Would you like to make final edits to your template category b
 if(mres == 0)
 {
 notimsg("Error", "Template creation aborted.");
-wait(500);
 adscenmenu();
 }
 if (mres == 1)
@@ -586,7 +555,6 @@ string edited = vd.input_box("", "Enter the new text of this template category."
 if (edited.empty())
 {
 notimsg("Error", "You must enter a valid template text.");
-wait(500);
 adscenmenu();
 }
 newTemplate = edited;
@@ -643,7 +611,6 @@ if (escm == "act2")
     if (filteredActions.length() == 0)
     {
         notimsg("Error", "There are no actions available to edit.");
-        wait(500);
         edscenmenu();
     }
     setupmenu(false);
@@ -664,7 +631,6 @@ if (escm == "act2")
 if(editedAction.empty())
 {
 notimsg("Error", "You must enter a valid action.");
-wait(500);
 edscenmenu();
 }
 else
@@ -697,7 +663,6 @@ if (escm == "ak2")
     if (filteredAttacks.length() == 0)
     {
         notimsg("Error", "There are no attacks available to edit.");
-        wait(500);
         edscenmenu();
     }
     setupmenu(false);
@@ -718,7 +683,6 @@ if (escm == "ak2")
 if(editedAttack.empty())
 {
 notimsg("Error", "You must enter a valid attack.");
-wait(500);
 edscenmenu();
 }
 else
@@ -751,7 +715,6 @@ if (escm == "bpart2")
     if (filteredBodyparts.length() == 0)
     {
         notimsg("Error", "There are no body parts available to edit.");
-        wait(500);
         edscenmenu();
     }
     setupmenu(false);
@@ -772,7 +735,6 @@ if (escm == "bpart2")
 if(editedBodypart.empty())
 {
 notimsg("Error", "You must enter a valid body part.");
-wait(500);
 edscenmenu();
 }
 else
@@ -805,7 +767,6 @@ if (escm == "cname2")
     if (filteredCharnames.length() == 0)
     {
         notimsg("Error", "There are no character names available to edit.");
-        wait(500);
         edscenmenu();
     }
     setupmenu(false);
@@ -826,7 +787,6 @@ if (escm == "cname2")
 if(editedCharname.empty())
 {
 notimsg("Error", "You must enter a valid character name.");
-wait(500);
 edscenmenu();
 }
 else
@@ -859,7 +819,6 @@ if (escm == "ctype2")
     if (filteredChartypes.length() == 0)
     {
         notimsg("Error", "There are no character types available to edit.");
-        wait(500);
         edscenmenu();
     }
     setupmenu(false);
@@ -880,7 +839,6 @@ if (escm == "ctype2")
 if(editedChartype.empty())
 {
 notimsg("Error", "You must enter a valid character type.");
-wait(500);
 edscenmenu();
 }
 else
@@ -913,7 +871,6 @@ if (escm == "dmessage2")
     if (filteredDeaths.length() == 0)
     {
         notimsg("Error", "There are no death messages available to edit.");
-        wait(500);
         edscenmenu();
     }
     setupmenu(false);
@@ -934,7 +891,6 @@ if (escm == "dmessage2")
 if(editedDeath.empty())
 {
 notimsg("Error", "You must enter a valid death message.");
-wait(500);
 edscenmenu();
 }
 else
@@ -967,7 +923,6 @@ if (escm == "mod2")
     if (filteredMoods.length() == 0)
     {
         notimsg("Error", "There are no moods available to edit.");
-        wait(500);
         edscenmenu();
     }
     setupmenu(false);
@@ -988,7 +943,6 @@ if (escm == "mod2")
 if(editedMood.empty())
 {
 notimsg("Error", "You must enter a valid mood.");
-wait(500);
 edscenmenu();
 }
 else
@@ -1021,7 +975,6 @@ if (escm == "pmessage2")
     if (filteredPains.length() == 0)
     {
         notimsg("Error", "There are no pain messages available to edit.");
-        wait(500);
         edscenmenu();
     }
     setupmenu(false);
@@ -1042,7 +995,6 @@ if (escm == "pmessage2")
 if(editedPain.empty())
 {
 notimsg("Error", "You must enter a valid pain message.");
-wait(500);
 edscenmenu();
 }
 else
@@ -1075,7 +1027,6 @@ if (escm == "res2")
     if (filteredReasons.length() == 0)
     {
         notimsg("Error", "There are no reasons available to edit.");
-        wait(500);
         edscenmenu();
     }
     setupmenu(false);
@@ -1096,7 +1047,6 @@ if (escm == "res2")
 if(editedReason.empty())
 {
 notimsg("Error", "You must enter a valid reason.");
-wait(500);
 edscenmenu();
 }
 else
@@ -1136,7 +1086,6 @@ if(escm == "temps2")
     if(categories.length() == 0)
     {
         notimsg("Error", "There are no template categories available to edit.");
-        wait(500);
         edscenmenu();
     }
     setupmenu(false);
@@ -1158,7 +1107,6 @@ vd.set_disallowed_chars(disachars, false, disadesc);
         if (newTemplate.empty())
         {
             notimsg("Error", "You must enter a valid template text.");
-            wait(500);
             edscenmenu();
         }
         else
@@ -1213,7 +1161,6 @@ if (rscm == "act3")
     if (filteredActions.length() == 0)
     {
         notimsg("Error", "There are no actions available to remove.");
-        wait(500);
         remscenmenu();
     }
     setupmenu(false);
@@ -1258,7 +1205,6 @@ if (rscm == "ak3")
     if (filteredAttacks.length() == 0)
     {
         notimsg("Error", "There are no attacks available to remove.");
-        wait(500);
         remscenmenu();
     }
     setupmenu(false);
@@ -1303,7 +1249,6 @@ if (rscm == "bpart3")
     if (filteredBodyparts.length() == 0)
     {
         notimsg("Error", "There are no body parts available to remove.");
-        wait(500);
         remscenmenu();
     }
     setupmenu(false);
@@ -1348,7 +1293,6 @@ if (rscm == "cname3")
     if (filteredCharnames.length() == 0)
     {
         notimsg("Error", "There are no character names available to remove.");
-        wait(500);
         remscenmenu();
     }
     setupmenu(false);
@@ -1393,7 +1337,6 @@ if (rscm == "ctype3")
     if (filteredChartypes.length() == 0)
     {
         notimsg("Error", "There are no character types available to remove.");
-        wait(500);
         remscenmenu();
     }
     setupmenu(false);
@@ -1438,7 +1381,6 @@ if (rscm == "dmessage3")
     if (filteredDeaths.length() == 0)
     {
         notimsg("Error", "There are no death messages available to remove.");
-        wait(500);
         remscenmenu();
     }
     setupmenu(false);
@@ -1483,7 +1425,6 @@ if (rscm == "mod3")
     if (filteredMoods.length() == 0)
     {
         notimsg("Error", "There are no moods available to remove.");
-        wait(500);
         remscenmenu();
     }
     setupmenu(false);
@@ -1528,7 +1469,6 @@ if (rscm == "pmessage3")
     if (filteredPains.length() == 0)
     {
         notimsg("Error", "There are no pain messages available to remove.");
-        wait(500);
         remscenmenu();
     }
     setupmenu(false);
@@ -1573,7 +1513,6 @@ if (rscm == "res3")
     if (filteredReasons.length() == 0)
     {
         notimsg("Error", "There are no reasons available to remove.");
-        wait(500);
         remscenmenu();
     }
     setupmenu(false);
@@ -1625,7 +1564,6 @@ if(rscm == "temps3")
     if(categories.length() == 0)
     {
         notimsg("Error", "There are no template categories available to remove.");
-        wait(500);
         remscenmenu();
     }
     setupmenu(false);
@@ -1702,7 +1640,6 @@ if(vscm=="act4")
     if(filtered_actions.length() == 0)
     {
         notimsg("Error", "There are no actions available to view.");
-        wait(500);
         vewscenmenu();
     }
     setupmenu(false);
@@ -1733,7 +1670,6 @@ if(vscm=="ak4")
     if(filtered_attacks.length() == 0)
     {
         notimsg("Error", "There are no attacks available to view.");
-        wait(500);
         vewscenmenu();
     }
 setupmenu(false);
@@ -1764,7 +1700,6 @@ if(vscm=="bpart4")
     if(filtered_bodyparts.length() == 0)
     {
         notimsg("Error", "There are no body parts available to view.");
-        wait(500);
         vewscenmenu();
     }
 setupmenu(false);
@@ -1795,7 +1730,6 @@ if(vscm=="cname4")
     if(filtered_charnames.length() == 0)
     {
         notimsg("Error", "There are no character names available to view.");
-        wait(500);
         vewscenmenu();
     }
     setupmenu(false);
@@ -1826,7 +1760,6 @@ if(vscm=="ctype4")
     if(filtered_chartypes.length() == 0)
     {
         notimsg("Error", "There are no character types available to view.");
-        wait(500);
         vewscenmenu();
     }
     setupmenu(false);
@@ -1857,7 +1790,6 @@ if(vscm=="dmessage4")
     if(filtered_deaths.length() == 0)
     {
         notimsg("Error", "There are no death messages available to view.");
-        wait(500);
         vewscenmenu();
     }
     setupmenu(false);
@@ -1888,7 +1820,6 @@ if(vscm=="mod4")
     if(filtered_moods.length() == 0)
     {
         notimsg("Error", "There are no moods available to view.");
-        wait(500);
         vewscenmenu();
     }
     setupmenu(false);
@@ -1919,7 +1850,6 @@ if(vscm=="pmessage4")
     if(filtered_pains.length() == 0)
     {
         notimsg("Error", "There are no pain messages available to view.");
-        wait(500);
         vewscenmenu();
     }
     setupmenu(false);
@@ -1950,7 +1880,6 @@ if(vscm=="res4")
     if(filtered_reasons.length() == 0)
     {
         notimsg("Error", "There are no reasons available to view.");
-        wait(500);
         vewscenmenu();
     }
     setupmenu(false);
@@ -1988,7 +1917,6 @@ if(vscm == "temps4")
     if (entries.length() == 0)
     {
         notimsg("Error", "There are no template categories available to view.");
-        wait(500);
         vewscenmenu();
     }
     setupmenu(false);
