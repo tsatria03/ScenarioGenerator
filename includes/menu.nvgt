@@ -590,6 +590,11 @@ wait(500);
 adscenmenu();
 }
 newTemplate = edited;
+templates.open("data/scenarios/" + senpack + "/templates.list", "a");
+templates.write("\r\n[" + newCat + "]\r\n" + newTemplate + "\r\n");
+templates.close();
+dlg_return("Success! Your template category has been added to the templates list.");
+adscenmenu();
 }
 if (mres == 2)
 {
