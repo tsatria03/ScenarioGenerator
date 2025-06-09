@@ -23,6 +23,23 @@ return false;
         }
         return count;
     }
+    string[] clean_lines(string filepath)
+{
+        file f;
+        string[] result;
+        if (f.open(filepath, "r"))
+{
+            string raw = f.read();
+            string[] lines = string_split(raw, "\r\n", true);
+            for (uint i = 0; i < lines.length(); i++)
+{
+                string line = string_trim_sides(lines[i]);
+                if (line != "") result.insert_last(line);
+            }
+            f.close();
+        }
+        return result;
+    }
 string parse_scenario_template(string templateKey)
 {
     templates.open("data/scenarios/" + senpack + "/templates.list", "r");
@@ -92,6 +109,42 @@ filtered_lines.insert_last(lines[i]);
 original_lines.insert_last(i);
 }
 }
+}
+void getscen() 
+{
+    action = clean_lines("data/scenarios/" + senpack + "/actions.list");
+    randomaction = random_string(action);
+    attack = clean_lines("data/scenarios/" + senpack + "/attacks.list");
+    randomattack = random_string(attack);
+    bodypart = clean_lines("data/scenarios/" + senpack + "/bodyparts.list");
+    randombodypart = random_string(bodypart);
+    charname = clean_lines("data/scenarios/" + senpack + "/charnames.list");
+    randomcharname = random_string(charname);
+    chartype = clean_lines("data/scenarios/" + senpack + "/chartypes.list");
+    randomchartype = random_string(chartype);
+    mood = clean_lines("data/scenarios/" + senpack + "/moods.list");
+    randommood = random_string(mood);
+    pain = clean_lines("data/scenarios/" + senpack + "/pains.list");
+    randompain = random_string(pain);
+    reason = clean_lines("data/scenarios/" + senpack + "/reasons.list");
+    randomreason = random_string(reason);
+    string[] categories;
+    if (templates.open("data/scenarios/" + senpack + "/templates.list", "r"))
+{
+        string contents = templates.read();
+        string[] lines = string_split(contents, "\r\n", true);
+        for (uint i = 0; i < lines.length(); i++)
+{
+            string line = string_trim_sides(lines[i]);
+            if (line.starts_with("[") && line.ends_with("]"))
+{
+                string cat = line.substr(1, line.length() - 2);
+                categories.insert_last(cat);
+            }
+        }
+        templates.close();
+    }
+    sentemp = categories.length() > 0 ? random_string(categories) : "";
 }
 void notimsg(string title, string text, bool can_cancel = false, uint flags = 0)
 {

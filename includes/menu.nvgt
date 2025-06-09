@@ -20,7 +20,7 @@ setupmenu(false);
 m.add_item_tts("male", "ml");
 m.add_item_tts("female", "fl");
 m.add_item_tts("back", "back");
-int mres=m.run("Choose the gender you'd like to use for this generation.",true);
+int mres=m.run("Choose the character's gender you'd like to use for this generation.",true);
 string gend=m.get_item_name(mres);
 if(mres==0)
 {

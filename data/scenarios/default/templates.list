@@ -1,8 +1,5 @@
 [classic]
 {pain} Your {chartype}, {charname}, {action} your {bodypart} with their {attack} because they were {mood} that you {reason}, causing you to lose {dmg}% of your health!
 
-[dramatic]
-{pain} In a moment of blind rage, the {chartype}, {charname}, {action} your {bodypart} using their {attack}. Their expression revealed that they were {mood} because you {reason}. {dmg}% of your health vanished in an instant!
-
 [first_person]
 {pain} I was ambushed by my {chartype}, {charname}. They {action} my {bodypart} with their {attack} because they were {mood} that I {reason}. I lost {dmg}% of my health.

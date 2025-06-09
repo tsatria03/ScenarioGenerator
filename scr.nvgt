@@ -23,62 +23,6 @@ set_sound_decryption_key("K71W8fVbUmfS4easd2OOlYannfQTMC9UFltsV7Ny1jDov0TJDE3NIC
 show_window("Scenario generator, "+"version "+version);
 mainmenu();
 }
-void getscen() 
-{
-    actions.open("data/scenarios/" + senpack + "/actions.list", "r");
-    actionsplit = actions.read();
-    action = string_split(actionsplit, "\r\n", true);
-    randomaction = random_string(action);
-    attacks.open("data/scenarios/" + senpack + "/attacks.list", "r");
-    attacksplit = attacks.read();
-    attack = string_split(attacksplit, "\r\n", true);
-    randomattack = random_string(attack);
-    bodyparts.open("data/scenarios/" + senpack + "/bodyparts.list", "r");
-    bodypartsplit = bodyparts.read();
-    bodypart = string_split(bodypartsplit, "\r\n", true);
-    randombodypart = random_string(bodypart);
-    charnames.open("data/scenarios/" + senpack + "/charnames.list", "r");
-    charnamesplit = charnames.read();
-    charname = string_split(charnamesplit, "\r\n", true);
-    randomcharname = random_string(charname);
-    chartypes.open("data/scenarios/" + senpack + "/chartypes.list", "r");
-    chartypesplit = chartypes.read();
-    chartype = string_split(chartypesplit, "\r\n", true);
-    randomchartype = random_string(chartype);
-    moods.open("data/scenarios/" + senpack + "/moods.list", "r");
-    moodsplit = moods.read();
-    mood = string_split(moodsplit, "\r\n", true);
-    randommood = random_string(mood);
-    pains.open("data/scenarios/" + senpack + "/pains.list", "r");
-    painsplit = pains.read();
-    pain = string_split(painsplit, "\r\n", true);
-    randompain = random_string(pain);
-    reasons.open("data/scenarios/" + senpack + "/reasons.list", "r");
-    reasonsplit = reasons.read();
-    reason = string_split(reasonsplit, "\r\n", true);
-    randomreason = random_string(reason);
-    templates.open("data/scenarios/" + senpack + "/templates.list", "r");
-    string contents = templates.read();
-    templates.close();
-    string[] lines = string_split(contents, "\r\n", true);
-    string[] categories;
-    for (uint i = 0; i < lines.length(); i++)
-    {
-        if (lines[i].starts_with("[") && lines[i].ends_with("]"))
-        {
-            string cat = lines[i].substr(1, lines[i].length() - 2);
-            categories.insert_last(cat);
-        }
-    }
-    if (categories.length() > 0)
-    {
-        sentemp = random_string(categories);
-    }
-    else
-    {
-        sentemp = "";
-    }
-}
 void genscen()
 {
 ambslot=pool.play_stationary_extended("amb.ogg",true,0,ambpan,ambvolume,ambpitch,false);

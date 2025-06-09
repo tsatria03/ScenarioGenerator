@@ -1,0 +1,5 @@
+[female]
+{pain} The female {chartype}, {charname}, swiftly {action} your {bodypart} using her {attack}. She seemed {mood} about you {reason}, leaving you with {dmg}% less health.
+
+[female_first_person]
+{pain} The female {chartype}, {charname}, attacked me out of nowhere. She {action} my {bodypart} using her {attack}, clearly {mood} about me {reason}. I lost {dmg}% of my health.

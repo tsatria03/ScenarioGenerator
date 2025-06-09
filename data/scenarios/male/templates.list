@@ -1,0 +1,5 @@
+[male]
+{pain} The male {chartype}, {charname}, lunged forward and {action} your {bodypart} with his {attack}. He was clearly {mood} about you {reason}, dealing {dmg}% damage!
+
+[male_first_person]
+{pain} I was caught off guard by the male {chartype}, {charname}. He {action} my {bodypart} with his {attack} because he was {mood} about me {reason}. That cost me {dmg}% health.
