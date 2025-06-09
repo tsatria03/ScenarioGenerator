@@ -1,6 +1,7 @@
 void dlg(string message, int timeout=-1)
 {
 timer timeouter;
+temp.play_stationary("dialog.ogg",false);
 speak(message);
 while(true)
 {
@@ -9,7 +10,8 @@ if (timeout>-1 and timeouter.elapsed>=timeout)
 return;
 if (key_pressed(KEY_C))
 {
-pool.play_stationary("clipcopy.ogg",false);
+temp.destroy_all();
+temp.play_stationary("copy.ogg",false);
 speak("Copied");
 clipboard_copy_text(message);
 }
@@ -19,6 +21,7 @@ speak(message);
 }
 if (key_pressed(KEY_RETURN) or key_pressed(KEY_SPACE))
 {
+temp.destroy_all();
 break;
 }
 }

@@ -14,7 +14,7 @@ string senpack="default";
 string version="1.6";
 dynamic_menu_pro m;
 file actions, bodyparts, attacks, deaths, charnames, chartypes, moods, pains, reasons, templates;
-sound_pool pool, spool;
+sound_pool pool, spool, temp;
 virtual_dialogs vd;
 void main()
 {

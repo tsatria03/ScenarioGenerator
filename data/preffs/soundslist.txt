@@ -2,10 +2,12 @@ amb.ogg
 bell.wav
 bloody hit.wav
 bloody hit2.wav
-clipcopy.ogg
+copy.ogg
 death1.ogg
 death2.ogg
 death3.ogg
+dialog.ogg
+error.ogg
 fall1.wav
 fall2.wav
 fall3.wav
@@ -31,4 +33,4 @@ pain1.ogg
 pain2.ogg
 pain3.ogg
 pain4.ogg
-total files: 33
+total files: 35
