@@ -1,3 +1,67 @@
+bool string_starts_with(const string& in str, const string& in start)
+{
+if (str.length()>=start.length())
+{
+return (str.substr(0, start.length()) == start);
+}
+return false;
+}
+bool string_ends_with(const string& in str,const string& in ending)
+{
+if (str.length()>=ending.length())
+{
+return (str.substr(str.length()-ending.length())==ending);
+}
+return false;
+}
+    int count_non_empty(string[] list)
+    {
+        int count = 0;
+        for (uint i = 0; i < list.length(); i++)
+        {
+            if (!string_trim_sides(list[i]).empty()) count++;
+        }
+        return count;
+    }
+string parse_scenario_template(string templateKey)
+{
+    templates.open("data/scenarios/" + senpack + "/templates.list", "r");
+    string tmplFile = templates.read();
+    templates.close();
+    string[] tmplLines = string_split(tmplFile, "\r\n", true);
+    bool inSection = false;
+    string selectedTemplate = "";
+    for (uint i = 0; i < tmplLines.length(); i++)
+{
+        string line = tmplLines[i];
+        if (line == "[" + templateKey + "]")
+{
+            inSection = true;
+            continue;
+        }
+else if (inSection && string_starts_with(line, "["))
+{
+            break;
+        }
+else if (inSection && line.length() > 0)
+{
+            selectedTemplate = line;
+            break;
+        }
+    }
+    int dmgPercent = round(((double(dmg) / maxhealth) * 100), 0);
+    string result = selectedTemplate;
+    result = string_replace(result, "{pain}", randompain, true);
+    result = string_replace(result, "{chartype}", randomchartype, true);
+    result = string_replace(result, "{charname}", randomcharname, true);
+    result = string_replace(result, "{action}", randomaction, true);
+    result = string_replace(result, "{bodypart}", randombodypart, true);
+    result = string_replace(result, "{attack}", randomattack, true);
+    result = string_replace(result, "{mood}", randommood, true);
+    result = string_replace(result, "{reason}", randomreason, true);
+    result = string_replace(result, "{dmg}", "" + dmgPercent, true);
+    return result;
+}
 string random_string(string[] array)
 {
 string retval=array[random(0,array.length()-1)];

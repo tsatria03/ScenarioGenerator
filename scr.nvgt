@@ -10,9 +10,10 @@ string disachars="@#$%^&*()[]{};:'\"\\|<>/+-=`~";
 string disadesc="This character is not allowed.";
 string sengender="male";
 string senpack="default";
+string sentemp="classic";
 string version="1.5";
 dynamic_menu_pro m;
-file actions, bodyparts, attacks, deaths, charnames, chartypes, moods, pains, reasons;
+file actions, bodyparts, attacks, deaths, charnames, chartypes, moods, pains, reasons, templates;
 sound_pool pool, spool;
 virtual_dialogs vd;
 void main()
@@ -22,44 +23,61 @@ set_sound_decryption_key("K71W8fVbUmfS4easd2OOlYannfQTMC9UFltsV7Ny1jDov0TJDE3NIC
 show_window("Scenario generator, "+"version "+version);
 mainmenu();
 }
-void getscen()
+void getscen() 
 {
-actions.open("data/scenarios/"+senpack+"/actions.list", "r");
-actionsplit=actions.read();
-action=string_split(actionsplit, "\r\n", true);
-randomaction=action[random(0, action.length()-1)];
-attacks.open("data/scenarios/"+senpack+"/attacks.list", "r");
-attacksplit=attacks.read();
-attack=string_split(attacksplit, "\r\n", true);
-randomattack=attack[random(0, attack.length()-1)];
-bodyparts.open("data/scenarios/"+senpack+"/bodyparts.list", "r");
-bodypartsplit=bodyparts.read();
-bodypart=string_split(bodypartsplit, "\r\n", true);
-randombodypart=bodypart[random(0, bodypart.length()-1)];
-deaths.open("data/scenarios/"+senpack+"/deaths.list", "r");
-deathsplit=deaths.read();
-death=string_split(deathsplit, "\r\n", true);
-randomdeath=death[random(0, death.length()-1)];
-charnames.open("data/scenarios/"+senpack+"/charnames.list", "r");
-charnamesplit=charnames.read();
-charname=string_split(charnamesplit, "\r\n", true);
-randomcharname=charname[random(0, charname.length()-1)];
-chartypes.open("data/scenarios/"+senpack+"/chartypes.list", "r");
-chartypesplit=chartypes.read();
-chartype=string_split(chartypesplit, "\r\n", true);
-randomchartype=chartype[random(0, chartype.length()-1)];
-moods.open("data/scenarios/"+senpack+"/moods.list", "r");
-moodsplit=moods.read();
-mood=string_split(moodsplit, "\r\n", true);
-randommood=mood[random(0, mood.length()-1)];
-pains.open("data/scenarios/"+senpack+"/pains.list", "r");
-painsplit=pains.read();
-pain=string_split(painsplit, "\r\n", true);
-randompain=pain[random(0, pain.length()-1)];
-reasons.open("data/scenarios/"+senpack+"/reasons.list", "r");
-reasonsplit=reasons.read();
-reason=string_split(reasonsplit, "\r\n", true);
-randomreason=reason[random(0, reason.length()-1)];
+    actions.open("data/scenarios/" + senpack + "/actions.list", "r");
+    actionsplit = actions.read();
+    action = string_split(actionsplit, "\r\n", true);
+    randomaction = random_string(action);
+    attacks.open("data/scenarios/" + senpack + "/attacks.list", "r");
+    attacksplit = attacks.read();
+    attack = string_split(attacksplit, "\r\n", true);
+    randomattack = random_string(attack);
+    bodyparts.open("data/scenarios/" + senpack + "/bodyparts.list", "r");
+    bodypartsplit = bodyparts.read();
+    bodypart = string_split(bodypartsplit, "\r\n", true);
+    randombodypart = random_string(bodypart);
+    charnames.open("data/scenarios/" + senpack + "/charnames.list", "r");
+    charnamesplit = charnames.read();
+    charname = string_split(charnamesplit, "\r\n", true);
+    randomcharname = random_string(charname);
+    chartypes.open("data/scenarios/" + senpack + "/chartypes.list", "r");
+    chartypesplit = chartypes.read();
+    chartype = string_split(chartypesplit, "\r\n", true);
+    randomchartype = random_string(chartype);
+    moods.open("data/scenarios/" + senpack + "/moods.list", "r");
+    moodsplit = moods.read();
+    mood = string_split(moodsplit, "\r\n", true);
+    randommood = random_string(mood);
+    pains.open("data/scenarios/" + senpack + "/pains.list", "r");
+    painsplit = pains.read();
+    pain = string_split(painsplit, "\r\n", true);
+    randompain = random_string(pain);
+    reasons.open("data/scenarios/" + senpack + "/reasons.list", "r");
+    reasonsplit = reasons.read();
+    reason = string_split(reasonsplit, "\r\n", true);
+    randomreason = random_string(reason);
+    templates.open("data/scenarios/" + senpack + "/templates.list", "r");
+    string contents = templates.read();
+    templates.close();
+    string[] lines = string_split(contents, "\r\n", true);
+    string[] categories;
+    for (uint i = 0; i < lines.length(); i++)
+    {
+        if (lines[i].starts_with("[") && lines[i].ends_with("]"))
+        {
+            string cat = lines[i].substr(1, lines[i].length() - 2);
+            categories.insert_last(cat);
+        }
+    }
+    if (categories.length() > 0)
+    {
+        sentemp = random_string(categories);
+    }
+    else
+    {
+        sentemp = "";
+    }
 }
 void genscen()
 {
@@ -99,13 +117,27 @@ speak(round(health/maxhealth*100,0)+" percent health remaining");
 }
 if(key_pressed(KEY_RETURN))
 {
+getscen();
+if (!sentemp.empty())
+{
 dmg = round(random(2, 20) / 100.0 * maxhealth, 0);
 health-=dmg;
-getscen();
 if(sengender=="male") pool.play_stationary_extended("male_scream.wav",false,0,0,-10,100,false);
 else if(sengender=="female") pool.play_stationary_extended("female_scream.wav",false,0,0,-10,100,false);
 pool.play_stationary_extended("pain"+random(1,4)+".ogg",false,0,0,-10,100,false);
-dlg(randompain+" Your "+randomchartype+", "+randomcharname+", "+randomaction+" your "+randombodypart+" with there "+randomattack+" because they were "+randommood+" that you "+randomreason+", causing you to lose "+round(dmg/maxhealth*100,0)+" percent of your health!");
+    dlg(parse_scenario_template(sentemp));
+}
+else
+{
+pool.destroy_all();
+pool.play_stationary_extended("bell.wav",false,0,0,-10,100,false);
+    alert("error", "No valid templates found.");
+sengender="none";
+senpack="none";
+health=10000;
+maxhealth=10000;
+mainmenu();
+}
 }
 if(key_pressed(KEY_ESCAPE))
 {
@@ -118,6 +150,10 @@ mainmenu();
 }
 if(health<=0)
 {
+    deaths.open("data/scenarios/" + senpack + "/deaths.list", "r");
+    deathsplit = deaths.read();
+    death = string_split(deathsplit, "\r\n", true);
+    randomdeath = random_string(death);
 pool.destroy_all();
 pool.play_stationary_extended("bell.wav",false,0,0,-10,100,false);
 pool.play_stationary_extended("fall"+random(1,7)+".wav",false,0,0,-10,100,false);
