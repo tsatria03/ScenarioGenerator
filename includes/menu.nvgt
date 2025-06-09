@@ -186,7 +186,7 @@ m.add_item_tts(senarpacks[i], senarpacks[i]);
 int mres=m.run("Choose the scenario pack you'd like to use in this menu.", true);
 if(mres==0)
 {
-scencredmenu();
+mainmenu();
 }
 if (mres==0 and mres>=senarpacks.length())
 {
@@ -449,31 +449,131 @@ if(ascm == "temps")
     m.fade_music();
     vd.set_disallowed_chars(disachars, false, disadesc);
     string newCat = vd.input_box("", "Enter the name of this template category.");
-    if(newCat.empty())
+    if (newCat.empty())
     {
         alert("Error", "You must enter a valid template category.");
         wait(500);
         adscenmenu();
     }
-    else
-    {
-vd.set_disallowed_chars(disachars, false, disadesc);
-        string newTemplate = vd.input_box("", "Enter the text of this template category.");
-        if(newTemplate.empty())
-        {
-            alert("Error", "You must enter a valid template text.");
-            wait(500);
-            adscenmenu();
-        }
-        else
-        {
-            templates.open("data/scenarios/" + senpack + "/templates.list", "a");
-            templates.write("\r\n[" + newCat + "]\r\n" + newTemplate + "\r\n");
-            templates.close();
-            dlg("Success! Your template category has been added to the templates list.");
-            adscenmenu();
-        }
+    string[] tokens;
+    string[] texts;
+    vd.set_disallowed_chars(disachars, false, disadesc);
+    tokens.insert_last(vd.input_box("", "Enter the first token of this template category. Example, {pain}."));
+    if (tokens[0].empty()) {
+        alert("Error", "Token 1 is empty. Please enter a valid token for this template category.");
+        wait(500);
+        adscenmenu();
     }
+    texts.insert_last(vd.input_box("", "Enter the first text of this template category. Example, Your."));
+    if (texts[0].empty()) {
+        alert("Error", "Text 1 is empty. Please enter a valid text segment for this template category.");
+        wait(500);
+        adscenmenu();
+    }
+    tokens.insert_last(vd.input_box("", "Enter the second token of this template category. Example, {chartype}."));
+    if (tokens[1].empty()) {
+        alert("Error", "Token 2 is empty. Please enter a valid token for this template category.");
+        wait(500);
+        adscenmenu();
+    }
+    tokens.insert_last(vd.input_box("", "Enter the third token of this template category. Example, {charname}."));
+    if (tokens[2].empty()) {
+        alert("Error", "Token 3 is empty. Please enter a valid token for this template category.");
+        wait(500);
+        adscenmenu();
+    }
+    tokens.insert_last(vd.input_box("", "Enter the fourth token of this template category. Example, {action}."));
+    if (tokens[3].empty()) {
+        alert("Error", "Token 4 is empty. Please enter a valid token for this template category.");
+        wait(500);
+        adscenmenu();
+    }
+    texts.insert_last(vd.input_box("", "Enter the second text of this template category. Example, your."));
+    if (texts[1].empty()) {
+        alert("Error", "Text 2 is empty. Please enter a valid text segment for this template category.");
+        wait(500);
+        adscenmenu();
+    }
+    tokens.insert_last(vd.input_box("", "Enter the fifth token of this template category. Example, {bodypart}."));
+    if (tokens[4].empty()) {
+        alert("Error", "Token 5 is empty. Please enter a valid token for this template category.");
+        wait(500);
+        adscenmenu();
+    }
+    texts.insert_last(vd.input_box("", "Enter the third text of this template category. Example, with their."));
+    if (texts[2].empty()) {
+        alert("Error", "Text 3 is empty. Please enter a valid text segment for this template category.");
+        wait(500);
+        adscenmenu();
+    }
+    tokens.insert_last(vd.input_box("", "Enter the sixth token of this template category. Example, {attack}."));
+    if (tokens[5].empty()) {
+        alert("Error", "Token 6 is empty. Please enter a valid token for this template category.");
+        wait(500);
+        adscenmenu();
+    }
+    texts.insert_last(vd.input_box("", "Enter the fourth text of this template category. Example, because they were."));
+    if (texts[3].empty()) {
+        alert("Error", "Text 4 is empty. Please enter a valid text segment for this template category.");
+        wait(500);
+        adscenmenu();
+    }
+    tokens.insert_last(vd.input_box("", "Enter the seventh token of this template category. Example, {mood}."));
+    if (tokens[6].empty()) {
+        alert("Error", "Token 7 is empty. Please enter a valid token for this template category.");
+        wait(500);
+        adscenmenu();
+    }
+    texts.insert_last(vd.input_box("", "Enter the fifth text of this template category. Example, that you."));
+    if (texts[4].empty()) {
+        alert("Error", "Text 5 is empty. Please enter a valid text segment for this template category.");
+        wait(500);
+        adscenmenu();
+    }
+    tokens.insert_last(vd.input_box("", "Enter the eighth token of this template category. Example, {reason}."));
+    if (tokens[7].empty()) {
+        alert("Error", "Token 8 is empty. Please enter a valid token for this template category.");
+        wait(500);
+        adscenmenu();
+    }
+    texts.insert_last(vd.input_box("", "Enter the sixth text of this template category. Example, causing you to lose."));
+    if (texts[5].empty()) {
+        alert("Error", "Text 6 is empty. Please enter a valid text segment for this template category.");
+        wait(500);
+        adscenmenu();
+    }
+    tokens.insert_last(vd.input_box("", "Enter the ninth token of this template category. Example, {dmg}."));
+    if (tokens[8].empty()) {
+        alert("Error", "Token 9 is empty. Please enter a valid token for this template category.");
+        wait(500);
+        adscenmenu();
+    }
+    texts.insert_last(vd.input_box("", "Enter the seventh text of this template category. Example, % of your health!"));
+    if (texts[6].empty()) {
+        alert("Error", "Text 7 is empty. Please enter a valid text segment for this template category.");
+        wait(500);
+        adscenmenu();
+    }
+    string newTemplate = "";
+    newTemplate += tokens[0] + " ";
+    newTemplate += texts[0] + " ";
+    newTemplate += tokens[1] + ", " + tokens[2] + ", " + tokens[3] + " ";
+    newTemplate += texts[1] + " ";
+    newTemplate += tokens[4] + " ";
+    newTemplate += texts[2] + " ";
+    newTemplate += tokens[5] + " ";
+    newTemplate += texts[3] + " ";
+    newTemplate += tokens[6] + " ";
+    newTemplate += texts[4] + " ";
+    newTemplate += tokens[7] + " ";
+    newTemplate += texts[5] + " ";
+    newTemplate += tokens[8] + " ";
+    newTemplate += texts[6];
+    templates.open("data/scenarios/" + senpack + "/templates.list", "a");
+    templates.write("\r\n[" + newCat + "]\r\n" + newTemplate + "\r\n");
+    templates.close();
+    dlg("Success! Your template category has been added to the templates list.");
+    adscenmenu();
 }
 if(ascm=="back")
 {

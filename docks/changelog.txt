@@ -1,8 +1,10 @@
 new in 1.5
-Recoded the scenario statistics menu to be less verbose when going through all of the scenario components.
+Added error checking to adding template categories in the add scenarios menu.
+Recoded the template categories item in the add scenarios menu to be fully guided with input promptss for each token and text the template requires in order to use it.
+Recoded the scenario statistics menu to be less verbose when going through the scenario components.
 You can now view how many entries their are for the templates file in the statistics menu.
-Added error checking for invalid templates throughout the entire app.
-Added the ability to add, edit, remove, and view templates in the scenario manager menu.
+Added error checking for invalid template categories throughout the entire app.
+Added the ability to add, edit, remove, and view template categories in the scenario manager menu.
 Added a new file called templates.list. This file will be discussed more in depth in the readme.
 Made it so the add, edit, remove, and view scenario menus no longer ask the user to choose a scenario pack that they'd like to use. From now on, the promp will only show up in the scenario manager and statistic menus.
 Made it so if there's only one scenario pack found in the data/scenarios directory, the app will now auto select that pack for use, instead of bringing up the menu to choose it every time.
