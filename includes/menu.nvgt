@@ -256,7 +256,7 @@ m.add_item_tts("death messages", "dmessage");
 m.add_item_tts("moods", "mod");
 m.add_item_tts("pain messages", "pmessage");
 m.add_item_tts("reasons", "res");
-m.add_item_tts("templates", "temps");
+m.add_item_tts("template categories", "temps");
 m.add_item_tts("back", "back");
 int mres=m.run("Add scenarios menu. What would you like to add?",true);
 string ascm=m.get_item_name(mres);
@@ -458,7 +458,7 @@ if(ascm == "temps")
     else
     {
 vd.set_disallowed_chars(disachars, false, disadesc);
-        string newTemplate = vd.input_box("", "Enter the template text for [" + newCat + "].");
+        string newTemplate = vd.input_box("", "Enter the text of this template category.");
         if(newTemplate.empty())
         {
             alert("Error", "You must enter a valid template text.");
@@ -470,7 +470,7 @@ vd.set_disallowed_chars(disachars, false, disadesc);
             templates.open("data/scenarios/" + senpack + "/templates.list", "a");
             templates.write("\r\n[" + newCat + "]\r\n" + newTemplate + "\r\n");
             templates.close();
-            dlg("Success! Your template has been added to the templates list.");
+            dlg("Success! Your template category has been added to the templates list.");
             adscenmenu();
         }
     }
@@ -492,7 +492,7 @@ m.add_item_tts("death messages", "dmessage2");
 m.add_item_tts("moods", "mod2");
 m.add_item_tts("pain messages", "pmessage2");
 m.add_item_tts("reasons", "res2");
-m.add_item_tts("templates", "temps2");
+m.add_item_tts("template categories", "temps2");
 m.add_item_tts("back", "back");
 int mres=m.run("Edit scenarios menu. What would you like to edit?",true);
 string escm=m.get_item_name(mres);
@@ -1005,7 +1005,7 @@ if(escm == "temps2")
     }
     if(categories.length() == 0)
     {
-        alert("Error", "There are no templates available to edit.");
+        alert("Error", "There are no template categories available to edit.");
         wait(500);
         edscenmenu();
     }
@@ -1023,10 +1023,11 @@ if(escm == "temps2")
     {
         int index = indices[mres - 1];
         string oldTemplate = (index + 1 < lines.length()) ? lines[index + 1] : "";
-        string newTemplate = vd.input_box("", "Editing [" + categories[mres - 1] + "]:", oldTemplate);
+vd.set_disallowed_chars(disachars, false, disadesc);
+        string newTemplate = vd.input_box("", "Enter the new text of this template category.", oldTemplate);
         if (newTemplate.empty())
         {
-            alert("Error", "You must enter a valid template.");
+            alert("Error", "You must enter a valid template text.");
             wait(500);
             edscenmenu();
         }
@@ -1039,7 +1040,7 @@ if(escm == "temps2")
                 templates.write(lines[i] + "\r\n");
             }
             templates.close();
-            dlg("Template category successfully edited.");
+dlg("Success! Your template category has been edited from the templates list.");
             edscenmenu();
         }
     }
@@ -1061,7 +1062,7 @@ m.add_item_tts("death messages", "dmessage3");
 m.add_item_tts("moods", "mod3");
 m.add_item_tts("pain messages", "pmessage3");
 m.add_item_tts("reasons", "res3");
-m.add_item_tts("templates", "temps3");
+m.add_item_tts("template categories", "temps3");
 m.add_item_tts("back", "back");
 int mres=m.run("Remove scenarios menu. What would you like to remove?",true);
 string rscm=m.get_item_name(mres);
@@ -1493,7 +1494,7 @@ if(rscm == "temps3")
     }
     if(categories.length() == 0)
     {
-        alert("Error", "There are no templates available to remove.");
+        alert("Error", "There are no template categories available to remove.");
         wait(500);
         remscenmenu();
     }
@@ -1529,7 +1530,7 @@ if(rscm == "temps3")
             templates.write(lines[i] + "\r\n");
         }
         templates.close();
-        dlg("Template category successfully removed.");
+dlg("Success! Your template category has been removed from the templates list.");
         remscenmenu();
     }
 }
@@ -1550,7 +1551,7 @@ m.add_item_tts("death messages", "dmessage4");
 m.add_item_tts("moods", "mod4");
 m.add_item_tts("pain messages", "pmessage4");
 m.add_item_tts("reasons", "res4");
-m.add_item_tts("templates", "temps4");
+m.add_item_tts("template categories", "temps4");
 m.add_item_tts("back", "back");
 int mres=m.run("View scenarios menu. What would you like to view?",true);
 string vscm=m.get_item_name(mres);
@@ -1856,7 +1857,7 @@ if(vscm == "temps4")
     }
     if (entries.length() == 0)
     {
-        alert("Error", "There are no templates available to view.");
+        alert("Error", "There are no template categories available to view.");
         wait(500);
         vewscenmenu();
     }
@@ -1865,7 +1866,7 @@ if(vscm == "temps4")
     {
         m.add_item_tts(entries[i], "", "", false);
     }
-    int mres = m.run("Templates viewer", true);
+    int mres = m.run("Template categories viewer", true);
     if (mres == 0)
     {
         vewscenmenu();
@@ -1884,18 +1885,18 @@ void statsmenu()
 {
 getscen();
 setupmenu();
-    m.add_item_tts("There are " + count_non_empty(action) + " entries in the actions file.");
-    m.add_item_tts("There are " + count_non_empty(attack) + " entries in the attacks file.");
-    m.add_item_tts("There are " + count_non_empty(bodypart) + " entries in the body parts file.");
-    m.add_item_tts("There are " + count_non_empty(charname) + " entries in the character names file.");
-    m.add_item_tts("There are " + count_non_empty(chartype) + " entries in the character types file.");
+    m.add_item_tts("Actions: " + count_non_empty(action) + " entries.");
+    m.add_item_tts("Attacks: " + count_non_empty(attack) + " entries.");
+    m.add_item_tts("Body parts: " + count_non_empty(bodypart) + " entries.");
+    m.add_item_tts("Character names: " + count_non_empty(charname) + " entries.");
+    m.add_item_tts("Character types: " + count_non_empty(chartype) + " entries.");
     deaths.open("data/scenarios/" + senpack + "/deaths.list", "r");
     deathsplit = deaths.read();
     death = string_split(deathsplit, "\r\n", true);
-    m.add_item_tts("There are " + count_non_empty(death) + " entries in the death messages file.");
-    m.add_item_tts("There are " + count_non_empty(mood) + " entries in the moods file.");
-    m.add_item_tts("There are " + count_non_empty(pain) + " entries in the pain messages file.");
-    m.add_item_tts("There are " + count_non_empty(reason) + " entries in the reasons file.");
+    m.add_item_tts("Death messages: " + count_non_empty(death) + " entries.");
+    m.add_item_tts("Moods: " + count_non_empty(mood) + " entries.");
+    m.add_item_tts("Pain messages: " + count_non_empty(pain) + " entries.");
+    m.add_item_tts("Reasons: " + count_non_empty(reason) + " entries.");
     templates.open("data/scenarios/" + senpack + "/templates.list", "r");
     string tempData = templates.read();
     templates.close();
@@ -1907,12 +1908,12 @@ setupmenu();
         if (trimmed.starts_with("[") && trimmed.ends_with("]"))
             templateCount++;
     }
-    m.add_item_tts("There are " + templateCount + " entries in the templates file.");
+    m.add_item_tts("Template categories: " + templateCount + " entries.");
 m.add_item_tts("back", "back");
 string[] senarpacks=find_directories("data/scenarios/*");
 int mres;
-if(senarpacks.length()==1) mres=m.run("Scenario statistics menu. What would you like to view?",true);
-else if(senarpacks.length()>1) mres=m.run(senpack+" loaded: Scenario statistics menu. What would you like to view?",true);
+if(senarpacks.length()==1) mres=m.run("Scenario statistics menu.",true);
+else if(senarpacks.length()>1) mres=m.run(senpack+" loaded: Scenario statistics menu.",true);
 string stm=m.get_item_name(mres);
 if(mres==0 or mres>=m.get_item_name(mres))
 {

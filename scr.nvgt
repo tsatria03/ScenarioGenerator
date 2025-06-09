@@ -6,11 +6,11 @@ int dmg=0;
 string[] action, attack, bodypart, charname, chartype, death, mood, pain, reason;
 string actionsplit, attacksplit, bodypartsplit, charnamesplit, chartypesplit, deathsplit, moodsplit, painsplit, reasonsplit;
 string randomaction, randomattack, randombodypart, randomcharname, randomchartype, randomdeath, randommood, randompain, randomreason;
+string sentemp;
 string disachars="@#$%^&*()[]{};:'\"\\|<>/+-=`~";
 string disadesc="This character is not allowed.";
 string sengender="male";
 string senpack="default";
-string sentemp="classic";
 string version="1.5";
 dynamic_menu_pro m;
 file actions, bodyparts, attacks, deaths, charnames, chartypes, moods, pains, reasons, templates;
@@ -131,7 +131,7 @@ else
 {
 pool.destroy_all();
 pool.play_stationary_extended("bell.wav",false,0,0,-10,100,false);
-    alert("error", "No valid templates found.");
+alert("Error", "There are no template categories available to generate.");
 sengender="none";
 senpack="none";
 health=10000;

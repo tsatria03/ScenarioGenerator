@@ -1,14 +1,15 @@
 new in 1.5
-You can now view how many entries their are for the scenario templates file in the statistics menu.
-Added error checking for invalid scenario templates throughout the entire app.
-Added the ability to add, edit, remove, and view scenario templates in the scenario manager menu.
-Added the ability to create your own scenario templates in the data/scenarios directory.
+Recoded the scenario statistics menu to be less verbose when going through all of the scenario components.
+You can now view how many entries their are for the templates file in the statistics menu.
+Added error checking for invalid templates throughout the entire app.
+Added the ability to add, edit, remove, and view templates in the scenario manager menu.
+Added a new file called templates.list. This file will be discussed more in depth in the readme.
 Made it so the add, edit, remove, and view scenario menus no longer ask the user to choose a scenario pack that they'd like to use. From now on, the promp will only show up in the scenario manager and statistic menus.
 Made it so if there's only one scenario pack found in the data/scenarios directory, the app will now auto select that pack for use, instead of bringing up the menu to choose it every time.
 Added error checking to each list file found in the edit scenarios menu.
 new in 1.4.
 Added the ability to edit scenarios in the scenario manager menu.
-Renamed the scenario editor menu to say scenario manager menu.
+Renamed the scenario editor menu to scenario manager menu.
 Fixed an issue where the scenario statistics menu would incorrectly provide information for files that didn't contain any written data.
 Added error checking to each list file found in the remove and view scenario menus.
 Added the ability to choose a scenario pack to use to add, generate, remove, and view scenario data for all menus that involve using them.
