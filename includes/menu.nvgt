@@ -280,7 +280,7 @@ else
 {
 actions.write("\r\n"+newact);
 actions.close();
-dlg("Success! Your action has been added to the actions list.");
+dlg_return("Success! Your action has been added to the actions list.");
 adscenmenu();
 }
 }
@@ -300,7 +300,7 @@ else
 {
 attacks.write("\r\n"+newak);
 attacks.close();
-dlg("Success! Your attack has been added to the attacks list.");
+dlg_return("Success! Your attack has been added to the attacks list.");
 adscenmenu();
 }
 }
@@ -320,7 +320,7 @@ else
 {
 bodyparts.write("\r\n"+newbpart);
 bodyparts.close();
-dlg("Success! Your body part has been added to the body parts list.");
+dlg_return("Success! Your body part has been added to the body parts list.");
 adscenmenu();
 }
 }
@@ -340,7 +340,7 @@ else
 {
 charnames.write("\r\n"+newcname);
 charnames.close();
-dlg("Success! Your character name has been added to the character names list.");
+dlg_return("Success! Your character name has been added to the character names list.");
 adscenmenu();
 }
 }
@@ -360,7 +360,7 @@ else
 {
 chartypes.write("\r\n"+newctype);
 chartypes.close();
-dlg("Success! Your character type has been added to the character types list.");
+dlg_return("Success! Your character type has been added to the character types list.");
 adscenmenu();
 }
 }
@@ -380,7 +380,7 @@ else
 {
 deaths.write("\r\n"+newdmessage);
 deaths.close();
-dlg("Success! Your death message has been added to the death messages list.");
+dlg_return("Success! Your death message has been added to the death messages list.");
 adscenmenu();
 }
 }
@@ -400,7 +400,7 @@ else
 {
 moods.write("\r\n"+newmod);
 moods.close();
-dlg("Success! Your mood has been added to the moods list.");
+dlg_return("Success! Your mood has been added to the moods list.");
 adscenmenu();
 }
 }
@@ -420,7 +420,7 @@ else
 {
 pains.write("\r\n"+newpmessage);
 pains.close();
-dlg("Success! Your pain message has been added to the pain messages list.");
+dlg_return("Success! Your pain message has been added to the pain messages list.");
 adscenmenu();
 }
 }
@@ -440,7 +440,7 @@ else
 {
 reasons.write("\r\n"+newres);
 reasons.close();
-dlg("Success! Your reason has been added to the reasons list.");
+dlg_return("Success! Your reason has been added to the reasons list.");
 adscenmenu();
 }
 }
@@ -569,11 +569,36 @@ newTemplate += "{" + tokens[7] + "} ";
 newTemplate += texts[5] + " ";
 newTemplate += "{" + tokens[8] + "} ";
 newTemplate += texts[6];
-    templates.open("data/scenarios/" + senpack + "/templates.list", "a");
-    templates.write("\r\n[" + newCat + "]\r\n" + newTemplate + "\r\n");
-    templates.close();
-    dlg("Success! Your template category has been added to the templates list.");
-    adscenmenu();
+setupmenu(false);
+m.add_item_tts("Yes");
+m.add_item_tts("No");
+int mres = m.run("Would you like to edit your template category before saving it?", true);
+if(mres == 0)
+{
+alert("Error", "Template creation aborted.");
+wait(500);
+adscenmenu();
+}
+if (mres == 1)
+{
+vd.set_disallowed_chars(disachars, false, disadesc);
+string edited = vd.input_box("", "Enter the new text of this template category.", newTemplate);
+if (edited.empty())
+{
+alert("Error", "You must enter a valid template text.");
+wait(500);
+adscenmenu();
+}
+newTemplate = edited;
+}
+if (mres == 2)
+{
+templates.open("data/scenarios/" + senpack + "/templates.list", "a");
+templates.write("\r\n[" + newCat + "]\r\n" + newTemplate + "\r\n");
+templates.close();
+dlg_return("Success! Your template category has been added to the templates list.");
+adscenmenu();
+}
 }
 if(ascm=="back")
 {
@@ -649,7 +674,7 @@ else
         actions.open("data/scenarios/" + senpack + "/actions.list", "w");
         actions.write(final);
         actions.close();
-dlg("Success! Your action has been edited from the actions list.");
+dlg_return("Success! Your action has been edited from the actions list.");
         edscenmenu();
     }
 }
@@ -703,7 +728,7 @@ else
         attacks.open("data/scenarios/" + senpack + "/attacks.list", "w");
         attacks.write(final);
         attacks.close();
-dlg("Success! Your attack has been edited from the attacks list.");
+dlg_return("Success! Your attack has been edited from the attacks list.");
         edscenmenu();
     }
 }
@@ -757,7 +782,7 @@ else
         bodyparts.open("data/scenarios/" + senpack + "/bodyparts.list", "w");
         bodyparts.write(final);
         bodyparts.close();
-dlg("Success! Your body part has been edited from the bodyparts list.");
+dlg_return("Success! Your body part has been edited from the bodyparts list.");
         edscenmenu();
     }
 }
@@ -811,7 +836,7 @@ else
         charnames.open("data/scenarios/" + senpack + "/charnames.list", "w");
         charnames.write(final);
         charnames.close();
-dlg("Success! Your character name has been edited from the character names list.");
+dlg_return("Success! Your character name has been edited from the character names list.");
         edscenmenu();
     }
 }
@@ -865,7 +890,7 @@ else
         chartypes.open("data/scenarios/" + senpack + "/chartypes.list", "w");
         chartypes.write(final);
         chartypes.close();
-dlg("Success! Your character type has been edited from the character types list.");
+dlg_return("Success! Your character type has been edited from the character types list.");
         edscenmenu();
     }
 }
@@ -919,7 +944,7 @@ else
         deaths.open("data/scenarios/" + senpack + "/deaths.list", "w");
         deaths.write(final);
         deaths.close();
-dlg("Success! Your death message has been edited from the death messages list.");
+dlg_return("Success! Your death message has been edited from the death messages list.");
         edscenmenu();
     }
 }
@@ -973,7 +998,7 @@ else
         moods.open("data/scenarios/" + senpack + "/moods.list", "w");
         moods.write(final);
         moods.close();
-dlg("Success! Your mood has been edited from the moods list.");
+dlg_return("Success! Your mood has been edited from the moods list.");
         edscenmenu();
     }
 }
@@ -1027,7 +1052,7 @@ else
         pains.open("data/scenarios/" + senpack + "/pains.list", "w");
         pains.write(final);
         pains.close();
-dlg("Success! Your pain message has been edited from the pain messages list.");
+dlg_return("Success! Your pain message has been edited from the pain messages list.");
         edscenmenu();
     }
 }
@@ -1081,7 +1106,7 @@ else
         reasons.open("data/scenarios/" + senpack + "/reasons.list", "w");
         reasons.write(final);
         reasons.close();
-dlg("Success! Your reason has been edited from the reasons list.");
+dlg_return("Success! Your reason has been edited from the reasons list.");
         edscenmenu();
     }
 }
@@ -1140,7 +1165,7 @@ vd.set_disallowed_chars(disachars, false, disadesc);
                 templates.write(lines[i] + "\r\n");
             }
             templates.close();
-dlg("Success! Your template category has been edited from the templates list.");
+dlg_return("Success! Your template category has been edited from the templates list.");
             edscenmenu();
         }
     }
@@ -1210,7 +1235,7 @@ if (rscm == "act3")
             actions.open("data/scenarios/" + senpack + "/actions.list", "w");
             actions.write(final);
             actions.close();
-            dlg("Success! Your action has been removed from the actions list.");
+            dlg_return("Success! Your action has been removed from the actions list.");
             remscenmenu();
         }
     }
@@ -1255,7 +1280,7 @@ if (rscm == "ak3")
             attacks.open("data/scenarios/" + senpack + "/attacks.list", "w");
             attacks.write(final);
             attacks.close();
-            dlg("Success! Your attack has been removed from the attacks list.");
+            dlg_return("Success! Your attack has been removed from the attacks list.");
             remscenmenu();
         }
     }
@@ -1300,7 +1325,7 @@ if (rscm == "bpart3")
             bodyparts.open("data/scenarios/" + senpack + "/bodyparts.list", "w");
             bodyparts.write(final);
             bodyparts.close();
-            dlg("Success! Your body part has been removed from the bodyparts list.");
+            dlg_return("Success! Your body part has been removed from the bodyparts list.");
             remscenmenu();
         }
     }
@@ -1345,7 +1370,7 @@ if (rscm == "cname3")
             charnames.open("data/scenarios/" + senpack + "/charnames.list", "w");
             charnames.write(final);
             charnames.close();
-            dlg("Success! Your character name has been removed from the character names list.");
+            dlg_return("Success! Your character name has been removed from the character names list.");
             remscenmenu();
         }
     }
@@ -1390,7 +1415,7 @@ if (rscm == "ctype3")
             chartypes.open("data/scenarios/" + senpack + "/chartypes.list", "w");
             chartypes.write(final);
             chartypes.close();
-            dlg("Success! Your character type has been removed from the character types list.");
+            dlg_return("Success! Your character type has been removed from the character types list.");
             remscenmenu();
         }
     }
@@ -1435,7 +1460,7 @@ if (rscm == "dmessage3")
             deaths.open("data/scenarios/" + senpack + "/deaths.list", "w");
             deaths.write(final);
             deaths.close();
-            dlg("Success! Your death message has been removed from the death messages list.");
+            dlg_return("Success! Your death message has been removed from the death messages list.");
             remscenmenu();
         }
     }
@@ -1480,7 +1505,7 @@ if (rscm == "mod3")
             moods.open("data/scenarios/" + senpack + "/moods.list", "w");
             moods.write(final);
             moods.close();
-            dlg("Success! Your mood has been removed from the moods list.");
+            dlg_return("Success! Your mood has been removed from the moods list.");
             remscenmenu();
         }
     }
@@ -1525,7 +1550,7 @@ if (rscm == "pmessage3")
             pains.open("data/scenarios/" + senpack + "/pains.list", "w");
             pains.write(final);
             pains.close();
-            dlg("Success! Your pain message has been removed from the pain messages list.");
+            dlg_return("Success! Your pain message has been removed from the pain messages list.");
             remscenmenu();
         }
     }
@@ -1570,7 +1595,7 @@ if (rscm == "res3")
             reasons.open("data/scenarios/" + senpack + "/reasons.list", "w");
             reasons.write(final);
             reasons.close();
-            dlg("Success! Your reason has been removed from the reasons list.");
+            dlg_return("Success! Your reason has been removed from the reasons list.");
             remscenmenu();
         }
     }
@@ -1630,7 +1655,7 @@ if(rscm == "temps3")
             templates.write(lines[i] + "\r\n");
         }
         templates.close();
-dlg("Success! Your template category has been removed from the templates list.");
+dlg_return("Success! Your template category has been removed from the templates list.");
         remscenmenu();
     }
 }

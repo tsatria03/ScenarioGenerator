@@ -23,3 +23,7 @@ break;
 }
 }
 }
+void dlg_return(string msg)
+{
+    dlg(msg + " Press enter to continue.");
+}
