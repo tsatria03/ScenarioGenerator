@@ -572,7 +572,7 @@ newTemplate += texts[6];
 setupmenu(false);
 m.add_item_tts("Yes");
 m.add_item_tts("No");
-int mres = m.run("Would you like to edit your template category before saving it?", true);
+int mres = m.run("Would you like to make final edits to your template category before saving it?", true);
 if(mres == 0)
 {
 alert("Error", "Template creation aborted.");

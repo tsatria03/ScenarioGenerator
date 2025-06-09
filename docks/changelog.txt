@@ -1,6 +1,6 @@
 new in 1.6
-Updated all single line dlg calls to tell the user what to do after reading one.
-Added the ability to make last minute edits to the template categories you've created. A menu will show up asking the user if they'd like to edit the template category before saving it.
+Updated dialogs in various menus to tell the user what to do after reading one.
+Added the ability to edit the template categories you've created prior to saving it. A menu will show up asking the user if they'd like to make final edits to their template categories before saving it.
 Made it so when you add tokens to a template category, the braces around the token is automatically inserted to folow the structure of the actual templates file.
 new in 1.5
 Added error checking to adding template categories in the add scenarios menu.
