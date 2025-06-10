@@ -1533,7 +1533,7 @@ if (rscm == "dmessage3")
         }
     }
 }
-if (rscm == "efstats3")
+if (rscm == "efstat3")
 {
     m.fade_music();
     effects.open("data/scenarios/" + senpack + "/effects.list", "r");
