@@ -3,3 +3,6 @@
 
 [female_first_person]
 {pain} The female {chartype}, {charname}, attacked me out of nowhere. She {action} my {bodypart} using her {attack}, clearly {mood} about me {reason}. I lost {dmg}% of my health.
+
+[female effects]
+Your {chartype}, {charname}, {effect}

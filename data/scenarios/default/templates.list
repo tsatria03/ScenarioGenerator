@@ -1,2 +1,5 @@
 [classic]
 {pain} Your {chartype}, {charname}, {action} your {bodypart} with their {attack} because they were {mood} that you {reason}, causing you to lose {dmg}% of your health!
+
+[classic effects]
+Your {chartype}, {charname}, {effect}
