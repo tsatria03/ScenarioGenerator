@@ -19,7 +19,7 @@ if (key_repeating(KEY_LEFT) or key_repeating(KEY_RIGHT) or key_repeating(KEY_UP)
 {
 speak(message);
 }
-if (key_pressed(KEY_RETURN) or key_pressed(KEY_SPACE))
+if (key_repeating(KEY_RETURN) or key_repeating(KEY_SPACE))
 {
 temp.destroy_all();
 break;

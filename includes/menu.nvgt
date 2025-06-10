@@ -296,6 +296,7 @@ m.add_item_tts("body parts", "bpart");
 m.add_item_tts("character names", "cname");
 m.add_item_tts("character types", "ctype");
 m.add_item_tts("death messages", "dmessage");
+m.add_item_tts("effect statuses", "efstat");
 m.add_item_tts("moods", "mod");
 m.add_item_tts("pain messages", "pmessage");
 m.add_item_tts("reasons", "res");
@@ -418,6 +419,25 @@ else
 deaths.write("\r\n"+newdmessage);
 deaths.close();
 dlg_return("Success! Your death message has been added to the death messages list.");
+adscenmenu();
+}
+}
+if(ascm=="efstat")
+{
+m.fade_music();
+effects.open("data/scenarios/"+senpack+"/effects.list", "a");
+vd.set_disallowed_chars(disachars, false, disadesc);
+string newefstat=vd.input_box("", "Enter the effect status you'd like to add.");
+if(newefstat.empty())
+{
+notimsg("Error", "You must enter a valid effect status.");
+adscenmenu();
+}
+else
+{
+effects.write("\r\n"+newefstat);
+effects.close();
+dlg_return("Success! Your effect status has been added to the effects list.");
 adscenmenu();
 }
 }
@@ -634,6 +654,7 @@ m.add_item_tts("body parts", "bpart2");
 m.add_item_tts("character names", "cname2");
 m.add_item_tts("character types", "ctype2");
 m.add_item_tts("death messages", "dmessage2");
+m.add_item_tts("effect statuses", "efstat2");
 m.add_item_tts("moods", "mod2");
 m.add_item_tts("pain messages", "pmessage2");
 m.add_item_tts("reasons", "res2");
@@ -957,6 +978,58 @@ dlg_return("Success! Your death message has been edited from the death messages 
     }
 }
 }
+if (escm == "efstat2")
+{
+    m.fade_music();
+    effects.open("data/scenarios/" + senpack + "/effects.list", "r");
+    effectsplit = effects.read();
+    effects.close();
+    string[] rawEffects = string_split(effectsplit, "\r\n", true);
+    string[] filteredEffects;
+    uint[] originalIndexes;
+    filter_empty_lines(rawEffects, filteredEffects, originalIndexes);
+    if (filteredEffects.length() == 0)
+    {
+        notimsg("Error", "There are no effect statuses available to edit.");
+        edscenmenu();
+    }
+    setupmenu(false);
+    for (uint i = 0; i < filteredEffects.length(); i++)
+    {
+        m.add_item_tts(filteredEffects[i], filteredEffects[i], "", true);
+    }
+    int mres = m.run("Select an effect status to edit", true);
+    if (mres == 0)
+    {
+        edscenmenu();
+    }
+    if (mres > 0 and mres <= filteredEffects.length())
+    {
+        int realIndex = originalIndexes[mres - 1];
+        vd.set_disallowed_chars(disachars, false, disadesc);
+        string editedEffect = vd.input_box("", "Enter the new name for this effect status.", rawEffects[realIndex]);
+if(editedEffect.empty())
+{
+notimsg("Error", "You must enter a valid effect status.");
+edscenmenu();
+}
+else
+{
+        rawEffects[realIndex] = editedEffect;
+        string final = "";
+        for (uint i = 0; i < rawEffects.length(); i++)
+        {
+            if (i > 0) final += "\r\n";
+            final += rawEffects[i];
+        }
+        effects.open("data/scenarios/" + senpack + "/effects.list", "w");
+        effects.write(final);
+        effects.close();
+dlg_return("Success! Your effect status has been edited from the effect statuses list.");
+        edscenmenu();
+    }
+}
+}
 if (escm == "mod2")
 {
     m.fade_music();
@@ -1184,6 +1257,7 @@ m.add_item_tts("body parts", "bpart3");
 m.add_item_tts("character names", "cname3");
 m.add_item_tts("character types", "ctype3");
 m.add_item_tts("death messages", "dmessage3");
+m.add_item_tts("effect statuses", "efstat3");
 m.add_item_tts("moods", "mod3");
 m.add_item_tts("pain messages", "pmessage3");
 m.add_item_tts("reasons", "res3");
@@ -1459,6 +1533,50 @@ if (rscm == "dmessage3")
         }
     }
 }
+if (rscm == "efstats3")
+{
+    m.fade_music();
+    effects.open("data/scenarios/" + senpack + "/effects.list", "r");
+    effectsplit = effects.read();
+    effects.close();
+    string[] rawEffects = string_split(effectsplit, "\r\n", true);
+    string[] filteredEffects;
+    uint[] originalIndexes;
+    filter_empty_lines(rawEffects, filteredEffects, originalIndexes);
+    if (filteredEffects.length() == 0)
+    {
+        notimsg("Error", "There are no effect statuses available to remove.");
+        remscenmenu();
+    }
+    setupmenu(false);
+    for (uint i = 0; i < filteredEffects.length(); i++)
+    {
+        m.add_item_tts(filteredEffects[i], filteredEffects[i], "", true);
+    }
+    int mres = m.run("Select an effect status to remove", true);
+    if (mres == 0)
+    {
+        remscenmenu();
+    }
+    if (mres > 0 and mres <= filteredEffects.length())
+    {
+        int realIndex = originalIndexes[mres - 1];
+        if (realIndex >= 0 and realIndex < rawEffects.length())
+        {
+            rawEffects.remove_at(realIndex);
+            string final = "";
+            for (uint i = 0; i < rawEffects.length(); i++)
+            {
+                final += rawEffects[i] + "\r\n";
+            }
+            effects.open("data/scenarios/" + senpack + "/effects.list", "w");
+            effects.write(final);
+            effects.close();
+            dlg_return("Success! Your effect status has been removed from the effect statuses list.");
+            remscenmenu();
+        }
+    }
+}
 if (rscm == "mod3")
 {
     m.fade_music();
@@ -1663,6 +1781,7 @@ m.add_item_tts("body parts", "bpart4");
 m.add_item_tts("character names", "cname4");
 m.add_item_tts("character types", "ctype4");
 m.add_item_tts("death messages", "dmessage4");
+m.add_item_tts("effect statuses", "efstat4");
 m.add_item_tts("moods", "mod4");
 m.add_item_tts("pain messages", "pmessage4");
 m.add_item_tts("reasons", "res4");
@@ -1854,6 +1973,36 @@ if(vscm=="dmessage4")
         return;
     }
 }
+if(vscm=="efstat4")
+{
+    m.fade_music();
+    effects.open("data/scenarios/" + senpack + "/effects.list", "r");
+    effectsplit = effects.read();
+    effects.close();
+    effect = string_split(effectsplit, "\r\n", true);
+    string[] filtered_effects;
+    uint[] original_indices;
+    filter_empty_lines(effect, filtered_effects, original_indices);
+    if(filtered_effects.length() == 0)
+    {
+        notimsg("Error", "There are no effect statuses available to view.");
+        vewscenmenu();
+    }
+    setupmenu(false);
+    for(uint i = 0; i < filtered_effects.length(); i++)
+    {
+        m.add_item_tts(filtered_effects[i], "", "", false);
+    }
+    int mres = m.run("effect statuses viewer", true);
+    if(mres == 0)
+    {
+        vewscenmenu();
+    }
+    if(mres > 0 && mres <= filtered_effects.length())
+    {
+        return;
+    }
+}
 if(vscm=="mod4")
 {
     m.fade_music();
@@ -1999,6 +2148,7 @@ setupmenu();
     deathsplit = deaths.read();
     death = string_split(deathsplit, "\r\n", true);
     m.add_item_tts("Death messages: " + count_non_empty(death) + " entries.");
+m.add_item_tts("Effect statuses: " + count_non_empty(effect) + " entries.");
     m.add_item_tts("Moods: " + count_non_empty(mood) + " entries.");
     m.add_item_tts("Pain messages: " + count_non_empty(pain) + " entries.");
     m.add_item_tts("Reasons: " + count_non_empty(reason) + " entries.");

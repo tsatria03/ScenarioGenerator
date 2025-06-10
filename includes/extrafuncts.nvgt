@@ -90,12 +90,14 @@ else if (inSection && line.length() > 0)
     result = string_replace(result, "{mood}", randommood, true);
     result = string_replace(result, "{reason}", randomreason, true);
     result = string_replace(result, "{dmg}", "" + dmgPercent, true);
+    result = string_replace(result, "{effect}", randomeffect, true);
     return result;
 }
 string random_string(string[] array)
 {
-string retval=array[random(0,array.length()-1)];
-return retval;
+    if (array.length() == 0)
+        return "";
+    return array[random(0, array.length() - 1)];
 }
 string string_trim_sides(const string& in str)
 {
@@ -135,6 +137,8 @@ void getscen()
     randomcharname = random_string(charname);
     chartype = clean_lines("data/scenarios/" + senpack + "/chartypes.list");
     randomchartype = random_string(chartype);
+    effect = clean_lines("data/scenarios/" + senpack + "/effects.list");
+    randomeffect = random_string(effect);
     mood = clean_lines("data/scenarios/" + senpack + "/moods.list");
     randommood = random_string(mood);
     pain = clean_lines("data/scenarios/" + senpack + "/pains.list");
