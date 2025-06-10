@@ -1,5 +1,6 @@
 new in 1.6
-Reorganized the scenarios folder to include 4 other scenario packs that are spisific to the user's gender.
+Added the option to select the neutral gender in the gender picker menu.
+Reorganized the scenarios folder to include 4 other scenario packs that are spisific to the user's gender identity.
 Added sounds for dialog and error messages.
 Fixed a bug where pressing enter to confirm the final edits of a template category would cause it to abort the saving process entirely.
 Updated dialogs in various menus to tell the user what to do after reading one.
