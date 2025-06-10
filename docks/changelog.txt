@@ -1,4 +1,5 @@
 new in 1.6
+Added the ability to skip the sounds that are herd after reaching the death screen upon being killed.
 Added the option to select the neutral gender in the gender picker menu.
 Reorganized the scenarios folder to include 4 other scenario packs that are spisific to the user's gender identity.
 Added sounds for dialog and error messages.
