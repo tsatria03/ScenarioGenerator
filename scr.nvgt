@@ -2,6 +2,7 @@
 double ambvolume=-10, ambpan=0, ambpitch=100, musicvolume=-10, musicpan=0, musicpitch=100;
 double health=10000, maxhealth=10000;
 int ambslot, musicslot;
+int menumusvolume=-10;
 int dmg=0;
 string[] action, attack, bodypart, charname, chartype, death, mood, pain, reason;
 string actionsplit, attacksplit, bodypartsplit, charnamesplit, chartypesplit, deathsplit, moodsplit, painsplit, reasonsplit;

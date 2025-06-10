@@ -23,6 +23,19 @@ return false;
         }
         return count;
     }
+uint8 active_sr()
+{
+uint8 ret=0;
+for(uint8 i=0; i<=4; i++)
+{
+if(screen_reader_is_running(i))
+{
+ret=i;
+break;
+}
+}
+return ret;
+}
     string[] clean_lines(string filepath)
 {
         file f;

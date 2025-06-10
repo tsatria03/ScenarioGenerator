@@ -7,7 +7,6 @@
 #include"dlg.nvgt"
 #include"extrafuncts.nvgt"
 #include"fadepool.nvgt"
-#include"key_hold.nvgt";
 #include"m_pro.nvgt"
 #include"menu.nvgt"
 #include"setupmenu.nvgt"
