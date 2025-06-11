@@ -15,7 +15,7 @@ string senpack="default";
 string version="1.6";
 dynamic_menu_pro m;
 file actions, bodyparts, attacks, deaths, charnames, chartypes, effects, moods, pains, reasons, templates;
-sound_pool deathpool, pool, spool, temp;
+sound_pool deathpool, painpool, pool, spool, temp;
 virtual_dialogs vd;
 void main()
 {
@@ -96,16 +96,18 @@ if (key_repeating(KEY_RETURN))
         {
             dmg = round(random(2, 20) / 100.0 * maxhealth, 0);
             health -= dmg;
-            if (sengender == "male") pool.play_stationary_extended("male_scream.wav", false, 0, 0, -10, 100, false);
-            else if (sengender == "female") pool.play_stationary_extended("female_scream.wav", false, 0, 0, -10, 100, false);
-            pool.play_stationary_extended("pain" + random(1, 4) + ".ogg", false, 0, 0, -10, 100, false);
+            if (sengender == "male") painpool.play_stationary_extended("male_scream.wav", false, 0, 0, -10, 100, false);
+            else if (sengender == "female") painpool.play_stationary_extended("female_scream.wav", false, 0, 0, -10, 100, false);
+            painpool.play_stationary_extended("pain" + random(1, 4) + ".ogg", false, 0, 0, -10, 100, false);
         }
         string parsed = parse_scenario_template(sentemp);
         dlg(parsed, dlgsound:!isDamage);
+painpool.destroy_all();
     }
     else
     {
-        pool.destroy_all();
+        painpool.destroy_all();
+pool.destroy_all();
         notimsg("Error", "There are no template categories available to generate.");
         sengender = "none";
         senpack = "none";
@@ -129,6 +131,7 @@ if(health<=0)
     deathsplit = deaths.read();
     death = string_split(deathsplit, "\r\n", true);
     randomdeath = random_string(death);
+painpool.destroy_all();
 pool.destroy_all();
 deathpool.play_stationary_extended("bell.wav",false,0,0,-10,100,false);
 deathpool.play_stationary_extended("fall"+random(1,7)+".wav",false,0,0,-10,100,false);
