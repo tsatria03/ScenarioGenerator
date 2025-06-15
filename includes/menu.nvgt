@@ -33,7 +33,7 @@ sengender="female";
 string[] senarpacks=find_directories("data/scenarios/*");
 if(senarpacks.length()==0)
 {
-notimsg("Error", "There are no scenario packs available to view.");
+notimsg("Error", "There are no scenario packs available to generate.");
 mainmenu();
 }
 else if(senarpacks.length()==1)
@@ -79,7 +79,7 @@ sengender="male";
 string[] senarpacks=find_directories("data/scenarios/*");
 if(senarpacks.length()==0)
 {
-notimsg("Error", "There are no scenario packs available to view.");
+notimsg("Error", "There are no scenario packs available to generate.");
 mainmenu();
 }
 else if(senarpacks.length()==1)
@@ -125,7 +125,7 @@ sengender="neutral";
 string[] senarpacks=find_directories("data/scenarios/*");
 if(senarpacks.length()==0)
 {
-notimsg("Error", "There are no scenario packs available to view.");
+notimsg("Error", "There are no scenario packs available to generate.");
 mainmenu();
 }
 else if(senarpacks.length()==1)
@@ -175,6 +175,7 @@ if(main=="manage")
 string[] senarpacks=find_directories("data/scenarios/*");
 if(senarpacks.length()==0)
 {
+m.fade_music();
 notimsg("Error", "There are no scenario packs available to view.");
 mainmenu();
 }
